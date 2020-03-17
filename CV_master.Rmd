@@ -119,7 +119,7 @@ write.csv(ben.dat, "masterCV_benicia.csv")
 
 ## heatmaps 
 
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 ```
 
