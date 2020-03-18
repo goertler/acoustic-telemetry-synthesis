@@ -34,7 +34,10 @@ head(ben.dat)
 ## calc CV
 
 ```{r pressure, echo=FALSE}
+#Delta2013-043 has a very large travel time
+
 CV_chip.tt <- chip.dat %>%
+  filter(FishID !="Delta2013-043") %>%
   group_by(wateryear, Route, Release_Group_SAIL, Run, add=TRUE) %>%
   summarize(count = n(),
             mean = mean(travel_time, na.rm=TRUE),
@@ -86,5 +89,29 @@ plot.cv<-ggplot(CV_chip.tt,
   facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
 
 plot.cv + geom_jitter(width = 0.5)
+```
+
+```{r, fig.width=14, fig.height=12}
+ggplot(chip.dat, aes(Route, travel_time)) +
+  geom_boxplot(colour = "grey50") +
+  geom_point(aes(col=Run)) +
+  ylim(0, 100)+
+  facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
+
+ggplot(chip.dat, aes(Route, travel_time)) +
+  geom_boxplot(colour = "grey50") +
+  geom_point(aes(col=wateryear, shape=Run)) +
+  ylim(0, 100)+
+  facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
+```
+
+```{r, fig.width=14, fig.height=12}
+plot4ted<-ggplot(chip.dat, aes(Route, travel_time)) +
+  geom_boxplot(colour = "red") +
+  geom_point(aes(col=wateryear, shape=Run)) +
+  ylim(0, 100)+
+  facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
+
+plot4ted + geom_jitter(aes(col=wateryear, shape=Run))
 ```
 
