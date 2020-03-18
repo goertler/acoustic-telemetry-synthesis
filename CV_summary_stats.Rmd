@@ -13,6 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## investigate CV data
 
+```{r, echo=FALSE}
+library(tidyverse)
+library(vegan)
+library(cluster)
+library(pvclust)
+library(pastecs)
+library(reshape)
+```
+
 # load data from CV_master
 ```{r}
 chip.dat<-read.csv("masterCV_chip.csv")
@@ -49,9 +58,11 @@ min(CV_chip.tt$count, na.rm=TRUE)
 summary(CV_chip.tt)
 
 hist(CV_chip.tt$CV)
+
+stat.desc(CV_chip.tt)
 ```
 
-```{r}
+```{r, fig.width=14, fig.height=12}
 CV_chip.tt$wateryear<-as.character(CV_chip.tt$wateryear)
 
 ggplot(CV_chip.tt, aes(Route, CV)) +
@@ -60,18 +71,20 @@ ggplot(CV_chip.tt, aes(Route, CV)) +
   facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
 ```
 
-```{r}
+```{r, fig.width=14, fig.height=12}
 ggplot(CV_chip.tt, aes(Route, CV)) +
   geom_boxplot(colour = "grey50") +
   geom_point(aes(col=Run)) +
   facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
 ```
 
-```{r}
-ggplot(CV_chip.tt, 
+```{r, fig.width=14, fig.height=12}
+plot.cv<-ggplot(CV_chip.tt, 
        aes(x=Route, y=wateryear, 
            size = CV, color=Run)) +
-    geom_point(alpha=0.7)+
+    geom_point()+
   facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
+
+plot.cv + geom_jitter(width = 0.5)
 ```
 

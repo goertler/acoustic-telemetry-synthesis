@@ -137,7 +137,7 @@ CV_chip.tt <- chip.dat %>%
 ```
 
 # plot CV in travel time
-```{r}
+```{r, fig.width=14, fig.height=12}
 ggplot(CV_chip.tt, aes(wateryear, Route)) +
   geom_raster(aes(fill = CV)) +
   scale_fill_distiller(palette = "Blues", direction = -1)+ 
@@ -161,7 +161,7 @@ CV_chip.ld <- chip.dat %>%
 ```
 
 # plot CV in date of last detection
-```{r}
+```{r, fig.width=14, fig.height=12}
 ggplot(CV_chip.ld, aes(wateryear, Route)) +
   geom_raster(aes(fill = CV)) +
   scale_fill_distiller(palette = "Blues", direction = -1)+ #previously used "Spectral"
@@ -186,7 +186,7 @@ CV_ben.tt <- ben.dat %>%
 ```
 
 # plot CV in travel time
-```{r}
+```{r, fig.width=14, fig.height=12}
 ggplot(CV_ben.tt, aes(wateryear, Route)) +
   geom_raster(aes(fill = CV)) +
   scale_fill_distiller(palette = "Blues", direction = -1)+ 
@@ -209,7 +209,7 @@ CV_ben.ld <- ben.dat %>%
 ```
 
 # plot CV in last detection
-```{r}
+```{r, fig.width=14, fig.height=12}
 ggplot(CV_ben.ld, aes(wateryear, Route)) +
   geom_raster(aes(fill = CV)) +
   scale_fill_distiller(palette = "Blues", direction = -1)+ 
