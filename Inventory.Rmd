@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - Study Summaries
 - Map
-- [CV Data](CV_master.html)   
+- [CV Data](CV_master.html) 
+- [CV Data diagnositcs](CV_summary_stats.html)
 - CV Analysis
 - DFA Data
 - DFA Anlysis
