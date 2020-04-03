@@ -1,6 +1,31 @@
+
+# load required packages
+if(!require(shiny)) install.packages("shiny", repos = "http://cran.us.r-project.org")
+if(!require(leaflet)) install.packages("leaflet", repos = "http://cran.us.r-project.org")
+if(!require(tidyverse)) install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+if(!require(sf)) install.packages("sf", repos = "http://cran.us.r-project.org")
+
 library(shiny)
 library(leaflet)
+library(tidyverse)
+library(sf)
 
+# import data
+rec<- read.csv("data/all_receivers.csv")
+rel<- read.csv("data/releaseloc.csv")
+st_layers("data/hydro_forshiny")
+
+#read in region distinctions 
+bypass <- st_read("data/hydro_forshiny","bypass_regions")
+sacr <- st_read("data/hydro_forshiny","SacRiv_NHDPlus")
+delta <- st_read("data/hydro_forshiny","Delta_waterways")
+sfb <- st_read("data/hydro_forshiny","SFBandSuisun")
+sfb <- st_transform(sfb,crs=4326)#puts in WGS84 CRS
+
+myCategoryColor_function <- colorFactor("Dark2", rec$Type) 
+factpal <- colorFactor(topo.colors(5), sacr$River_Seg) # color palette for river segments according to Johnson et al 2017
+
+#ui
 ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
   leafletOutput("map", height = '100%', width = '100%'),
@@ -13,23 +38,7 @@ ui <- bootstrapPage(
   )
 )
 
-library(tidyverse)
-library(shiny)
-library(leaflet)
-library(sf)
-
-rec<- read.csv("data/all_receivers.csv")
-rel<- read.csv("data/releaseloc.csv")
-st_layers("data/hydro_forshiny")
-#read in region distinctions 
-bypass <- st_read("data/hydro_forshiny","bypass_regions")
-sacr <- st_read("data/hydro_forshiny","SacRiv_NHDPlus")
-delta <- st_read("data/hydro_forshiny","Delta_waterways")
-sfb <- st_read("data/hydro_forshiny","SFBandSuisun")
-sfb <- st_transform(sfb,crs=4326)#puts in WGS84 CRS
-myCategoryColor_function <- colorFactor("Dark2", rec$Type) 
-factpal <- colorFactor(topo.colors(5), sacr$River_Seg) # color palette for river segments according to Johnson et al 2017
-
+#server
 server <- function(input, output) {
   
   filteredData <- reactive( rec %>% filter(Year %in% input$choices) )
@@ -98,4 +107,7 @@ server <- function(input, output) {
         clearMarkers()}
   })
 }
+
+#shiny
+shinyApp(ui = ui, server = server)
 
