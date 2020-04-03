@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Please link all files added to this repository here with a breif description and category:
 
 - Study Summaries
-- Map
+- [Map](Tracy's_ShinyApp.R)
 - [CV Data](CV_master.html) 
 - [CV Data diagnositcs](CV_summary_stats.html)
 - CV Analysis
@@ -20,3 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - DFA Anlysis
 
 The "CV Data" file is the code for the assembly of final datasets, which combined Tracy's travel time estimates into single files (depending on final detection location), calculated final salmon-day of detection and includes CV plots.
+
+The "CV Data diagnositcs" file is a continuation of the CV data with plots and summary statsitcs of the dataset created in "CV Data".
+
+The "Map" flie is Tracy's shinyApp of release and reciever locations by year and tag type. I am also planning to add the source studies.
