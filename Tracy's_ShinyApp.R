@@ -30,13 +30,22 @@ ui <- bootstrapPage(
   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
   leafletOutput("map", height = '100%', width = '100%'),
   absolutePanel(top = 10, right = 10, 
-                checkboxGroupInput("choices", "Water Year", choices =  list("2007","2008","2009","2010","2011","2012","2013", "2014","2015","2016","2017"),
-                                   selected=c("2007","2008","2009","2010","2011","2012","2013", "2014","2015","2016","2017")),
+                id="controls",
+                style="z-index:500;",
+                class = "panel panel-default",
+                draggable = TRUE,
+                
                 #checkboxGroupInput("choices", "Tag Type",choices= list("JSATS","Vemco"),
                 #selected=c("Vemco","JSATS")),
+                sliderInput(inputId = "choices", label = "Choose a Range of Years",
+                            value = c(2013,2017), min = 2007, max = 2017, sep = "")
                 # verbatimTextOutput("my_rows")#to show number of rows displayed in map
   )
 )
+
+#checkboxGroupInput("choices", "Visualize the number of recievers with optional filters of Year and Tag Type",
+#choices =  list("2007","2008","2009","2010","2011","2012","2013", "2014","2015","2016","2017"),
+#selected=c("2007","2008","2009","2010","2011","2012","2013", "2014","2015","2016","2017")),
 
 #custom icon
 fishIcon <- makeIcon(
