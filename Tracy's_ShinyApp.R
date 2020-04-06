@@ -75,7 +75,14 @@ server <- function(input, output) {
                 pal =  factpal,
                 values = sacr$River_Seg, opacity = .8, 
                 position="topleft")%>% 
-      setView(lat =     38.63700, lng = -121.2210, zoom = 7)})
+      setView(lat =     38.63700, lng = -121.2210, zoom = 7)%>%
+      addMeasure(
+        position = "bottomleft",
+        primaryLengthUnit = "meters",
+        primaryAreaUnit = "sqmeters",
+        activeColor = "#3D535D",
+        completedColor = "#7D4479")
+    })
   
   observe({
     recf<- filteredData()
