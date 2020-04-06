@@ -53,9 +53,11 @@ fishIcon <- makeIcon(
   iconWidth = 24, iconHeight = 24
 )
 
-#custom map
-library(geojsonio)
-bostoneight <- geojsonio::geojson_read("mass-8ft.json", what = "sp")
+#custom info
+content <- paste(sep = "<br/>",
+                 "Mapped Release and Receiver Locations:",
+                 "Visualize the number of recievers with optional Year filter.",
+                 "Click on fish symbols for additional release information.")
 
 #server
 server <- function(input, output) {
@@ -81,7 +83,9 @@ server <- function(input, output) {
         primaryLengthUnit = "meters",
         primaryAreaUnit = "sqmeters",
         activeColor = "#3D535D",
-        completedColor = "#7D4479")
+        completedColor = "#7D4479")%>%
+      addPopups(-124.156494, 40.797177, content,
+                options = popupOptions(closeButton = FALSE))
     })
   
   observe({
