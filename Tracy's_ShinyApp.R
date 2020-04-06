@@ -38,6 +38,12 @@ ui <- bootstrapPage(
   )
 )
 
+#custom icon
+fishIcon <- makeIcon(
+  iconUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Pictograms-nps-water-fish_hatchery.svg/256px-Pictograms-nps-water-fish_hatchery.svg.png",
+  iconWidth = 24, iconHeight = 24
+)
+
 #server
 server <- function(input, output) {
   
@@ -97,7 +103,7 @@ server <- function(input, output) {
                     opacity = 1.0, fillOpacity = 0.5)%>% # adds sfb and suisun
         
         #release locations
-        addMarkers(data=relf,popup= paste("Release Location: ",rel$Release.Location,"<br>",
+        addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ",rel$Release.Location,"<br>",
                                           "Study: ", relf$Study,"<br>",
                                           "Year: ",relf$Year,"<br>",
                                           "Run: ",relf$Run),) #add number of fish released each year/location? 
