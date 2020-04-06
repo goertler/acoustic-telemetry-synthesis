@@ -59,7 +59,8 @@ server <- function(input, output) {
   filteredData <- reactive( rec %>% filter(Year %in% input$choices) )
   filteredData2 <- reactive( rel %>% filter(Year %in% input$choices) )
   
-  output$map <- renderLeaflet({ leaflet() %>% addTiles() %>%
+  output$map <- renderLeaflet({ leaflet() %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>%
       addLegend(title = "Receiver Technology", 
                 pal =  myCategoryColor_function,
                 values = rec$Type, opacity = .8, 
