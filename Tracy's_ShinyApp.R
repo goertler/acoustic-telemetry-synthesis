@@ -53,6 +53,10 @@ fishIcon <- makeIcon(
   iconWidth = 24, iconHeight = 24
 )
 
+#custom map
+library(geojsonio)
+bostoneight <- geojsonio::geojson_read("mass-8ft.json", what = "sp")
+
 #server
 server <- function(input, output) {
   
@@ -60,7 +64,8 @@ server <- function(input, output) {
   filteredData2 <- reactive( rel %>% filter(Year %in% input$choices) )
   
   output$map <- renderLeaflet({ leaflet() %>% 
-      addProviderTiles(providers$CartoDB.Positron) %>%
+      addProviderTiles(providers$Stamen.Toner, group = "Toner")%>% 
+      addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite")%>%
       addLegend(title = "Receiver Technology", 
                 pal =  myCategoryColor_function,
                 values = rec$Type, opacity = .8, 
