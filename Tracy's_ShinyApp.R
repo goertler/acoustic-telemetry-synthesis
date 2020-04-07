@@ -32,7 +32,7 @@ bypass_4326 <- bypass %>% st_transform(crs = 4326)#puts in WGS84 CRS
 
 
 myCategoryColor_function <- colorFactor("Dark2", rec$Type) 
-pal <- colorFactor(palette = "Blues", domain = hydro_4326$Region)
+pal <- colorFactor(palette = c("#C6DBEF","#6BAED6","#2171B5","#08306B"), domain = hydro_4326$Region)
 
 #ui
 ui <- bootstrapPage(
@@ -82,9 +82,12 @@ server <- function(input, output) {
                 values = rec$Type, opacity = .8, 
                 position="topleft") %>%
       # add legend for river segments
-      addLegend(title = "River Regions from Johnson et al 2017", 
-                pal =  pal,
-                values = hydro_4326$Region, opacity = .8, 
+      addLegend(title = "River Regions from Johnson et al. 2017", 
+                #pal =  pal,
+                #values = hydro_4326$Region, 
+                opacity = .8, 
+                colors = c("#08306B","#C6DBEF","#2171B5","#6BAED6"),
+                labels = c("Upper Sacramento River", "Middle Sacramento River", "Hydrography (Lindley et al. 2006)", "Tidal Delta, Estuary & Bays"),
                 position="topleft")%>% 
       setView(lat =     38.63700, lng = -121.2210, zoom = 7)%>%
       addMeasure(
@@ -111,7 +114,7 @@ server <- function(input, output) {
                     weight = 1)%>%
         addPolygons(data = hydro_4326, 
                     fillColor = ~pal(Region),
-                    color = ~pal(Region),
+                    color = "#2171B5",
                     weight = 1)%>%
         clearMarkers() %>% 
         addCircleMarkers(popup= paste("Location: ",recf$Location#,"<br>",
@@ -138,7 +141,7 @@ server <- function(input, output) {
                     weight = 1)%>%
         addPolygons(data = hydro_4326, 
                     fillColor = ~pal(Region),
-                    color = ~pal(Region),
+                    color = "#2171B5",
                     weight = 1)%>%
         #release locations
         addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ",rel$Release.Location,"<br>",
