@@ -43,7 +43,10 @@ ui <- bootstrapPage(
                 style="z-index:500;",
                 class = "panel panel-default",
                 draggable = TRUE,
-                
+                tags$div(tags$h3("Mapped Release and Receiver Locations:"), 
+                         tags$p("Visualize the number of recievers with Year filter."), 
+                         tags$p("Click on fish symbols for additional release information."), 
+                         tags$p("Please send questions to:", tags$a("Pascale Goertler", href="mailto:Pascale.Goertler@deltacouncil.ca.gov?subject=CHNTelemetrySynth"))),
                 #checkboxGroupInput("choices", "Tag Type",choices= list("JSATS","Vemco"),
                 #selected=c("Vemco","JSATS")),
                 sliderInput(inputId = "choices", label = "Choose a Range of Years",
@@ -61,12 +64,6 @@ fishIcon <- makeIcon(
   iconUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Pictograms-nps-water-fish_hatchery.svg/256px-Pictograms-nps-water-fish_hatchery.svg.png",
   iconWidth = 24, iconHeight = 24
 )
-
-#custom info
-content <- paste(sep = "<br/>",
-                 "Mapped Release and Receiver Locations:",
-                 "Visualize the number of recievers with Year filter.",
-                 "Click on fish symbols for additional release information.")
 
 #server
 server <- function(input, output) {
@@ -95,9 +92,7 @@ server <- function(input, output) {
         primaryLengthUnit = "meters",
         primaryAreaUnit = "sqmeters",
         activeColor = "#3D535D",
-        completedColor = "#7D4479")%>%
-      addPopups(-124.156494, 40.797177, content,
-                options = popupOptions(closeButton = FALSE))
+        completedColor = "#7D4479")
     })
   
   observe({
