@@ -31,7 +31,7 @@ bypass<-st_read("data/For_Pascale/bypass_regions.shp")
 bypass_4326 <- bypass %>% st_transform(crs = 4326)#puts in WGS84 CRS
 
 
-myCategoryColor_function <- colorFactor("Dark2", rec$Type) 
+myCategoryColor_function <- colorFactor(palette=c("#FF7F00","#FDBF6F"), domain = rec$Type) 
 pal <- colorFactor(palette = c("#C6DBEF","#6BAED6","#2171B5","#08306B"), domain = hydro_4326$Region)
 
 #ui
