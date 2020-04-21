@@ -81,12 +81,12 @@ server <- function(input, output) {
                 values = rec$Type, opacity = .8, 
                 position="topleft") %>%
       # add legend for river segments
-      addLegend(title = "River Regions from Johnson et al. 2017", 
+      addLegend(title = "River Regions from <a href='https://watershed.ucdavis.edu/files/biblio/Johnson_2017_SFEWS.pdf'>Johnson et al. 2017</a>", 
                 #pal =  pal,
                 #values = hydro_4326$Region, 
                 opacity = .8, 
                 colors = c("#08306B","#C6DBEF","#2171B5","#6BAED6"),
-                labels = c("Upper Sacramento River", "Middle Sacramento River", "Hydrography (Lindley et al. 2006)", "Tidal Delta, Estuary & Bays"),
+                labels = c("Upper Sacramento River", "Middle Sacramento River", "Hydrography (<a href='https://escholarship.org/uc/item/1ss794fc'>Lindley et al. 2006</a>)", "Tidal Delta, Estuary & Bays"),
                 position="topleft")%>% 
       setView(lat =     38.63700, lng = -121.2210, zoom = 7)%>%
       addMeasure(
