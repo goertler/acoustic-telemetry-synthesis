@@ -12,7 +12,9 @@ library(sf)
 
 # import data
 rec<- read.csv("data/all_receivers.csv")
+#rec$Year<-as.numeric(rec$Year)
 rel<- read.csv("data/releaseloc.csv")
+#rel$Year<-as.numeric(rel$Year)
 #st_layers("data/hydro_forshiny")
 st_layers("data/For_Pascale")
 
@@ -128,7 +130,7 @@ server <- function(input, output) {
     if(nrow(relf) != 0){leafletProxy("map", data = filteredData2()) %>%
        
         #release locations
-        addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ",rel$Release.Location,"<br>",
+        addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ", relf$Release.Location,"<br>",
                                           "Study: ", relf$Study,"<br>",
                                           "Year: ",relf$Year,"<br>",
                                           "Run: ",relf$Run)) #add number of fish released each year/location? 
