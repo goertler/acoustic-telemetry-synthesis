@@ -126,18 +126,7 @@ server <- function(input, output) {
   observe({
     relf<- filteredData2()
     if(nrow(relf) != 0){leafletProxy("map", data = filteredData2()) %>%
-        addPolygons(data = bypass_4326, 
-                    fillColor = ~pal(Region),
-                    color = ~pal(Region),
-                    weight = 1)%>%
-        addPolygons(data = buffer_4326, 
-                    fillColor = ~pal(Region),
-                    color = ~pal(Region),
-                    weight = 1)%>%
-        addPolygons(data = hydro_4326, 
-                    fillColor = ~pal(Region),
-                    color = "#2171B5",
-                    weight = 1)%>%
+       
         #release locations
         addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ",rel$Release.Location,"<br>",
                                           "Study: ", relf$Study,"<br>",
