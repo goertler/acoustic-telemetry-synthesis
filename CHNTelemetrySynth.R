@@ -131,7 +131,7 @@ server <- function(input, output) {
        
         #release locations
         addMarkers(data=relf,icon=fishIcon, popup= paste("Release Location: ", relf$Release.Location,"<br>",
-                                          "Study: ", relf$Study,"<br>",
+                                          "Study: <a href='",relf$link,"'>",relf$Study,"</a><br>",
                                           "Year: ",relf$Year,"<br>",
                                           "Run: ",relf$Run)) #add number of fish released each year/location? 
     }
