@@ -26,6 +26,7 @@ The "CV Data diagnositcs" file is a continuation of the CV data with plots and s
 The "Map" flie is Tracy's shinyApp of release and reciever locations by year and tag type. Source studies have been added and will be updated. The most recent version is in CHNTelemetrySynth.R and at https://deltascience.shinyapps.io/CHNTelemetrySynth/
 
 The "DFA Data" file is Tracy's organization of the detection data into individual time series for the DFA analysis with edits from Cyril to account for (1) receivers that are too close together, and (2) distance matrix issues.
-  -removing a couple YBUS receiver sites that didn't seem to be contributing important data
-  -switched the detection files to the newest, best, filtered files
+
+- removing a couple YBUS receiver sites that didn't seem to be contributing important data
+- switched the detection files to the newest, best, filtered files
   
