@@ -10,7 +10,7 @@ library(dplyr)
 library(padr)
 library(data.table)
 library(tidyr)
-
+library(lubridate)
 
 ## Load receiver rkm corrections. These were not used afterall. 
 #rkm_correct <- read.csv('Adjusted_genloc_rkm_for_Sac_fish_going_downstream.csv')
@@ -29,6 +29,8 @@ tagging_meta$Rel_datetime <- as.POSIXct(tagging_meta$Rel_datetime, tz="Etc/GMT+8
 ## Load detections
 temp = list.files(path = "C:/Users/TGrimes/Desktop/detection_files/study-detections",full.names = T, pattern="*.csv")
 temp = list.files(path = "C:/Users/fish/Downloads/DFA/DFA/study-detections",full.names = T, pattern="*.csv")
+temp = list.files(path = "C:/Users/pgoertler/Desktop/Telemetry Synthesis/DFA.CMedits/study-detections",full.names = T, pattern="*.csv")
+
 for (i in 1:length(temp)) assign(temp[i], read.csv(temp[i], stringsAsFactors = F))
 
 ## Bind all detections into one mother dataframe
@@ -49,7 +51,7 @@ all_detects <- merge(all_detects, tagging_meta[, c("FishID", "StudyID", "Fish_Ty
 
 all_detects$DetectDate<- as.POSIXct(all_detects$DateTime_PST, tz="Etc/GMT+8", format = "%m/%d/%Y %H:%M:%OS")
 
-all_detects <- select(all)
+all_detects <- select(all) # PG - got an error here
 all_detects<- select(all_detects,-c(19:22))
 all_detects <- merge(all_detects, tagging_meta[, c("FishID", "StudyID", "Fish_Type", "Rel_loc", "Rel_rkm")], by = "FishID")
 
@@ -346,4 +348,5 @@ dfa.ybus<-  ybus_test %>%
   select(-Group)%>%
   spread(key = FishID, value = Dist)
 
+#There are NA values in the column Date.
 write.csv(dfa.ybus,"ybus_DistTravelbyday_mat.csv", row.names=FALSE)
