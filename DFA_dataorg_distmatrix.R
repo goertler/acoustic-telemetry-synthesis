@@ -243,7 +243,10 @@ ybus<-select(ybus,-c(1,6,8,11))
 str(ybus)
 
 ## Reformat dates, make sure we have hours/mins/secs
+sum(is.na(ybus$DateTime))#before = 0
+ybus$DateTime<-as.Date(ybus$DateTime)# this fixed the NA dates
 ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S")
+sum(is.na(ybus$DetectDate))#after = 1165 -- now 0
 
 ## delta and yolo measurements for non-mainstem routes were done from downstream going up, and should be
 ## upstream going down for this analysis. Therefore, I have remeasured some of the most frequented delta receivers from upstream going down.
@@ -347,6 +350,6 @@ dfa.ybus<-  ybus_test %>%
   ungroup()%>%
   select(-Group)%>%
   spread(key = FishID, value = Dist)
+#there are NA values in the column Date.
 
-#There are NA values in the column Date.
 write.csv(dfa.ybus,"ybus_DistTravelbyday_mat.csv", row.names=FALSE)
