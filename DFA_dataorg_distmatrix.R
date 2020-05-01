@@ -244,8 +244,7 @@ str(ybus)
 
 ## Reformat dates, make sure we have hours/mins/secs
 sum(is.na(ybus$DateTime))#before = 0
-ybus$DateTime<-as.Date(ybus$DateTime)# this fixed the NA dates
-ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S")
+ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S", tz='EST')# 'EST' fixed the NA dates
 sum(is.na(ybus$DetectDate))#after = 1165 -- now 0
 
 ## delta and yolo measurements for non-mainstem routes were done from downstream going up, and should be
@@ -350,6 +349,10 @@ dfa.ybus<-  ybus_test %>%
   ungroup()%>%
   select(-Group)%>%
   spread(key = FishID, value = Dist)
-#there are NA values in the column Date.
+
+#there are NA values in the column Date - fixed line 247
+#datetime variable does not vary for 7 of the groups, no padding applied on this / these group(s)
+ndates<-summarise(ybus_test, "FishID", ndates = length(unique(Date)))
+ndates<-summarise(all_detects, "FishID", ndates = length(unique(DetectDate)))
 
 write.csv(dfa.ybus,"ybus_DistTravelbyday_mat.csv", row.names=FALSE)
