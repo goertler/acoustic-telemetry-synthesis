@@ -1,3 +1,5 @@
+setwd("~/Documents/acoustic-telemetry-synthesis")
+
 # 2017
 grps<-read.csv("JSATS_CV_4DFA.csv")
 grps_17<-subset(grps, wateryr==2017)
@@ -5,19 +7,28 @@ grps_17up<-subset(grps_17, Release_Group_v2=="Upper Sacramento River")
 grps_17td<-subset(grps_17, Release_Group_v2=="Tidal Delta")
 grps_17md<-subset(grps_17, Release_Group_v2=="Mid-Sacramento River")
 
-dat.17<-read.csv("JSATS17_DistTravelbyday.csv")
+#dat.17<-read.csv("JSATS17_DistTravelbyday.csv")
+# new data - post TG/CM update
+dat.17<-read.csv("JSATS17_DistTravelbyday_mat.csv")
 
-NameList<-unique(grps_17md$TagID)
-NameList_v2 = paste("X",NameList, sep="") 
-dat_17md <-dat.17[,colnames(dat.17)%in%NameList_v2] 
+NameList<-unique(grps_17md$FishID)
+#NameList_v2 = paste("X",NameList, sep="") # no necessary now that we are using FishId instead of Tag
+# need to replace "-" with "."
+NameList_v2 = gsub('-', '.', NameList)
+dat_17md <-dat.17[,colnames(dat.17)%in%NameList_v2] #101
 
-NameList<-unique(grps_17up$TagID)
-NameList_v2 = paste("X",NameList, sep="") 
-dat_17up <-dat.17[,colnames(dat.17)%in%NameList_v2] 
+NameList<-unique(grps_17up$FishID)
+NameList_v2 = gsub('-', '.', NameList) 
+dat_17up <-dat.17[,colnames(dat.17)%in%NameList_v2] #348
 
-NameList<-unique(grps_17td$TagID)
-NameList_v2 = paste("X",NameList, sep="") 
-dat_17td <-dat.17[,colnames(dat.17)%in%NameList_v2] 
+NameList<-unique(grps_17td$FishID)
+NameList_v2 = gsub('-', '.', NameList)
+dat_17td <-dat.17[,colnames(dat.17)%in%NameList] #99
+
+# was supposed to loose 100 fish with latest QC... need to check NAs
+sapply(dat_17up, function(x)all(is.na(x)))
+sapply(dat_17md, function(x)all(is.na(x)))
+sapply(dat_17td, function(x)all(is.na(x))) # there is something wrong here - all Mok2017### are gone now
 
 dat_17md = as.data.frame(sapply(dat_17md, as.numeric)) 
 dat_17up = as.data.frame(sapply(dat_17up, as.numeric))
