@@ -1,6 +1,6 @@
 setwd("~/Documents/acoustic-telemetry-synthesis")
 
-# 2017
+#### 2017
 grps<-read.csv("JSATS_CV_4DFA.csv")
 grps_17<-subset(grps, wateryr==2017)
 grps_17up<-subset(grps_17, Release_Group_v2=="Upper Sacramento River")
@@ -48,7 +48,6 @@ dat.z = (dat.t - y.bar) * (1/Sigma)
 rownames(dat.z)=rownames(dat.t)
 
 # need to run DynamicFactorAnalysis_TMB_UsingUnstructuredCorr.R first
-
 mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DE') #33679.27(up), 2980.19(md)
 mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DE') #31824.12(up), 2930.602
 mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DE') #30530.39(up), 2858.807
@@ -65,7 +64,7 @@ mod13<-runDFA(obs=dat.z,NumStates=13,ErrStruc='DE') #21221.41(up), -6.566599
 mod14<-runDFA(obs=dat.z,NumStates=14,ErrStruc='DE') #20283.56(up), -1734.077
 mod15<-runDFA(obs=dat.z,NumStates=15,ErrStruc='DE') #19104.11(up), -10175.76
 
-#2013
+#### 2013
 grps_13<-subset(grps, wateryr==2013)
 grps_13up<-subset(grps_13, Release_Group_v2=="Upper Sacramento River") #21
 grps_13td<-subset(grps_13, Release_Group_v2=="Tidal Delta") #46
@@ -86,7 +85,11 @@ NameList_v2 = gsub('-', '.', NameList)
 dat_13td <-dat.13[,colnames(dat.13)%in%NameList] #0 lost all td fish again...
 
 write.csv(grps_13td, "tidalDelta2013.csv")
+
 # need to add 19 from yolo to td
+yolo.13<-read.csv("Yolo13_DistTravelbyday.csv") #19
+#colnames(dat_13yolo)[colnames(dat_13yolo) == 'dat.13all[, 1]'] <- 'Date'
+#dat_13td<-merge(dat_13td, dat_13yolo, by="Date", all=TRUE)
 
 dat_13md = as.data.frame(sapply(dat_13md, as.numeric)) 
 dat_13up = as.data.frame(sapply(dat_13up, as.numeric))
@@ -111,4 +114,49 @@ mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DE') #531.4604(md), 1354.936
 # 2013 middle river release = 3 trends
 # 2013 upper river release = 2 trends
 
+#### 2016
+grps_16<-subset(grps, wateryr==2016)
+grps_16up<-subset(grps_16, Release_Group_v2=="Upper Sacramento River") #134
+grps_16md<-subset(grps_16, Release_Group_v2=="Mid-Sacramento River") #15
+
+dat.16<-read.csv("JSATS16_DistTravelbyday_mat.csv")
+
+# need to sort out ybus data (all td and add to md)
+grps_yb<-read.csv("ybusCV.csv")
+grps_16td<-subset(grps_yb, Release_Group=="Tidal Delta")
+grps_16md.yb<-subset(grps_yb, Release_Group=="Middle Sacramento River")
+
+dat.16<-read.csv("JSATS16_DistTravelbyday.csv")
+dat.16.yb<-read.csv("YBUS16_DistTravelbyday.csv")
+
+NameList<-unique(grps_16up$FishID)
+NameList_v2 = gsub('-', '.', NameList) 
+dat_16up <-dat.16[,colnames(dat.16)%in%NameList_v2] #134
+
+dat_16up = as.data.frame(sapply(dat_16up, as.numeric))
+
+dat_16up<-dat_16up[rowSums(is.na(dat_16up)) != ncol(dat_16up), ] #75
+
+dat.t<-t(dat_16up)
+
+Sigma = sqrt(apply(dat.t, 1, var, na.rm=TRUE))
+y.bar = apply(dat.t, 1, mean, na.rm=TRUE)
+dat.z = (dat.t - y.bar) * (1/Sigma)
+rownames(dat.z)=rownames(dat.t)
+
+mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DE') #7690.899
+mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DE') #7279.164
+mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DE') #7033.348
+mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DE') #6909.009
+mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DE') #6819.389
+mod6<-runDFA(obs=dat.z,NumStates=6,ErrStruc='DE') #6748.028
+mod7<-runDFA(obs=dat.z,NumStates=7,ErrStruc='DE') #6686.242
+mod8<-runDFA(obs=dat.z,NumStates=8,ErrStruc='DE') #6603.917
+mod9<-runDFA(obs=dat.z,NumStates=9,ErrStruc='DE') #6488.887
+mod10<-runDFA(obs=dat.z,NumStates=10,ErrStruc='DE') #6339.859
+mod11<-runDFA(obs=dat.z,NumStates=11,ErrStruc='DE') #6211.851
+mod12<-runDFA(obs=dat.z,NumStates=12,ErrStruc='DE') #6030.455
+mod13<-runDFA(obs=dat.z,NumStates=13,ErrStruc='DE') #5876.904
+mod14<-runDFA(obs=dat.z,NumStates=14,ErrStruc='DE') #5651.252
+mod15<-runDFA(obs=dat.z,NumStates=15,ErrStruc='DE') #5381.767
 
