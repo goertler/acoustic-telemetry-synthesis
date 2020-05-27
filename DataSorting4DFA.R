@@ -4,7 +4,7 @@ setwd("~/Documents/acoustic-telemetry-synthesis")
 grps<-read.csv("JSATS_CV_4DFA.csv")
 grps_17<-subset(grps, wateryr==2017)
 grps_17up<-subset(grps_17, Release_Group_v2=="Upper Sacramento River")
-grps_17td<-subset(grps_17, Release_Group_v2=="Tidal Delta")
+#grps_17td<-subset(grps_17, Release_Group_v2=="Tidal Delta") # no longer running these - all Mok fish
 grps_17md<-subset(grps_17, Release_Group_v2=="Mid-Sacramento River")
 
 #dat.17<-read.csv("JSATS17_DistTravelbyday.csv")
@@ -21,9 +21,9 @@ NameList<-unique(grps_17up$FishID)
 NameList_v2 = gsub('-', '.', NameList) 
 dat_17up <-dat.17[,colnames(dat.17)%in%NameList_v2] #348
 
-NameList<-unique(grps_17td$FishID)
-NameList_v2 = gsub('-', '.', NameList)
-dat_17td <-dat.17[,colnames(dat.17)%in%NameList] #99
+#NameList<-unique(grps_17td$FishID)
+#NameList_v2 = gsub('-', '.', NameList)
+#dat_17td <-dat.17[,colnames(dat.17)%in%NameList] #99
 
 # I was supposed to loose ~100 fish with latest QC... need to check NAs
 sapply(dat_17up, function(x)all(is.na(x)))
@@ -63,6 +63,13 @@ mod12<-runDFA(obs=dat.z,NumStates=12,ErrStruc='DE') #22331.66(up), 551.8398
 mod13<-runDFA(obs=dat.z,NumStates=13,ErrStruc='DE') #21221.41(up), -6.566599
 mod14<-runDFA(obs=dat.z,NumStates=14,ErrStruc='DE') #20283.56(up), -1734.077
 mod15<-runDFA(obs=dat.z,NumStates=15,ErrStruc='DE') #19104.11(up), -10175.76
+
+# tim reccomended different error structure:
+mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DUE') #(up)17708.02, (md)2377.986
+mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DUE') #(up)4305.22, (md)2340.518
+mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DUE') #(up)7804.498, (md)2268.015
+mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DUE') #(up)3968.671, (md)2404.455
+mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DUE') #(up)7483.714, (md)
 
 #### 2013
 grps_13<-subset(grps, wateryr==2013)
@@ -113,6 +120,12 @@ mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DE') #531.4604(md), 1354.936
 
 # 2013 middle river release = 3 trends
 # 2013 upper river release = 2 trends
+
+mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DUE') #(md) 34.9934, (up) 1294.592
+mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DUE') #(md) -90.40034, (up) 1401.51
+mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DUE') #(md) 467.3408, (up) 1352.82
+mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DUE') #(md) -187.5152, (up) 1079.169
+mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DUE') #(md) -283.2182, (up) 954.0951
 
 #### 2016
 grps_16<-subset(grps, wateryr==2016)
