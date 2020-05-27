@@ -1,9 +1,16 @@
 #setwd('~/Desktop/TestModel')
+<<<<<<< HEAD
 install.packages("Matrix")
 library(TMB)
 library(Matrix)
 #StoreOldWD<-getwd()
 #setwd('~/Documents/RStuff/DFA_TMB')
+=======
+library(TMB)
+library(Matrix)
+StoreOldWD<-getwd()
+setwd('~/Documents/RStuff/DFA_TMB')
+>>>>>>> 94ee03cb40f3af47edc18366e863c366940ad5c3
 
 dfa_model <- "// Dynamic Factor Analysis for multivariate time series
 #include <TMB.hpp>
@@ -330,7 +337,11 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivC
 #
 # newmethodR<-pl1$R
 
+<<<<<<< HEAD
 #setwd(StoreOldWD)
+=======
+setwd(StoreOldWD)
+>>>>>>> 94ee03cb40f3af47edc18366e863c366940ad5c3
 
 
 
