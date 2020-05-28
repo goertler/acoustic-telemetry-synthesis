@@ -165,7 +165,7 @@ ZmatFactorGen<-function(Data,NumStates){
 }
 
 ### Compute AIC for my DFA model output
-dfaAIC<-function(x,AICc=F){
+dfaAIC<-function(x,AICc=T){ # PG changed to T for AICc
 	opt<-x[['Optimization']]
 	NumPar<-length(opt$par)
 	NLL<-opt$value#opt$value
@@ -191,7 +191,7 @@ dfaAIC<-function(x,AICc=F){
 # If you want individual paramters from individual covariate series then you need to set indivCovar to TRUE. Example you have temperature covariates for each of the rivers of bristol bay and want to estimated individual temperature effects.
 # A combination of these two will require manual passing of the covariate paramter matrix. You can do this by supplying Dmat and Dfac. This defaults to NULL and don't mess with it unless you need to deviate from the two covariate approaches above. BEWARE!: frustrating debugging is an absolute certainty should you go this route. But if its what you need it can be done.
     
-runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivCovar=FALSE,Dmat=NULL,Dfac=NULL,Rfac=NULL,logsdObs=NULL,logsdObsFac=NULL,cholCorr=NULL,cholFac=NULL,EstSE=FALSE){ 
+runDFA<-function(obs,NumStates=2,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indivCovar=FALSE,Dmat=NULL,Dfac=NULL,Rfac=NULL,logsdObs=NULL,logsdObsFac=NULL,cholCorr=NULL,cholFac=NULL,EstSE=TRUE){ 
 	##
 	#  TopSection is used for Debug only.
 	#
@@ -200,7 +200,7 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivC
 	#Dmat<-DmatRun
 	#Dfac<-DfacRun
 	
-	obs<-t(obs)
+	obs<-t(obs) #PG need to fix, data already transponsed
 	Zfac<-ZmatFactorGen(Data=obs,NumStates=NumStates) #creates the Z factor to fix the upper corner if NumStates is greater than 1.
 	if(EstCovar){ # If you are estimating covariates this creates Dmat and Dfac based on the data, number of covars
 		if(is.null(Dmat) & is.null(Dfac)){ #This checks that you did not supply Dmat or Dfac (Manual covariate paramter entries)
@@ -262,7 +262,7 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivC
 	covStateFac<-factor(matrix(NA,nrow=NumStates,ncol=NumStates))
 	#Creates the model object and runs the optimization
 	obj1 <- MakeADFun(data,parameters,random="u",DLL="dfa1tmb",silent=T,map=list(Z=Zfac,D=Dfac,cholCorr=cholFac,logsdObs=logsdObsFac,covState=covStateFac))#,map=list())
-	opt1 <- nlminb(obj1$par,obj1$fn,obj1$gr,control=list(iter.max=2000,eval.max=2000))
+	opt1 <- nlminb(obj1$par,obj1$fn,obj1$gr,control=list(iter.max=10000,eval.max=2000)) # PG increaesed
 	#newtonOption(obj1,smartsearch=TRUE)
 	obj1$control=list(trace=1,REPORT=1,reltol=1e-12,maxit=2000)
 	obj1$fn()
@@ -308,7 +308,7 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivC
 	
 	#Fits for each time series
 	FitSeries<- pl1$Z %*% pl1$u + pl1$D %*% Covars
-	
+	ResidSeries <- t(obs) - FitSeries
 	#Create plots of model fit
 	#pdf('DFAfit.pdf')
 	#for(i in 1:ncol(obs)){
@@ -326,11 +326,14 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DE',EstCovar=FALSE,Covars=NULL,indivC
 	
 	#Compute AIC.
 	AIC<-2*length(opt1$par) + 2*opt1$value;AIC
+	ObsVec<-na.omit(as.vector(obs))
+	ResidSeries<-na.omit(as.vector(ResidSeries))
+	R2 <- 1 - (sum(ResidSeries^2)/sum((ObsVec-mean(ObsVec))^2))
 	
 	#print(AIC)
-	if(EstSE){return(list(Optimization = opt1, Estimates = pl1, Fits = FitSeries,AIC=AIC,StdErr=SES,ParCorrs=sdr$cov.fixed))
-	}else{return(list(Optimization = opt1, Estimates = pl1, Fits = FitSeries,AIC=AIC))}
-		
+	if(EstSE){return(list(Optimization = opt1, Estimates = pl1, Fits = FitSeries,AIC=AIC,R2=R2,StdErr=SES,ParCorrs=sdr$cov.fixed))
+	}else{return(list(Optimization = opt1, Estimates = pl1, Fits = FitSeries,AIC=AIC,R2=R2))}
+	
 }
 #
 # runDFA(ZL_FW1,ErrStruc='UNC')
