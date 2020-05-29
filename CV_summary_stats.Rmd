@@ -65,6 +65,8 @@ hist(CV_chip.tt$CV)
 stat.desc(CV_chip.tt)
 ```
 
+# boxplots as an alternative to heatmaps
+
 ```{r, fig.width=14, fig.height=12}
 CV_chip.tt$wateryear<-as.character(CV_chip.tt$wateryear)
 
@@ -113,5 +115,13 @@ plot4ted<-ggplot(chip.dat, aes(Route, travel_time)) +
   facet_wrap(~ Release_Group_SAIL)+ theme_minimal()
 
 plot4ted + geom_jitter(aes(col=wateryear, shape=Run))
+
+# travel times greater than 100 excluded (just Delta2013-043)
+```
+
+# anova
+
+```{r}
+
 ```
 
