@@ -191,7 +191,7 @@ dfaAIC<-function(x,AICc=T){ # PG changed to T for AICc
 # If you want individual paramters from individual covariate series then you need to set indivCovar to TRUE. Example you have temperature covariates for each of the rivers of bristol bay and want to estimated individual temperature effects.
 # A combination of these two will require manual passing of the covariate paramter matrix. You can do this by supplying Dmat and Dfac. This defaults to NULL and don't mess with it unless you need to deviate from the two covariate approaches above. BEWARE!: frustrating debugging is an absolute certainty should you go this route. But if its what you need it can be done.
     
-runDFA<-function(obs,NumStates=2,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indivCovar=FALSE,Dmat=NULL,Dfac=NULL,Rfac=NULL,logsdObs=NULL,logsdObsFac=NULL,cholCorr=NULL,cholFac=NULL,EstSE=TRUE){ 
+runDFA<-function(obs,NumStates=1,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indivCovar=FALSE,Dmat=NULL,Dfac=NULL,Rfac=NULL,logsdObs=NULL,logsdObsFac=NULL,cholCorr=NULL,cholFac=NULL,EstSE=FALSE){ 
 	##
 	#  TopSection is used for Debug only.
 	#
@@ -235,7 +235,7 @@ runDFA<-function(obs,NumStates=2,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indiv
 		cholFac<-factor(cholFac)
 	}else if(ErrStruc =='DUE'){
 		cholCorr<-rep(0,ncol(obs)*(ncol(obs)-1)/2)
-		logsdObs<-log(rep(0.5,ncol(obs)))
+		logsdObs<-log(rep(0.25,ncol(obs))) #changed starting value
 		logsdObsFac<-seq(1,ncol(obs))
 		logsdObsFac<-factor(logsdObsFac)
 		cholFac <-rep(NA,ncol(obs)*(ncol(obs)-1)/2)
