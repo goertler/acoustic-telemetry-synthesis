@@ -38,7 +38,7 @@ dat_17md<-dat_17md[rowSums(is.na(dat_17md)) != ncol(dat_17md), ] #55
 dat_17up<-dat_17up[rowSums(is.na(dat_17up)) != ncol(dat_17up), ] #122
 #dat_17td<-dat_17td[rowSums(is.na(dat_17td)) != ncol(dat_17td), ]
 
-dat.t<-t(dat_17md)
+dat.t<-t(dat_17md) #needed to change bc Tim's code transposes internally
 dat.t<-t(dat_17up)
 #dat.t<-t(dat_17td)
 
@@ -65,11 +65,11 @@ mod14<-runDFA(obs=dat.z,NumStates=14,ErrStruc='DE') #20283.56(up), -1734.077
 mod15<-runDFA(obs=dat.z,NumStates=15,ErrStruc='DE') #19104.11(up), -10175.76
 
 # tim reccomended different error structure:
-mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DUE') #(up)17708.02, (md)2377.986
-mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DUE') #(up)4305.22, (md)2340.518
-mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DUE') #(up)7804.498, (md)2268.015
-mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DUE') #(up)3968.671, (md)2404.455
-mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DUE') #(up)7483.714, (md)
+mod1<-runDFA(obs=dat.z) 
+mod2<-runDFA(obs=dat.z,NumStates=2) 
+mod3<-runDFA(obs=dat.z,NumStates=3) 
+mod4<-runDFA(obs=dat.z,NumStates=4) 
+mod5<-runDFA(obs=dat.z,NumStates=5) 
 
 #### 2013
 grps_13<-subset(grps, wateryr==2013)
@@ -89,15 +89,23 @@ dat_13up <-dat.13[,colnames(dat.13)%in%NameList_v2] #21
 
 NameList<-unique(grps_13td$FishID)
 NameList_v2 = gsub('-', '.', NameList)
-dat_13td <-dat.13[,colnames(dat.13)%in%NameList] #0 lost all td fish again...
+dat_13td <-dat.13[,colnames(dat.13)%in%NameList_v2] #46
+#0 lost all td fish again...
 
-write.csv(grps_13td, "tidalDelta2013.csv")
+#write.csv(grps_13td, "tidalDelta2013.csv") # Cyril fixed
 
 # need to add 19 from yolo to td
 yolo.13<-read.csv("Yolo13_DistTravelbyday.csv") #19
+yolo.13$Date<-as.Date(yolo.13$Date)
 #colnames(dat_13yolo)[colnames(dat_13yolo) == 'dat.13all[, 1]'] <- 'Date'
-#dat_13td<-merge(dat_13td, dat_13yolo, by="Date", all=TRUE)
+dat_13td$Date<-dat.13[,1]
+dat_13td$Date<-as.Date(dat_13td$Date)
+dat_13td2<-merge(dat_13td, yolo.13[,-1], by="Date", all=TRUE)
+dat_13td2<-dat_13td2[,-1]
 
+dat_13td<-dat_13td2[rowSums(is.na(dat_13td2)) != ncol(dat_13td2), ] #70
+
+#
 dat_13md = as.data.frame(sapply(dat_13md, as.numeric)) 
 dat_13up = as.data.frame(sapply(dat_13up, as.numeric))
 
@@ -121,11 +129,11 @@ mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DE') #531.4604(md), 1354.936
 # 2013 middle river release = 3 trends
 # 2013 upper river release = 2 trends
 
-mod1<-runDFA(obs=dat.z,NumStates=1,ErrStruc='DUE') #(md) 34.9934, (up) 1294.592
-mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DUE') #(md) -90.40034, (up) 1401.51
-mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DUE') #(md) 467.3408, (up) 1352.82
-mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DUE') #(md) -187.5152, (up) 1079.169
-mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DUE') #(md) -283.2182, (up) 954.0951
+mod1<-runDFA(obs=dat.z) #(md) 34.9934, (up) 1294.592
+mod2<-runDFA(obs=dat.z,NumStates=2) #(md) -90.40034, (up) 1401.51
+mod3<-runDFA(obs=dat.z,NumStates=3) #(md) 467.3408, (up) 1352.82
+mod4<-runDFA(obs=dat.z,NumStates=4) #(md) -187.5152, (up) 1079.169
+mod5<-runDFA(obs=dat.z,NumStates=5) #(md) -283.2182, (up) 954.0951
 
 #### 2016
 grps_16<-subset(grps, wateryr==2016)
@@ -172,4 +180,35 @@ mod12<-runDFA(obs=dat.z,NumStates=12,ErrStruc='DE') #6030.455
 mod13<-runDFA(obs=dat.z,NumStates=13,ErrStruc='DE') #5876.904
 mod14<-runDFA(obs=dat.z,NumStates=14,ErrStruc='DE') #5651.252
 mod15<-runDFA(obs=dat.z,NumStates=15,ErrStruc='DE') #5381.767
+
+# new trial
+dat.t<-t(dat_16up) # done
+dat.t<-t(dat_13md) # done
+dat.t<-t(dat_13up) # done
+dat.t<-t(dat_17md) # done 
+dat.t<-t(dat_17up) # done max iterations for 4 & 5
+dat.t<-t(dat_13td)
+
+Sigma = sqrt(apply(dat.t, 1, var, na.rm=TRUE))
+y.bar = apply(dat.t, 1, mean, na.rm=TRUE)
+dat.z = (dat.t - y.bar) * (1/Sigma)
+rownames(dat.z)=rownames(dat.t)
+
+mod1<-runDFA(obs=dat.z) 
+mod2<-runDFA(obs=dat.z,NumStates=2) 
+mod3<-runDFA(obs=dat.z,NumStates=3) 
+mod4<-runDFA(obs=dat.z,NumStates=4) 
+mod5<-runDFA(obs=dat.z,NumStates=5) 
+
+mod1$AIC
+mod2$AIC
+mod3$AIC
+mod4$AIC
+mod5$AIC
+
+mod1$R2
+mod2$R2
+mod3$R2
+mod4$R2
+mod5$R2
 
