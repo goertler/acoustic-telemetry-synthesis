@@ -150,6 +150,7 @@ plot4ted + geom_jitter(aes(col=wateryear, shape=Run))
 head(CV_chip.tt_v2)
 head(CV_ben.tt_v2)
 
+# one-way anova
 aov.wy<-aov(CV~wateryear, data = CV_chip.tt_v2)
 summary(aov.wy) # not sign = 0.769
 aov.rt<-aov(CV~Route, data = CV_chip.tt_v2)
@@ -157,14 +158,31 @@ summary(aov.rt) # almost sign = 0.0709
 aov.rel<-aov(CV~Release_Group_SAIL, data = CV_chip.tt_v2)
 summary(aov.rel) # not sign = 0.342
 
+# two way anova
+aov.wy.rt<-aov(CV~wateryear+Route, data = CV_chip.tt_v2)
+summary(aov.wy.rt)
+aov.wy.rel<-aov(CV~wateryear+Release_Group_SAIL, data = CV_chip.tt_v2)
+summary(aov.wy.rel)
+aov.rt.rel<-aov(CV~Route+Release_Group_SAIL, data = CV_chip.tt_v2)
+summary(aov.rt.rel)
+
 TukeyHSD(aov.rt)
 
+# one-way anova
 aov.wy<-aov(CV~wateryear, data = CV_ben.tt_v2)
 summary(aov.wy) # not sign = 0.424
 aov.rt<-aov(CV~Route, data = CV_ben.tt_v2)
 summary(aov.rt) # almost sign = 0.27
 aov.rel<-aov(CV~Release_Group_SAIL, data = CV_ben.tt_v2)
 summary(aov.rel) # not sign = 0.605
+
+# two way anova
+aov.wy.rt<-aov(CV~wateryear+Route, data = CV_ben.tt_v2)
+summary(aov.wy.rt)
+aov.wy.rel<-aov(CV~wateryear+Release_Group_SAIL, data = CV_ben.tt_v2)
+summary(aov.wy.rel)
+aov.rt.rel<-aov(CV~Route+Release_Group_SAIL, data = CV_ben.tt_v2)
+summary(aov.rt.rel)
 
 ```
 
