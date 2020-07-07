@@ -114,6 +114,7 @@ dat_13up<-dat_13up[rowSums(is.na(dat_13up)) != ncol(dat_13up), ] #96
 
 dat.t<-t(dat_13md)
 dat.t<-t(dat_13up)
+dat.t<-t(dat_13td)
 
 Sigma = sqrt(apply(dat.t, 1, var, na.rm=TRUE))
 y.bar = apply(dat.t, 1, mean, na.rm=TRUE)
