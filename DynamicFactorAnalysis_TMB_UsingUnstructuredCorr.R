@@ -235,7 +235,7 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indiv
 		cholFac<-factor(cholFac)
 	}else if(ErrStruc =='DUE'){
 		cholCorr<-rep(0,ncol(obs)*(ncol(obs)-1)/2)
-		logsdObs<-log(rep(0.25,ncol(obs))) #changed starting value
+		logsdObs<-log(rep(0.55,ncol(obs))) #changed starting value
 		logsdObsFac<-seq(1,ncol(obs))
 		logsdObsFac<-factor(logsdObsFac)
 		cholFac <-rep(NA,ncol(obs)*(ncol(obs)-1)/2)
@@ -262,9 +262,9 @@ runDFA<-function(obs,NumStates=1,ErrStruc='DUE',EstCovar=FALSE,Covars=NULL,indiv
 	covStateFac<-factor(matrix(NA,nrow=NumStates,ncol=NumStates))
 	#Creates the model object and runs the optimization
 	obj1 <- MakeADFun(data,parameters,random="u",DLL="dfa1tmb",silent=T,map=list(Z=Zfac,D=Dfac,cholCorr=cholFac,logsdObs=logsdObsFac,covState=covStateFac))#,map=list())
-	opt1 <- nlminb(obj1$par,obj1$fn,obj1$gr,control=list(iter.max=10000,eval.max=2000)) # PG increaesed
+	opt1 <- nlminb(obj1$par,obj1$fn,obj1$gr,control=list(iter.max=10000,eval.max=2500)) # PG increaesed
 	#newtonOption(obj1,smartsearch=TRUE)
-	obj1$control=list(trace=1,REPORT=1,reltol=1e-12,maxit=2000)
+	obj1$control=list(trace=1,REPORT=1,reltol=1e-12,maxit=2500) # PG increaesed
 	obj1$fn()
 	obj1$gr()
 	#obj1$method='BFGS'
