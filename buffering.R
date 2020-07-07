@@ -446,3 +446,63 @@ rel.rout.diversity <- chip.dat %>%
             SD = sd(travel_time, na.rm=TRUE))%>%
   mutate(CV=SD/mean)
 
+# loop with subsampling
+chip.dat<-read.csv("masterCV_chip.csv")
+head(chip.dat)
+
+chip.dat <- subset(chip.dat, FishID !="Delta2013-043")
+str(chip.dat)
+chip.dat$wateryear<-as.factor(chip.dat$wateryear)
+#################################
+
+Shannon.df <- data.frame(wateryear = seq(2007, 2017, 1), mean.Shannon = NA, sd.Shannon = NA)
+
+for(i in unique(Shannon.df$wateryear)){
+  temp.dat <- subset(chip.dat, wateryear == i)
+  results <- list()
+  for(k in 1:100){
+   fish.samples <- sample(unique(temp.dat$FishID), 10, replace = FALSE)
+   temp.dat2 <- subset(temp.dat, FishID %in% fish.samples)
+   results[k] <- diversity(temp.dat2$travel_time, index = "shannon")
+  }
+  Shannon.df[row.names(temp.dat), "mean.Shannon"] <- mean(results, na.rm=TRUE)
+  Shannon.df[row.names(temp.dat), "sd.Shannon"] <- sd(results, na.rm=TRUE)
+}
+
+#### Alt 2
+
+Shannon.df <- data.frame(wateryear = seq(2007, 2017, 1), mean.Shannon = NA, sd.Shannon = NA, median.Shannon = NA)
+
+place.holder <- data.frame(loop.id = 1:500, Shannon = NA)
+
+#head(chip.dat)
+
+for(i in unique(Shannon.df$wateryear)){
+  temp.dat <- subset(chip.dat, wateryear == i)
+  for(k in 1:500){
+    fish.samples <- sample(unique(temp.dat$FishID), 10, replace = FALSE)
+    temp.dat2 <- subset(temp.dat, FishID %in% fish.samples)
+    place.holder[k, "Shannon"] <- diversity(temp.dat2$travel_time, index = "shannon")
+  }
+  Shannon.df[Shannon.df$wateryear==i, "mean.Shannon"] <- mean(place.holder$Shannon, na.rm=TRUE)
+  Shannon.df[Shannon.df$wateryear==i, "sd.Shannon"] <- sd(place.holder$Shannon, na.rm=TRUE)
+  Shannon.df[Shannon.df$wateryear==i, "median.Shannon"] <- median(place.holder$Shannon, na.rm=TRUE)
+}
+
+head(Shannon.df)
+# color by water year
+Shannon.df$col<-c("orange", "red", "orange", "green", "darkblue", "green","orange", "red", "red", "green", "darkblue")
+plot(Shannon.df$wateryear, Shannon.df$mean.Shannon,
+     col=Shannon.df$col)
+
+# group by water year
+Shannon.df$type<-c("D","C","D","BN","W","BN","D","C","C","BN","W")
+Shannon.df$type<-as.factor(Shannon.df$type)
+Shannon.df$type<-factor(Shannon.df$type, levels = c("C","D","BN","W"))
+str(Shannon.df)
+
+png(filename = "Shannonvs.WaterYear.png", width = 12, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
+
+plot(Shannon.df$type, Shannon.df$mean.Shannon, xlab="Sacramento Valley Water Year Index", ylab="Shannon Diversity Index")
+
+dev.off()
