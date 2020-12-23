@@ -53,7 +53,7 @@ dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdal
 route <- read.csv("data/CV_data/JSATS_CV.csv", stringsAsFactors = FALSE)
 
 ## Load and clean detections; merge with tagging metadata; select relevant columns
-source("R/clean_all_detects.R") # creates the all_detects object
+source("R/clean_all_detects.R") # creates the all_detects object; sources clean_tagging_metadata.R
 
 #########################################################
 # Create lagged dataframe of detections:
@@ -164,7 +164,7 @@ ggplot(first_detects1, aes(x = DetectDate, y = sum_tot_length/1000)) +
 
 
 # Next step: calculate daily distance traveled by each fish
-d1 = first_detects1[ , c("FishID", "Date", "Total_Length_m", "sum_tot_length")]
+d1 = first_detects1[ , c("FishID", "Date", "movement", "Total_Length_m", "sum_tot_length")]
 
 # Plan function
 # Goal: calculate the distance traveled on each day; if detections are separated by many days, spread the total distance out evenly across all those days.
@@ -174,11 +174,12 @@ d1 = first_detects1[ , c("FishID", "Date", "Total_Length_m", "sum_tot_length")]
 # step3: enter 0 for Total Length traveled on those new dates
 # step4: replace the 0s by the quotient of the abs()
 
-test = subset(d1, FishID == "ARF2017-005" | FishID == "WR2017-466")
+test = subset(d1, FishID == "ARF2017-005")
 
 pad_dates1fish = function(df,  cml_sum_col) {
   
-  splitdf = padr::pad(df, interval = "day", group = "FishID")
+  df = test # function testing
+  splitdf = padr::pad(df, interval = "day", group = "FishID") # counts every GoldenGate detection as a movement of 826 meters; can't be what we want
   # splitdf$cml[is.na(splitdf$cml)] <- 0
   # splitdf[[cml_sum_col]] = 
   
