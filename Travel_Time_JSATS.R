@@ -42,8 +42,8 @@ jsats<-rbind(w.17[,c(1,2,4,9,13:16)], sb.17[,c(1,2,4,9,13:16)], w.13[,c(1,2,4,9,
              c.17[,c(1,2,4,9,13:16)], d.17[,c(1,2,4,9,13:16)], fd.13[,c(1,2,4,9,13:16)],
              fd.14[,c(1,2,4,9,13:16)], f.12[,c(1,2,4,9,13:16)], b.14[,c(1,2,4,9,13:16)],
              c.12[,c(1,2,4,9,13:16)], c.13[,c(1,2,4,9,13:16)])
-head(jsats)             
-
+head(jsats) #6863             
+length(unique(jsats$FishID))
 unique(jsats$LOC)             
 unique(jsats$GEN)           
 unique(jsats$RKM)
@@ -594,4 +594,7 @@ head(tt.dat)
 tt.dat.route<-merge(tt.dat, Route.List.3, by="FishID", all.x = TRUE)
 head(tt.dat.route)
 tt.dat.route[["Route"]][is.na(tt.dat.route[["Route"]])] <- "SacR"
+length(unique(tt.dat.route$FishID)) #26
 write.csv(tt.dat.route, "travel.time.jsats.FIN.csv")
+
+summarise(group_by(tt.dat.route,Route), count=length(unique(FishID)))
