@@ -122,9 +122,12 @@ all_detects$prev_GEN <- NA
 all_detects$prev_DetectDate <- NA
 
 
+
 #########################################################
+if(FALSE){
 # test lag shift
 tt = subset(all_detects, FishID %in% c("ARF2016-114", "SB2017-167", "WR2017-555"))
+
 tt[, c("prev_FishID", "prev_GEN", "prev_DetectDate")] <- # populate this with...
   as.data.frame(
       data.table::shift(
@@ -136,8 +139,10 @@ tt[, c("prev_FishID", "prev_GEN", "prev_DetectDate")] <- # populate this with...
                 )
 
 tt = tt[ , c(1, 6, 8, 12:14)]
+# vet(tt, 12) # visually inspected to see if the lag worked; not a great test
 
-# this should give us only the first detections of each fish
+
+# this should give us only the first detections of each fish or the first detection at a new rec
 ttfd <-
   tt[which(
     tt$FishID != tt$prev_FishID |
@@ -151,6 +156,7 @@ ttfd$movement <-
         ttfd$GEN, sep = " ")
 
 library(dplyr)
+
 route <- route %>%
   select(FishID, Route) %>%
   distinct()
@@ -165,22 +171,14 @@ first_detects_routes <-
 fdr <-
   merge(
     first_detects_routes,
-    dist_DCC_Yolo_Tisd_closed[, c("Name", "Total_Length_m")], # only merging the total length
+    dm_closed[, c("Name", "Total_Length_m")], # only merging the total length
     by.x  = "movement",
     by.y = "Name",
     all.x = TRUE # we're keeping all rows from x, not y
   )
 
-#/end test lag shift
+# end with a df where each row is a fish's movement with a distance associated
 
-#########################################################
-### shifts the three columns down by 1; the first row will be an NA
-all_detects[, c("prev_FishID", "prev_GEN", "prev_DetectDate")] <- # populate this with...
-  as.data.frame(
-      data.table::shift(
-           x = all_detects[, c("FishID", "GEN", "DetectDate")], # this, lagged by 1
-           n = 1,
-          fill = NA,
-          type = "lag"
-                        )
-                )
+#/end test lag shift
+}
+
