@@ -77,10 +77,12 @@ plot_track <- function(df, ID) {
 # refactor first_last
 
 
-test_fl_onefish <- function (x, dtc2 = "DateTime_PST", tagc = "FishID", stnc2 = "GEN") 
+test_fl_onefish <- function (x, 
+                             dtc2 = "DateTime_PST", 
+                             tagc = "FishID", 
+                             stnc2 = "GEN") 
 {
     x = x[order(x[[dtc2]]), ]
-    
     newdf = x[x[[dtc2]] == min(x[[dtc2]]) | x[[dtc2]] == max(x[[dtc2]]) ,  ]
     
     return(newdf)

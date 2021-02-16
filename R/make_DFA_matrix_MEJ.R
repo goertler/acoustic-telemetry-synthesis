@@ -68,30 +68,14 @@ tt1 = split(tt, tt$visitID) # list of data frames
 tt2 = lapply(tt1, FUN = test_fl_onefish)
 
 tt3 = do.call(rbind, tt2)
-
+tt3 = tt3[!duplicated(tt3$visitID, fromLast = TRUE), ] # keeps departure
 str(tt3) 
 
 # make movements
-test$movement = paste(dplyr::lag(test$GEN), test$GEN, sep = " - ")
-
-a = test[!duplicated(test$GEN),] #Retain only the first appearances of 'arrival'
-
-test[ , c("GEN", "arrival", "departure", "movement")]
-
-a[ , c("GEN", "arrival", "departure", "movement")]
-
-        a = a[order(a$arrival),] #Sort each sub-group by 'arrival'
-        cbind(TagID = a$TagID[1], #obtain TagID, station, and ttime of the sub-group,
-            Last_Station = a$Station[NROW(a)],
-            ttime = (as.numeric(as.POSIXct(a$arrival[NROW(a)])) - as.numeric(releasetime))/(60*60*24))
-        
-
-
-
-
+tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
 
 # get route infor for fish ids
-first_detects_routes <- merge(test, route, all.x = TRUE, by = "FishID") 
+first_detects_routes <- merge(tt3, route, all.x = TRUE, by = "FishID") 
 first_detects_routes <- first_detects_routes[!is.na(first_detects_routes$Route), ]
 
 
@@ -107,8 +91,31 @@ first_detects_routes <-
 
 # Make sure that movements denote the day on which they arrive at the second location
 
-first_detects_routes = first_detects_routes[order(first_detects_routes$FishID, first_detects_routes$first_det), ]
+first_detects_routes = first_detects_routes[order(first_detects_routes$FishID, first_detects_routes$DateTime_PST), ]
 
 # calculate the number of days between first and second location
 
-# insert distance row with NA for location but value for distance that equals total distance/days between first and second location.
+first_detects_routes$Date = as.Date(first_detects_routes$DateTime_PST)
+
+library(dplyr)
+ff = first_detects_routes
+ff %>% 
+  group_by(FishID, Date) %>% 
+  summarise(tot_distance = sum(Total_Length_m)) %>% 
+  ungroup() -> ff
+
+ff = as.data.frame(ff)
+ff$timdiff = as.numeric(abs(difftime(dplyr::lag(ff$Date), ff$Date, units = "days")))
+
+ff = ff[!is.na(ff$tot_distance), ]
+dates = as.Date(padr::pad(ff, interval = "day")$Date)
+
+ff$dist_day = ff$tot_distance/ff$timdiff
+
+dists = rep(ff$dist_day, ff$timdiff)
+
+fin = data.frame(FishID = ff$FishID[1],
+           Date = dates, 
+           Distance_m = dists)
+
+sum(fin$Distance_m) == sum(ff$tot_distance) #hs it kinda worked
