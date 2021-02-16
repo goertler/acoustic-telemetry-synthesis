@@ -85,11 +85,8 @@ first_detects$movement <-
 ## Selecting relevant columns to bind: joining routes and first detects
 stopifnot(diff(len(route$FishID), len(first_detects$FishID)) != 0) # if we're going to join these, they need to have the same number of fish
 
-`%>%` <- magrittr::`%>%` # define pipe in global environment to avoid attaching dplyr
-
-route <- route %>% 
-  dplyr::select(FishID, Route) %>% 
-  dplyr::distinct()
+route = route[ , c("FishID", "Route")]
+stopifnot(sum(duplicated(route$FishID)) == 0) # make sure each row is distinct
 
 ## Joining the routing determination to the detection data
 ## and removing fish that have no routing determination
@@ -163,24 +160,50 @@ ggplot(first_detects1, aes(x = DetectDate, y = sum_tot_length/1000)) +
   theme_minimal()# only 1 fish type in 2014?
 
 
+saveRDS(first_detects1, "data_clean/first_detects1.rds") # last object prior to distance calculations
+
+# Starting pt halfway through analysis
+# Wed Jan  6 14:32:12 2021 ------------------------------
+
+# start with a dataframe of FishID, Date, movement, total_length, and sum_tot_length.
+
+# some fish have one or more movements on a single day; some have none.
+# each movement is associated with a particular distance, which we pulled from the distance matrix.
+# Might be easier to look at total distance travelled by a fish and spread it out evenly, but that would smooth over the variation that we're interested in; need take it on a movement-by-movement basis.
+
+# still, let's start there; let's pretend that a fish goes 100 miles total.  The movement starts on 2017-05-25 and finishes on 2017-06-08, but they're only detected on two days in there (beginning and end).
+
+# to spread out the movement, you would calculate how many days there are, and how many miles, and then divide the miles by the number of days:
+
+100/as.numeric(difftime(as.Date("2017-06-08"), as.Date("2017-05-25")))
+
+# to do this in a dataframe of movements:
+
+# on 2017-05-27, fish went 
+View(first_detects1[first_detects1$FishID == "ARF2017-005", ])
+
+# Goal: end with a dataframe where fishID is a row, and each day is a column; the entry for each day should be a linear approximation of movement, as derived from the detection histories.
+
+
+## For 1 fish:
+# step1: add in all missing dates for individual fish
+# step2: enter 0 for Total Length traveled on those new dates
+# step3: replace the 0s by the quotient of the abs()
+
+first_detects1 = readRDS("data_clean/first_detects1.rds")
 # Next step: calculate daily distance traveled by each fish
 d1 = first_detects1[ , c("FishID", "Date", "movement", "Total_Length_m", "sum_tot_length")]
 
-# Plan function
-# Goal: calculate the distance traveled on each day; if detections are separated by many days, spread the total distance out evenly across all those days.
-
-## For 1 fish:
-# step1: fill in all missing dates for individual fish
-# step3: enter 0 for Total Length traveled on those new dates
-# step4: replace the 0s by the quotient of the abs()
+# movements with 0
+d1 = d1[d1$Total_Length_m != 0 , ]
 
 test = subset(d1, FishID == "ARF2017-005")
 
-pad_dates1fish = function(df,  cml_sum_col) {
+pad_dates1fish = function(df) {
   
   df = test # function testing
   splitdf = padr::pad(df, interval = "day", group = "FishID") # counts every GoldenGate detection as a movement of 826 meters; can't be what we want
-  # splitdf$cml[is.na(splitdf$cml)] <- 0
+  splitdf$Total_Length_m[is.na(splitdf$Total_Length_m)] <- 0
   # splitdf[[cml_sum_col]] = 
   
 }

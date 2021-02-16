@@ -5,20 +5,44 @@
 # Fri Jul 24 14:01:50 2020 ------------------------------
 
 # this script gets sourced in line 30 of the DFA_dataorg_distmatrix_MEJ.R script
-
 # calls: R/clean_tagging_metadata
-
-## Load detections
-temp = list.files(path = "data/detection_data/study-detections-JSATS", full.names = T, pattern="*.csv") 
+source("R/utils.R")
+#-------------------------------------------------------#
+if(FALSE){
+# OLD METHOD: build from raw detection files
+  ## Load detections
+temp = list.files(path = "data/detection_data/study-detections-JSATS", 
+                  full.names = TRUE, 
+                  pattern="*.csv") 
 
 ## Bind all detections into one mother dataframe
 all_detects <- do.call("rbind", lapply(temp, 
                                        read.csv, 
                                        stringsAsFactors = FALSE))
 
+# fix date formats
 all_detects$DetectDate <- as.POSIXct(all_detects$DateTime_PST, 
                                        tz = "Etc/GMT+8", 
                                       format = "%m/%d/%Y %H:%M:%OS")
+}
+#-------------------------------------------------------#
+
+# NEW METHOD: use Pascale's pre-made .csv (not uploaded to github b/c 550MB)
+all_detects = data.table::fread("data/detection_data/all_JSATS.csv")
+all_detects = as.data.frame(all_detects)
+
+all_detects$DetectDate = as.Date(as.POSIXct(all_detects$DateTime_PST,
+                                            tz = "Etc/GMT+8",
+                                            format = "%m/%d/%Y %H:%M:%OS"))
+
+sort(unique(all_detects$DetectDate))
+csn(all_detects) # problem is not in the dates, but the times
+
+all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST, 
+                                       tz = "Etc/GMT+8", 
+                                      format = "%m/%d/%Y %H:%M:%OS")
+
+csn(all_detects)
 
 # load and clean tagging metadata
 source("R/clean_tagging_metadata.R") # creates tagging_meta object
@@ -30,17 +54,15 @@ all_detects <-
                                       "Fish_Type", 
                                       "Rel_loc", 
                                       "Rel_rkm")], 
-        by = "FishID")
+        by = "FishID",
+        all.x = TRUE)
 
 # Get rid of unused columns
 all_detects  = all_detects[ , c("FishID",
-                                "TagID",
                                 "DateTime_PST",
                                 "StudyID",
-                                "RecSN",
                                 "GEN",
                                 "RKM",
-                                "DetectDate",
                                 "Fish_Type",
                                 "Rel_loc",
                                 "Rel_rkm"
@@ -105,21 +127,35 @@ all_detects[which(all_detects$GEN == "DeerCk_RST_Rel"), "GEN"] <-
   "DeerCk_RST"
 all_detects[which(all_detects$GEN == "FreeportDiv"), "GEN"] <-
   "Freeport"
+
 ## combine certain locations where receivers are too close together
-all_detects[which(all_detects$GEN == "ChippsE"), "GEN"] <- "ChippsW"
+all_detects[which(all_detects$GEN == "ChippsE"), "GEN"] <- "ChippsW" # this is how it is in the dist matrix
+all_detects[which(all_detects$GEN == "GoldenGateE"), "GEN"] <- "GoldenGateW"
 
 ## remove mokbase since it is one site we don't have distance matrix for
 all_detects <- all_detects[which(all_detects$GEN != "MokBase"),]
 
-# Prepare for calculating distances by detection order
-all_detects <-
-  all_detects[order(all_detects$FishID, 
-                    all_detects$DetectDate), ] 
+all_detects$Year = lubridate::year(all_detects$DateTime_PST)
+len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2016])
 
-# prepare lagged columns
-all_detects$prev_FishID <- NA
-all_detects$prev_GEN <- NA
-all_detects$prev_DetectDate <- NA
+
+#-------------------------------------------------------#
+# Subset down to the years and fish we need for the DFA:
+
+all_detects = all_detects[all_detects$Year %in% c(2013, 2016, 2017), ]
+
+DFAids = unique(all_detects$FishID[all_detects$GEN %in% c("Benecia", "ChippsW")]) # 575 fish
+
+dfa_detects = all_detects[(all_detects$FishID %in% DFAids), ]
+
+write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", row.names = FALSE) # for Pascale
+
+saveRDS(dfa_detects, "data_clean/jsats_dfa_detects.rds")
+
+# # prepare lagged columns
+# all_detects$prev_FishID <- NA
+# all_detects$prev_GEN <- NA
+# all_detects$prev_DetectDate <- NA
 
 
 
