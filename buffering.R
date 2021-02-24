@@ -1,3 +1,4 @@
+# start @ 119
 # boxplot for manuscript
 chip.dat<-read.csv("masterCV_chip.csv")
 
@@ -103,7 +104,7 @@ legend("topleft",c("Sacramemto River", "Sacramento Sloughs", "Central Delta Slou
 dev.off()
 
 # buffering
-
+library(vegan)
 #### data ####
 chip.dat<-read.csv("masterCV_chip.csv")
 head(chip.dat)
@@ -116,28 +117,35 @@ unique(chip.dat$wateryear)
 unique(chip.dat$Release_Group_SAIL)
 
 ####### Vectors for loops ##########
-loop.years <- unique(chip.dat$wateryear)
-loop.Release_Group_SAIL = unique(chip.dat$Release_Group_SAIL)
-loop.df <- data.frame(Loop.ID = c("A", "A", "B", "B", "C", "C", "D", "D", "D",
-                                  "E", "E", "F", "F", "G", "G", "H", "H", "H", "I","I","I","J","J","J","J",
-                                  "K","K","L","L","M","M","N","N",
-                                  "O", "O","O","P","P","P","Q","Q","Q",
-                                  "R","R","R","S","S","S","T","T","T",
-                                  "U","U","U","U",
-                                  "V","V","V","V",
-                                  "X","X","X","X",
-                                  "Y","Y","Y","Y",
-                                  "Z","Z","Z","Z","Z"), 
-                      Route = c("SacRiver", "SacRS", "cendel", "SacRiver", "SacRS", "cendel", "SacRiver", "SacRS", "cendel",
-                                "both", "SacRiver","both","SacRS","both","cendel","SacRiver","both","SacRS", "both","cendel","SacRiver","SacRS", "both","cendel","SacRiver",
-                                "SacRiver","Yolo_Bypass", "SacRS","Yolo_Bypass","cendel","Yolo_Bypass","both","Yolo_Bypass",
-                                "SacRiver", "SacRS","Yolo_Bypass","SacRiver","both","Yolo_Bypass","cendel", "SacRiver","Yolo_Bypass",
-                                "both","Yolo_Bypass","cendel","SacRS","Yolo_Bypass","cendel","both","Yolo_Bypass","SacRS",
-                                "both","Yolo_Bypass","cendel","SacRS",
-                                "SacRiver", "SacRS","Yolo_Bypass","both",
-                                "SacRiver", "SacRS","Yolo_Bypass","cendel",
-                                "SacRiver", "Yolo_Bypass","cendel","both",
-                                "SacRiver", "Yolo_Bypass","cendel","both","SacRS"))
+library(vegan)
+### udpated data and loop.id
+# for Mac setwd("~/Downloads") # done on work computer and then switched to mac
+setwd("C:/Users/pgoertler/OneDrive - deltacouncil/AT Diversity ms")
+loop.df<-read.csv("Loop.ID.fin.csv") # file created in Buffering4NewData.R
+dat.tt<-read.csv("dat.tt_v4.csv") # file created in tt.final.R, updated year for CM Vemco wateryear error and GS missing JSATS
+
+loop.years <- unique(dat.tt$Year)
+loop.Release_Group_SAIL = unique(dat.tt$Release_Group_SAIL)
+#loop.df <- data.frame(Loop.ID = c("A", "A", "B", "B", "C", "C", "D", "D", "D",
+#                                  "E", "E", "F", "F", "G", "G", "H", "H", "H", "I","I","I","J","J","J","J",
+#                                  "K","K","L","L","M","M","N","N",
+#                                 "O", "O","O","P","P","P","Q","Q","Q",
+#                                  "R","R","R","S","S","S","T","T","T",
+#                                  "U","U","U","U",
+#                                  "V","V","V","V",
+#                                  "X","X","X","X",
+#                                  "Y","Y","Y","Y",
+#                                  "Z","Z","Z","Z","Z"), 
+#                      Route = c("SacRiver", "SacRS", "cendel", "SacRiver", "SacRS", "cendel", "SacRiver", "SacRS", "cendel",
+#                                "both", "SacRiver","both","SacRS","both","cendel","SacRiver","both","SacRS", "both","cendel","SacRiver","SacRS", "both","cendel","SacRiver",
+#                                "SacRiver","Yolo_Bypass", "SacRS","Yolo_Bypass","cendel","Yolo_Bypass","both","Yolo_Bypass",
+#                                "SacRiver", "SacRS","Yolo_Bypass","SacRiver","both","Yolo_Bypass","cendel", "SacRiver","Yolo_Bypass",
+#                                "both","Yolo_Bypass","cendel","SacRS","Yolo_Bypass","cendel","both","Yolo_Bypass","SacRS",
+#                                "both","Yolo_Bypass","cendel","SacRS",
+#                                "SacRiver", "SacRS","Yolo_Bypass","both",
+#                                "SacRiver", "SacRS","Yolo_Bypass","cendel",
+#                                "SacRiver", "Yolo_Bypass","cendel","both",
+#                                "SacRiver", "Yolo_Bypass","cendel","both","SacRS"))
 
 ########### data frame to hold data ##########
 dat.net <- data.frame(Year = NA, Release_Group_SAIL = NA, Loop.ID = NA, Length.Route = NA, CV = NA, Shannon.indx = NA, Simpson.indx = NA, Length.Fish.ID = NA, mean.t = NA, SD.t = NA)
@@ -150,9 +158,9 @@ for(i in unique(loop.years)){
       
       temp.dat <- subset(loop.df, Loop.ID == k)
       
-      R.group <- factor(j, levels=unique(chip.dat$Release_Group_SAIL))
+      R.group <- factor(j, levels=unique(dat.tt$Release_Group_SAIL))
       
-      temp.dat2 <- subset(chip.dat, wateryear == i & Release_Group_SAIL ==  R.group & Route %in% temp.dat$Route)
+      temp.dat2 <- subset(dat.tt, Year == i & Release_Group_SAIL ==  R.group & Route %in% temp.dat$Route)
       
       if(length(temp.dat$Route) != length(unique(temp.dat2$Route)))
         next
@@ -179,14 +187,14 @@ for(i in unique(loop.years)){
   }
 }
 
-write.csv(dat.net[-1,], "diveristy.cv.chips.csv")
+write.csv(dat.net[-1,], "diveristy.cv.chips_v4.csv")
 
 # double check 
-dat.net.08 <- subset(dat.net, Loop.ID == "H")
+#dat.net.08 <- subset(dat.net, Loop.ID == "H")
 
-head(dat.net)
+#head(dat.net)
 
-par(mfrow=c(1,1), mar=c(4,4,4,4))
+#par(mfrow=c(1,1), mar=c(4,4,4,4))
 hist(dat.net$Shannon.indx)
 hist(dat.net$Simpson.indx)
 hist(dat.net$CV)
@@ -197,33 +205,16 @@ plot(dat.net$CV, dat.net$Shannon.indx,
      col=as.character(dat.net$colors), 
      pch=dat.net$Length.Route)
 
-colors <- c("#f58231", "#42d4f4", "#f032e6")
-Release_Group_SAIL<- unique(dat.net[-1,]$Release_Group_SAIL)
-dat.col<-data.frame(colors,Release_Group_SAIL)
-dat.net<-merge(dat.net[-1,], dat.col, by="Release_Group_SAIL")
-
-shapes = c(0,1,2,3,4,5,6,7,8,9) 
-Year <- unique(dat.net$Year)
-dat.pch<-data.frame(shapes,Year)
-dat.net<-merge(dat.net, dat.pch, by="Year")
-
 max.min<-ddply(dat.net, "Length.Route",
               summarise, max=max(CV, na.rm = TRUE),
               min=min(CV, na.rm = TRUE))
 
 # add single CV estimates
-chip.cv<-read.csv("CV.Chipps_results.csv")
-head(chip.cv)
-chip.cv$Length.Route<-1
-chip.cv<-chip.cv[,-1]
-colnames(chip.cv)[1:8] <- c("Year", "Loop.ID", "Release_Group_SAIL", "count", "mean", "SD", "CV", "Length.Route")
-colnames(dat.net)[1:8] <- c("Year", "Release_Group_SAIL", "Loop.ID", "Length.Route", "CV", "count", "mean", "SD")
-
-dat.fin<-rbind(dat.net[-1,], chip.cv)
-
 # need to calculate for diveristy index
-CV_chip.diversity <- chip.dat %>%
-  group_by(wateryear, Route, Release_Group_SAIL, add=TRUE) %>%
+library(tidyverse)
+
+CV_chip.diversity <- dat.tt %>%
+  group_by(Year, Route, Release_Group_SAIL, add=TRUE) %>%
   summarize(count = n(),
             Shannon.indx = diversity(travel_time, index = "shannon"),
             mean = mean(travel_time, na.rm=TRUE),
@@ -233,15 +224,17 @@ CV_chip.diversity <- chip.dat %>%
 head(CV_chip.diversity)
 chip.cv = CV_chip.diversity
 colnames(chip.cv)[1:8] <- c("Year", "Loop.ID", "Release_Group_SAIL", "count", "Shannon.indx", "mean", "SD", "CV")
-dat.net<-dat.net[-1,-7]
+#dat.net<-dat.net[-1,-7]
+dat.net<-dat.net[-1,-c(7,11,12)] # updated data
 colnames(dat.net)[1:9] <- c("Year", "Release_Group_SAIL", "Loop.ID", "Length.Route", "CV", "Shannon.indx", "count", "mean", "SD")
 chip.cv<-data.frame(chip.cv)
 chip.cv$Length.Route<-1
 dat.fin<-rbind(dat.net, chip.cv)
+write.csv(dat.fin, "buffering.dat.csv")
 # plot
 
 # define colors
-colors <- c("#f58231", "#42d4f4", "#f032e6")
+colors <- c("#ffe119", "#4363d8", "#000000")
 Release_Group_SAIL<- unique(dat.fin$Release_Group_SAIL)
 dat.col<-data.frame(colors,Release_Group_SAIL)
 dat.fin<-merge(dat.fin, dat.col, by="Release_Group_SAIL")
@@ -252,14 +245,15 @@ Year <- unique(dat.fin$Year)
 dat.pch<-data.frame(shapes,Year)
 dat.fin<-merge(dat.fin, dat.pch, by="Year")
 
-png(filename = "buffering.png", width = 12, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
+png(filename = "buffering_newdat3.png", width = 12, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
 
 plot(jitter(dat.fin$Length.Route), dat.fin$CV, 
      col=as.character(dat.fin$colors), 
      pch=dat.fin$shapes,
      xlab="Number of Routes",
      ylab="CV",
-     cex=2)
+     cex=2,
+     lwd=2.5)
 legend("bottomright", c("Upper River", 
                         "Middle River", 
                     "Tidal Delta", 
@@ -267,7 +261,7 @@ legend("bottomright", c("Upper River",
                     "2009","2010","2011","2012",
                     "2013","2014","2015",
                     "2016","2017"), 
-       pch=c(16,16,16,8,0,2,1,10,7,5,9,6,3,4), col=c("#f58231", "#42d4f4", "#f032e6",
+       pch=c(16,16,16,8,1,4,2,9,0,5,10,6,3,7), col=c("#000000", "#ffe119", "#4363d8",
                                     "black","black","black","black","black","black",
                                     "black","black","black","black","black"), 
        bty="n", ncol=2)
@@ -275,7 +269,7 @@ legend("bottomright", c("Upper River",
 
 dev.off()
 
-write.csv(dat.fin, "buffering.cv.chips.csv")
+write.csv(dat.fin, "buffering.cv.chips_v5.csv")
 
 sum.cv<-ddply(dat.fin, c("Year", "Release_Group_SAIL", "Length.Route"),
               summarise, mean=mean(CV, na.rm = TRUE), 
@@ -284,7 +278,7 @@ sum.cv<-ddply(dat.fin, c("Year", "Release_Group_SAIL", "Length.Route"),
 
 head(sum.cv)
 
-write.csv(sum.cv, "sum.cv.chips.csv")
+write.csv(sum.cv, "sum.cv.chips_v3.csv")
 
 # shannon diveristy index
 # separte by # of routes used to calucalte cv
