@@ -89,6 +89,74 @@ test_fl_onefish <- function (x,
     
 }
 
+## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
+# df = jsats; fish = "ARF2017-005" # testing
+
+dpd_allfish = function(detdf) {
+  f1 = split(detdf, detdf$FishID)
+  f1 = f1[sapply(f1, nrow) > 0]
+  tmp = lapply(f1, calc_distance_per_day)
+  do.call(rbind, tmp)
+}
+
+calc_distance_per_day = function(df, distance_matrix = dm_closed) {
+  
+tt = df[ , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
+tt = tt[order(tt$DateTime_PST), ]
+
+tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
+
+tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
+
+tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
+
+# make movements
+tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
+
+# pull movements from the matrix
+tt3 =
+  merge(
+    tt3,
+    distance_matrix[, c("Name", "Total_Length_m")],
+    by.x  = "movement",
+    by.y = "Name",
+    all.x = TRUE
+  )
+
+tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
+tt3$Date = as.Date(tt3$DateTime_PST)
+
+# I can get it to a data frame-like structure with this, but it strips the column names:
+ff =  tapply(tt3[ , "Total_Length_m"], 
+                       tt3[ , c("FishID", "Date")], 
+                       sum, 
+                       simplify = TRUE)
+
+ff = as.data.frame(cbind(t(ff), dimnames(ff)[[1]]))
+ff$Date = as.Date(row.names(ff))
+colnames(ff) = c("tot_distance", "FishID", "Date")
+
+
+ff$timdiff = abs(as.numeric(difftime(dplyr::lag(ff$Date), 
+                                     ff$Date, 
+                                     units = "days")))
+
+ff = ff[!is.na(ff$tot_distance), ]
+dates = as.Date(padr::pad(ff, interval = "day")$Date)
+
+ff$tot_distance = as.numeric(ff$tot_distance)
+ff$dist_day = ff$tot_distance/ff$timdiff
+
+dists = rep(ff$dist_day, ff$timdiff)
+
+fin = data.frame(FishID = unique(ff$FishID),
+           Date = dates, 
+           Distance_m = dists)
+
+stopifnot(sum(fin$Distance_m) == sum(ff$tot_distance))
+
+return(fin)
+}
 
 
 
