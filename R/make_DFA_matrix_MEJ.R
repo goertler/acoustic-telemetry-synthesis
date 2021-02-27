@@ -56,4 +56,4 @@ test_3fish = jsats[jsats$FishID %in% c(unique(jsats$FishID)[1:3]), ]
 test = dpd_allfish(test_3fish) # passes
 str(test)
 
-bigtest = dpd_allfish(jsats) # there we go; let debugging begin
+bigtest = dpd_allfish(jsats) # 

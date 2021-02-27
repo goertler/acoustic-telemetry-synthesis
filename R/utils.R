@@ -161,8 +161,6 @@ fin = data.frame(FishID = unique(ff$FishID),
            Date = dates, 
            Distance_m = dists)
 
-stopifnot(sum(fin$Distance_m) == sum(round(ff$tot_distance, 2)))
-
 return(fin)
 }
 
