@@ -90,7 +90,7 @@ test_fl_onefish <- function (x,
 }
 
 ## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
- df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
+#df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
 
 dpd_allfish = function(detdf) {
   f1 = split(detdf, detdf$FishID)
@@ -101,7 +101,7 @@ dpd_allfish = function(detdf) {
 
 calc_distance_per_day = function(df, distance_matrix = dm_closed) {
   
-tt = df[df$FishID == fish , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
+tt = df[ , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
 tt = tt[order(tt$DateTime_PST), ]
 
 tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
