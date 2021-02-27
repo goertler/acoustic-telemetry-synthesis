@@ -90,7 +90,7 @@ test_fl_onefish <- function (x,
 }
 
 ## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
-# df = jsats; fish = "ARF2017-005" # testing
+ df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
 
 dpd_allfish = function(detdf) {
   f1 = split(detdf, detdf$FishID)
@@ -101,7 +101,7 @@ dpd_allfish = function(detdf) {
 
 calc_distance_per_day = function(df, distance_matrix = dm_closed) {
   
-tt = df[ , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
+tt = df[df$FishID == fish , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
 tt = tt[order(tt$DateTime_PST), ]
 
 tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
@@ -137,23 +137,31 @@ ff$Date = as.Date(row.names(ff))
 colnames(ff) = c("tot_distance", "FishID", "Date")
 
 
-ff$timdiff = abs(as.numeric(difftime(dplyr::lag(ff$Date), 
-                                     ff$Date, 
+ff$timdiff = abs(as.numeric(difftime(ff$Date, 
+                                     dplyr::lag(ff$Date), 
                                      units = "days")))
 
-ff = ff[!is.na(ff$tot_distance), ]
-dates = as.Date(padr::pad(ff, interval = "day")$Date)
+dates = seq.Date(from = ff$Date[1], to = ff$Date[length(ff$Date)],
+                by = "days"
+                  ) # create vector of dates for the total time period
 
-ff$tot_distance = as.numeric(ff$tot_distance)
+
+ff = ff[!is.na(ff$tot_distance), ] # remove first row of df
+
+dates = dates[-1] # remove first date; corresponds to the date of NA in ff
+
+ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
+
 ff$dist_day = ff$tot_distance/ff$timdiff
 
 dists = rep(ff$dist_day, ff$timdiff)
+stopifnot(length(dists) == length(dates))
 
 fin = data.frame(FishID = unique(ff$FishID),
            Date = dates, 
            Distance_m = dists)
 
-stopifnot(sum(fin$Distance_m) == sum(ff$tot_distance))
+stopifnot(sum(fin$Distance_m) == sum(round(ff$tot_distance, 2)))
 
 return(fin)
 }
