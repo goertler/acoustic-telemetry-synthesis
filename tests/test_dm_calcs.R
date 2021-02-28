@@ -17,7 +17,7 @@ ggplot(jsats[jsats$FishID == test$FishID[1], ],
 len(bigtest$FishID)
 
 
-tt = jsats[jsats$FishID == test$FishID[3], 
+tt = jsats[jsats$FishID == "CFC2017-127", 
            c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
 
 tt = tt[order(tt$DateTime_PST), ]
@@ -80,6 +80,6 @@ fin = data.frame(FishID = unique(ff$FishID),
            Date = dates, 
            Distance_m = dists)
 
-stopifnot(sum(fin$Distance_m) == sum(ff$tot_distance))
+stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.rm = TRUE)))
 
 

@@ -162,7 +162,7 @@ fin = data.frame(FishID = unique(ff$FishID),
            Date = dates, 
            Distance_m = dists)
 
-stopifnot(sum(fin$Distance_m) == sum(ff$tot_distance))
+stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.rm = TRUE)))
 
 return(fin)
 }
