@@ -57,7 +57,6 @@ jsats$DetectDate = as.Date(jsats$DateTime_PST)
 #-------------------------------------------------------#
 test_3fish = jsats[jsats$FishID %in% c(unique(jsats$FishID)[1:3]), ]
 
-test = dpd_allfish(test_3fish) # passes
-str(test)
+test = dpd_allfish(test_3fish) 
 
 bigtest = dpd_allfish(jsats) # 

@@ -14,8 +14,9 @@ ggplot(jsats[jsats$FishID == test$FishID[1], ],
   geom_point() +
   geom_path(aes(group = FishID))
 
-len(bigtest$FishID)
-
+#-------------------------------------------------------#
+# Check 1 fish line by line
+#-------------------------------------------------------#
 
 tt = jsats[jsats$FishID == "CFC2017-127", 
            c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
@@ -83,3 +84,44 @@ fin = data.frame(FishID = unique(ff$FishID),
 stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.rm = TRUE)))
 
 
+
+
+
+
+
+
+#-------------------------------------------------------#
+# know it works within itself - now need to check a fish "by hand" and test
+#-------------------------------------------------------#
+source("R/make_DFA_matrix_MEJ.R")
+
+f1 = jsats[jsats$FishID == "WR2017-484", ] # fish with the fewest movements
+ 
+tt = f1[order(f1$DateTime_PST), ]
+
+tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
+
+tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
+
+tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
+
+# make movements
+tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
+
+# pull movements from the matrix
+tt3 =
+  merge(
+    tt3,
+    dm_closed[, c("Name", "Total_Length_m")],
+    by.x  = "movement",
+    by.y = "Name",
+    all.x = TRUE
+  )
+
+tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
+tt3$Date = as.Date(tt3$DateTime_PST)
+
+write.csv(tt3, "tests/movements_WR2017-484.csv")
+
+f2 = bigtest[bigtest$FishID == unique(tt3$FishID), ]
+all.equal(sum(f2$Distance_m, na.rm = TRUE), sum(tt3$Total_Length_m, na.rm = TRUE))
