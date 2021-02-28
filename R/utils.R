@@ -76,7 +76,7 @@ plot_track <- function(df, ID) {
 
 # refactor first_last
 
-
+# keep first and last detection at each receiver
 test_fl_onefish <- function (x, 
                              dtc2 = "DateTime_PST", 
                              tagc = "FishID", 
@@ -94,7 +94,7 @@ test_fl_onefish <- function (x,
 
 dpd_allfish = function(detdf) {
   f1 = split(detdf, detdf$FishID)
-  f1 = f1[sapply(f1, nrow) > 0]
+  f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
   tmp = lapply(f1, calc_distance_per_day)
   do.call(rbind, tmp)
 }
@@ -130,36 +130,39 @@ tt3$Date = as.Date(tt3$DateTime_PST)
 ff =  tapply(tt3[ , "Total_Length_m"], 
                        tt3[ , c("FishID", "Date")], 
                        sum, 
+                       na.rm = TRUE,
                        simplify = TRUE)
 
 ff = as.data.frame(cbind(t(ff), dimnames(ff)[[1]]))
 ff$Date = as.Date(row.names(ff))
 colnames(ff) = c("tot_distance", "FishID", "Date")
 
-
-ff$timdiff = abs(as.numeric(difftime(ff$Date, 
-                                     dplyr::lag(ff$Date), 
+# calculate vector of time differences & add as column
+ff$timediff = abs(as.numeric(difftime(dplyr::lag(ff$Date), # time 1
+                                     ff$Date, # time 2
                                      units = "days")))
 
-dates = seq.Date(from = ff$Date[1], to = ff$Date[length(ff$Date)],
+# create vector of dates for the total time period
+dates = seq.Date(from = ff$Date[1], # from 1st date
+                 to = ff$Date[length(ff$Date)], # to final date
                 by = "days"
-                  ) # create vector of dates for the total time period
+                  ) 
 
-
-ff = ff[!is.na(ff$tot_distance), ] # remove first row of df
-
-dates = dates[-1] # remove first date; corresponds to the date of NA in ff
+ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
 
 ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
 
-ff$dist_day = ff$tot_distance/ff$timdiff
+ff$dist_day = ff$tot_distance/ff$timediff
 
-dists = rep(ff$dist_day, ff$timdiff)
+dists = rep(ff$dist_day, ff$timediff)
+
 stopifnot(length(dists) == length(dates))
 
 fin = data.frame(FishID = unique(ff$FishID),
            Date = dates, 
            Distance_m = dists)
+
+stopifnot(sum(fin$Distance_m) == sum(ff$tot_distance))
 
 return(fin)
 }

@@ -21,13 +21,17 @@
 
 # rename some receiver locations to agree with the names in the distance matrices
 
-# get fish paths using tag_tales() function
+# order detections by FishID and date; filter down to the first detection at each receiver
 
-# order detections by FishID and date; create lagged detection columns, filter down to the first detection at each receiver, create movement column
+# create lagged detection columns; create movement column by pasting
 
 # join with distance matrix data to get distance each movement represents
 
-# Pad fish movement days; average total distance traveled across that time period
+# group by fishID & date; the total distance traveled column = the distance traveled from the previous recorded movement to that date
+
+# Create column of lagged difftime = number of days elapsed since recorded previous movement
+
+# 
 
 # FishID in columns, dates in the rows, distance traveled in cells (absolute)
 
