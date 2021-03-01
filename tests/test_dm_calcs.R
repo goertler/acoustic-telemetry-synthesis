@@ -93,6 +93,8 @@ stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.
 #-------------------------------------------------------#
 # know it works within itself - now need to check a fish "by hand" and test
 #-------------------------------------------------------#
+if(FALSE){
+  
 source("R/make_DFA_matrix_MEJ.R")
 
 f1 = jsats[jsats$FishID == "WR2017-484", ] # fish with the fewest movements
@@ -125,3 +127,4 @@ write.csv(tt3, "tests/movements_WR2017-484.csv")
 
 f2 = bigtest[bigtest$FishID == unique(tt3$FishID), ]
 all.equal(sum(f2$Distance_m, na.rm = TRUE), sum(tt3$Total_Length_m, na.rm = TRUE))
+}

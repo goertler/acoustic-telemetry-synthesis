@@ -7,38 +7,35 @@
  # - only need fish (JSATS) from: 2013, 2016, and 2017
  # - only need fish (all groups) that reach either Ben or Chipps recs
  # - End Recs: "BeniciaW"  "ChippsW"
+ # - Rename some receiver locations to agree with the names in the distance matrices
 
 #-------------------------------------------------------#
 # Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
 
 # If detections are separated by many days, spread the distance evenly across the interval.
 
-# Output: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell.
+# Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
+
 #-------------------------------------------------------#
-# Re-factored approach to creating distance traveled matrix:
+# Re-factored approach to creating distance traveled matrix: dbd_allfish function
+#-------------------------------------------------------#
 
-# Filter down to only fish detected to either Benicia or Chipps.  No vemco receivers at Benicia (ybus data and my fish).  JSATs: ChippsE, ChippsW, or Benicia.
+# 1. order detections by FishID and date; filter down to the first detection at each receiver
 
-# rename some receiver locations to agree with the names in the distance matrices
+# 2. create lagged detection columns; create movement column by pasting
 
-# order detections by FishID and date; filter down to the first detection at each receiver
-
-# create lagged detection columns; create movement column by pasting
-
-# join with distance matrix data to get distance each movement represents
+# 3. join with distance matrix data to get distance each movement represents
 
 # group by fishID & date; the total distance traveled column = the distance traveled from the previous recorded movement to that date
 
-# Create column of lagged difftime = number of days elapsed since recorded previous movement
+# 4. Create column of lagged difftime = number of days elapsed since recorded previous movement
 
-# 
+# 5. create vector of full dates in between recorded detections for a given movement
 
-# FishID in columns, dates in the rows, distance traveled in cells (absolute)
+# 6. create vector of corresponding distances per day by dividing total distance by difftime
 
-# Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
-
-# columns needed:
-# FishID, DetectDateTime, GEN, Movement, Distance_m.
+# 7. join to a final data frame
+#-------------------------------------------------------#
 
 source("R/utils.R")
 
@@ -55,8 +52,9 @@ jsats = readRDS("data_clean/jsats_dfa_detects.rds") # created in R/clean_all_det
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
 
 #-------------------------------------------------------#
+# small test: 3 fish
 test_3fish = jsats[jsats$FishID %in% c(unique(jsats$FishID)[1:3]), ]
-
 test = dpd_allfish(test_3fish) 
 
+# big test: all fish
 bigtest = dpd_allfish(jsats) # 
