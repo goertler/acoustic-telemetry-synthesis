@@ -52,9 +52,33 @@ jsats = readRDS("data_clean/jsats_dfa_detects.rds") # created in R/clean_all_det
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
 
 #-------------------------------------------------------#
-# small test: 3 fish
-test_3fish = jsats[jsats$FishID %in% c(unique(jsats$FishID)[1:3]), ]
-test = dpd_allfish(test_3fish) 
 
 # big test: all fish
 bigtest = dpd_allfish(jsats) # 
+saveRDS(bigtest, "data_clean/distance_per_day.rds")
+
+dt16 = bigtest[lubridate::year(bigtest$Date) == 2016, ]
+
+library(dplyr)
+
+dt16 %>% 
+  group_by(FishID) %>% 
+  arrange(Date) %>% 
+  padr::pad(interval = "day",
+            start_val = min(dt16$Date),
+            end_val = max(dt16$Date)) %>% 
+  ungroup() -> ddd
+
+head(ddd)
+
+
+csn(dt16)
+
+dt16 = tidyr::pivot_wider(dt16, names_from = Date, values_from = Distance_m)
+
+dt16[1:10, 1:5]
+
+
+dt16 = 
+
+write.csv(dt2016, "results/dfa_2016.csv", row.names = FALSE)

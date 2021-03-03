@@ -35,8 +35,6 @@ all_detects$DetectDate = as.Date(as.POSIXct(all_detects$DateTime_PST,
                                             tz = "Etc/GMT+8",
                                             format = "%m/%d/%Y %H:%M:%OS"))
 
-sort(unique(all_detects$DetectDate))
-csn(all_detects) # problem is not in the dates, but the times
 
 all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST, 
                                        tz = "Etc/GMT+8", 
@@ -136,85 +134,23 @@ all_detects[which(all_detects$GEN == "GoldenGateE"), "GEN"] <- "GoldenGateW"
 all_detects <- all_detects[which(all_detects$GEN != "MokBase"),]
 
 all_detects$Year = lubridate::year(all_detects$DateTime_PST)
-len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2016])
+len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2013])
 
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
 
+ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE)
+
 all_detects = all_detects[all_detects$Year %in% c(2013, 2016, 2017), ]
 
-DFAids = unique(all_detects$FishID[all_detects$GEN %in% c("Benecia", "ChippsW")]) # 575 fish
-
-dfa_detects = all_detects[(all_detects$FishID %in% DFAids), ]
+sum(unique(all_detects$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
 
 write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", row.names = FALSE) # for Pascale
 
-saveRDS(dfa_detects, "data_clean/jsats_dfa_detects.rds")
-
-# # prepare lagged columns
-# all_detects$prev_FishID <- NA
-# all_detects$prev_GEN <- NA
-# all_detects$prev_DetectDate <- NA
-
+saveRDS(all_detects, "data_clean/jsats_dfa_detects.rds")
 
 
 #########################################################
-if(FALSE){
-# test lag shift
-tt = subset(all_detects, FishID %in% c("ARF2016-114", "SB2017-167", "WR2017-555"))
 
-tt[, c("prev_FishID", "prev_GEN", "prev_DetectDate")] <- # populate this with...
-  as.data.frame(
-      data.table::shift(
-           x = tt[, c("FishID", "GEN", "DetectDate")], # this, lagged by 1
-           n = 1,
-          fill = NA,
-          type = "lag"
-                        )
-                )
-
-tt = tt[ , c(1, 6, 8, 12:14)]
-# vet(tt, 12) # visually inspected to see if the lag worked; not a great test
-
-
-# this should give us only the first detections of each fish or the first detection at a new rec
-ttfd <-
-  tt[which(
-    tt$FishID != tt$prev_FishID |
-      tt$GEN != tt$prev_GEN
-  ),]   #  first detections or first detections at a new receiver; by fish, each row should have a different receiver than the last one
-
-
-# make movement column; this is needed in order to merge with the distance matrix later.
-ttfd$movement <-
-  paste(ttfd$prev_GEN, "-", 
-        ttfd$GEN, sep = " ")
-
-library(dplyr)
-
-route <- route %>%
-  select(FishID, Route) %>%
-  distinct()
-
-## Joining the routing determination to the detection data
-## and removing fish that have no routing determination
-
-first_detects_routes <-
-  left_join(ttfd, route, by = "FishID") %>%
-  filter(!is.na(Route))
-
-fdr <-
-  merge(
-    first_detects_routes,
-    dm_closed[, c("Name", "Total_Length_m")], # only merging the total length
-    by.x  = "movement",
-    by.y = "Name",
-    all.x = TRUE # we're keeping all rows from x, not y
-  )
-
-# end with a df where each row is a fish's movement with a distance associated
-
-#/end test lag shift
-}
 
