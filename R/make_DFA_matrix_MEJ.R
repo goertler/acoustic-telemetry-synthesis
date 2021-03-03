@@ -57,6 +57,7 @@ jsats$DetectDate = as.Date(jsats$DateTime_PST)
 bigtest = dpd_allfish(jsats) # 
 saveRDS(bigtest, "data_clean/distance_per_day.rds")
 
+bigtest = readRDS("data_clean/distance_per_day.rds")
 dt16 = bigtest[lubridate::year(bigtest$Date) == 2016, ]
 
 library(dplyr)
@@ -67,18 +68,57 @@ dt16 %>%
   padr::pad(interval = "day",
             start_val = min(dt16$Date),
             end_val = max(dt16$Date)) %>% 
-  ungroup() -> ddd
-
-head(ddd)
-
-
-csn(dt16)
+  ungroup() -> dt16
 
 dt16 = tidyr::pivot_wider(dt16, names_from = Date, values_from = Distance_m)
 
 dt16[1:10, 1:5]
+dates = as.character(sort(as.Date(colnames(dt16)[2:124])))
 
+dt16 = dt16[ , c("FishID", dates)]
 
-dt16 = 
+write.csv(dt16, "results/dfa_2016.csv", row.names = FALSE)
+#-------------------------------------------------------#
+dt13 = bigtest[lubridate::year(bigtest$Date) == 2013, ]
 
-write.csv(dt2016, "results/dfa_2016.csv", row.names = FALSE)
+dt13 %>% 
+  group_by(FishID) %>% 
+  arrange(Date) %>% 
+  padr::pad(interval = "day",
+            start_val = min(dt13$Date),
+            end_val = max(dt13$Date)) %>% 
+  ungroup() -> dt13
+
+csn(dt13)
+
+dt13 = tidyr::pivot_wider(dt13, names_from = Date, values_from = Distance_m)
+
+dt13[1:10, 1:5]
+dim(dt13)
+dates = as.character(sort(as.Date(colnames(dt13)[2:122])))
+dt13 = dt13[ , c("FishID", dates)]
+
+write.csv(dt13, "results/dfa_2013.csv", row.names = FALSE)
+
+#-------------------------------------------------------#
+
+dt17 = bigtest[lubridate::year(bigtest$Date) == 2017, ]
+
+dt17 %>% 
+  group_by(FishID) %>% 
+  arrange(Date) %>% 
+  padr::pad(interval = "day",
+            start_val = min(dt17$Date),
+            end_val = max(dt17$Date)) %>% 
+  ungroup() -> dt17
+
+csn(dt17)
+
+dt17 = tidyr::pivot_wider(dt17, names_from = Date, values_from = Distance_m)
+
+dt17[1:10, 1:5]
+dim(dt17)
+dates = as.character(sort(as.Date(colnames(dt17)[2:149])))
+dt17 = dt17[ , c("FishID", dates)]
+
+write.csv(dt17, "results/dfa_2017.csv", row.names = FALSE)
