@@ -136,6 +136,19 @@ all_detects <- all_detects[which(all_detects$GEN != "MokBase"),]
 all_detects$Year = lubridate::year(all_detects$DateTime_PST)
 len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2013])
 
+#-------------------------------------------------------#
+# QAQC
+#-------------------------------------------------------#
+
+# TagIDs with suspicious detections (detected before released)
+chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020", 
+"CFC2012-022", "CFC2012-023", "Delta2012-001", "Delta2012-002", 
+"Delta2012-003", "Delta2012-021", "Delta2012-031", "Delta2012-034", 
+"Delta2012-039", "Delta2012-052", "Delta2012-054", "Delta2012-080", 
+"Delta2012-087", "Delta2012-090", "Delta2012-095", "Delta2012-097", 
+"Delta2012-098", "Delta2012-108")
+
+sum(all_detects$FishID %in% chk) # none of these are kept for the DFA analysis
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
@@ -145,6 +158,7 @@ ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE)
 all_detects = all_detects[all_detects$Year %in% c(2013, 2016, 2017), ]
 
 sum(unique(all_detects$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
+sum(all_detects$FishID %in% chk) # 0
 
 write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", row.names = FALSE) # for Pascale
 
