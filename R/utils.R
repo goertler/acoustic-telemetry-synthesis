@@ -64,10 +64,11 @@ coerce_index <- function( ... ) {
 library(ggplot2)
 
 plot_track <- function(df, ID) {
-  ss = subset(df, FishID == ID)
-  ggplot(ss, aes(x = DateTime_PST, y = GEN)) +
+  ggplot(subset(df, FishID == ID), aes(x = DateTime_PST, y = reorder(GEN, RKM))) +
     geom_point() +
+    geom_path(aes(group = FishID)) +
     theme_minimal() +
+    scale_x_datetime(date_labels = "%b-%d") +
     labs(x = "DateTime", y = "GEN", title = paste(ID))
 }
 

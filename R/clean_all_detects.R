@@ -140,6 +140,22 @@ len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2013])
 # QAQC
 #-------------------------------------------------------#
 
+# check for duplicated tagIDs across studies:
+stopifnot(anyDuplicated(tagging_meta$FishID) == 0)
+
+# check for simultaneous detections within fish and locations
+i = duplicated(all_detects) # 5848 duplicate rows
+i2 = duplicated(all_detects, fromLast = TRUE)
+
+dups = all_detects[i,]
+dups2 = all_detects[i2, ]
+
+alldups = rbind(dups, dups2)
+alldups = alldups[order(alldups$FishID, alldups$DateTime_PST), ]
+
+# remove duplicate detections:
+ans = all_detects[!i,]
+
 # TagIDs with suspicious detections (detected before released)
 chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020", 
 "CFC2012-022", "CFC2012-023", "Delta2012-001", "Delta2012-002", 
@@ -148,21 +164,52 @@ chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020",
 "Delta2012-087", "Delta2012-090", "Delta2012-095", "Delta2012-097", 
 "Delta2012-098", "Delta2012-108")
 
-sum(all_detects$FishID %in% chk) # none of these are kept for the DFA analysis
+sum(ans$FishID %in% chk) # none of these are kept for the DFA analysis, but we'll remove the false dets just in case:
+
+ans2 <-
+  merge(ans, tagging_meta[, c("FishID", "Rel_datetime")], 
+        by = "FishID",
+        all.x = TRUE)
+
+library(dplyr)
+
+ans2 %>% 
+  group_by(FishID) %>% 
+  filter(DateTime_PST < Rel_datetime) %>% 
+  ungroup() -> too_early
+
+too_early
+length(chk)
+sum(chk %in% unique(too_early$FishID))
+
+too_early = data.frame(too_early)
+
+ans3 = anti_join(ans2, too_early)
+stopifnot(nrow(ans2) - nrow(too_early) == nrow(ans3))
+
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
 
 ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE)
 
-all_detects = all_detects[all_detects$Year %in% c(2013, 2016, 2017), ]
+ans3 = ans3[ans3$Year %in% c(2013, 2016, 2017), ]
 
-sum(unique(all_detects$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
-sum(all_detects$FishID %in% chk) # 0
+sum(unique(ans3$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
+sum(ans3$FishID %in% chk) # 0
 
-write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", row.names = FALSE) # for Pascale
 
-saveRDS(all_detects, "data_clean/jsats_dfa_detects.rds")
+# write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", 
+#           row.names = FALSE) # for Pascale
+
+# find tracks where fish go backwards
+ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
+
+fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
+
+plot_track(fp, fp$FishID[7])
+saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")
+saveRDS(ans3, "data_clean/jsats_dfa_detects.rds")
 
 
 #########################################################
