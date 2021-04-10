@@ -188,6 +188,26 @@ ans3 = anti_join(ans2, too_early)
 stopifnot(nrow(ans2) - nrow(too_early) == nrow(ans3))
 
 
+ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
+plot_track(ans2, "FR2014-250") # it doesn't make sense that this fish is in ans2 but not in ans3
+plot_track(ans2, "WR2017-493")
+
+plot_track(ans3, "WR2017-094")
+plot_track(ans3, "WR2017-484")
+plot_track(ans3, "WR2017-545")
+plot_track(ans3, "WR2016-294")
+
+# functions to write:
+# identify fish that go backwards
+# identify fish that have x number of detections
+
+
+if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds")){
+fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
+saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")}else{fp = readRDS("data_clean/jsats_dfa_detects_fishpaths.rds")}
+
+plot_track(fp, "FR2014-250")
+sum("FR2014-250" %in% too_early$FishID)
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
 
@@ -199,19 +219,33 @@ sum(unique(ans3$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
 sum(ans3$FishID %in% chk) # 0
 
 
+
 # write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", 
 #           row.names = FALSE) # for Pascale
 
-# find tracks where fish go backwards
-ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
 
-fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
 
-plot_track(fp, fp$FishID[7])
-saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")
 saveRDS(ans3, "data_clean/jsats_dfa_detects.rds")
 
 
 #########################################################
+# find tracks where fish go backwards
+# find tracks where fish go backwards
+#riverkilometer increases after having previously decreased
+test = fp[fp$FishID == "WR2017-493",]
 
+backwards_onefish = function(fp_df_onefish){
+  
+rkms_increase = lag(round(fp_df_onefish$RKM, 1)) < round(fp_df_onefish$RKM, 1)
+
+ans = sum(rkms_increase, na.rm = TRUE)
+
+}
+
+test_split = split(fp, fp$FishID)
+
+test_split = test_split[sapply(test_split, nrow) >0 ]
+bck1 = lapply(test_split, FUN = backwards_onefish)
+
+bck1[bck1>5]
 
