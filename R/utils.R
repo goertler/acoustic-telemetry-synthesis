@@ -178,5 +178,13 @@ return(fin)
 
 }
 
+# find fish that go backwards
+#riverkilometer increases after having previously decreased
+backwards_onefish = function(fp_df_onefish){
+  
+rkms_increase = lag(round(fp_df_onefish$RKM, 1)) < round(fp_df_onefish$RKM, 1)
 
+ans = sum(rkms_increase, na.rm = TRUE)
+
+}
 

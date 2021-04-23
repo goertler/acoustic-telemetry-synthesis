@@ -178,7 +178,6 @@ ans2 %>%
   filter(DateTime_PST < Rel_datetime) %>% 
   ungroup() -> too_early
 
-too_early
 length(chk)
 sum(chk %in% unique(too_early$FishID))
 
@@ -186,10 +185,11 @@ too_early = data.frame(too_early)
 
 ans3 = anti_join(ans2, too_early)
 stopifnot(nrow(ans2) - nrow(too_early) == nrow(ans3))
+sum(ans3$FishID %in% chk) # 0
 
 
 ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
-plot_track(ans2, "FR2014-250") # it doesn't make sense that this fish is in ans2 but not in ans3
+plot_track(ans3, "FR2014-250") 
 plot_track(ans2, "WR2017-493")
 
 plot_track(ans3, "WR2017-094")
@@ -202,22 +202,70 @@ plot_track(ans3, "WR2016-294")
 # identify fish that have x number of detections
 
 
-if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds")){
-fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
-saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")}else{fp = readRDS("data_clean/jsats_dfa_detects_fishpaths.rds")}
+if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds")) {
+  fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
+  saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")
+} else{
+  fp = readRDS("data_clean/jsats_dfa_detects_fishpaths.rds")
+}
 
 plot_track(fp, "FR2014-250")
-sum("FR2014-250" %in% too_early$FishID)
+
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
-
-ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE)
-
+ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE) #667 JSATS fishIDs in the DFA years
 ans3 = ans3[ans3$Year %in% c(2013, 2016, 2017), ]
-
 sum(unique(ans3$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
-sum(ans3$FishID %in% chk) # 0
+exits = unique(ans3$FishID[ans3$GEN %in% c("Benicia", "ChippsW")]) # only use the fish detected at Chipps/Benicia
 
+#-------------------------------------------------------#
+# Only check backwards moving fish on the DFA Fish
+fpp = fp[fp$FishID %in% exits, ]
+
+test_split = split(fpp, fpp$FishID)
+
+test_split = test_split[sapply(test_split, nrow) > 0 ]
+bck1 = lapply(test_split, FUN = backwards_onefish)
+
+sum(bck1>0)
+bck1[bck1>5]
+
+# fish paths for those fish that go backwards
+bck2 = data.frame(FishID = names(bck1), nrev = as.integer(bck1))
+bck2 = bck2[bck2$nrev>0 , ]
+
+backtracks = fpp[fpp$FishID %in% bck2$FishID, ]
+bsplit = split(backtracks, backtracks$FishID)
+
+get_stns = lapply(bsplit, FUN = function(x) y = x[["GEN"]] ) # get station path from each fish
+
+len(get_stns)
+length(get_stns)
+unique(get_stns) # how to analyze these tracks???
+
+## detection bins
+
+ans3 %>% 
+  filter(FishID %in% exits) %>% 
+  group_by(FishID) %>% 
+  tally() -> detsumm
+
+summary(detsumm$n)
+
+detsumm %>%
+  filter(n < 50) %>%
+  ggplot(aes(x = as.integer(n))) +
+  geom_histogram(
+    binwidth = 1,
+    position = position_dodge(width = 1),
+    color = "black",
+    fill = "transparent"
+  ) +
+  theme_minimal()
+
+onedet = detsumm$FishID[detsumm$n == 1]
+
+unique(ans3$GEN[ans3$FishID %in% onedet])
 
 
 # write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", 
@@ -227,25 +275,4 @@ sum(ans3$FishID %in% chk) # 0
 
 saveRDS(ans3, "data_clean/jsats_dfa_detects.rds")
 
-
-#########################################################
-# find tracks where fish go backwards
-# find tracks where fish go backwards
-#riverkilometer increases after having previously decreased
-test = fp[fp$FishID == "WR2017-493",]
-
-backwards_onefish = function(fp_df_onefish){
-  
-rkms_increase = lag(round(fp_df_onefish$RKM, 1)) < round(fp_df_onefish$RKM, 1)
-
-ans = sum(rkms_increase, na.rm = TRUE)
-
-}
-
-test_split = split(fp, fp$FishID)
-
-test_split = test_split[sapply(test_split, nrow) >0 ]
-bck1 = lapply(test_split, FUN = backwards_onefish)
-
-bck1[bck1>5]
 
