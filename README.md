@@ -3,15 +3,14 @@ acoustic telemetry synthesis for describing juvenile Chinook diversity
 
 # File Dependencies:
 
-R/utils.R : none
-R/clean_all_detects.R: 
-    - R/clean_tagging_metadata:
-        data/tagging_data/Tagging_Fish_Metadata.txt
-        
-    - data/detection_data/all_JSATS.csv
-    - data/tagging_data/dat4Von.csv
+    R/utils.R : none
+    R/clean_all_detects.R: 
+      - data/detection_data/all_JSATS.csv
+      - data/tagging_data/dat4Von.csv
+      - R/clean_tagging_metadata:
+          - data/tagging_data/Tagging_Fish_Metadata.txt
     
-# Package dependencies:
+# Package Dependencies:
 
 ```
 ## CRAN
