@@ -40,7 +40,6 @@ all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
                                        tz = "Etc/GMT+8", 
                                       format = "%m/%d/%Y %H:%M:%OS")
 
-csn(all_detects)
 
 # load and clean tagging metadata
 source("R/clean_tagging_metadata.R") # creates tagging_meta object
@@ -183,7 +182,7 @@ sum(chk %in% unique(too_early$FishID))
 
 too_early = data.frame(too_early)
 
-ans3 = anti_join(ans2, too_early)
+ans3 = anti_join(ans2, too_early) # removes the fish that were detected before they were tagged
 stopifnot(nrow(ans2) - nrow(too_early) == nrow(ans3))
 sum(ans3$FishID %in% chk) # 0
 
@@ -201,15 +200,28 @@ plot_track(ans3, "WR2016-294")
 # identify fish that go backwards
 # identify fish that have x number of detections
 
-
+#-------------------------------------------------------#
+# Build/load fishpaths of all JSATs detections:
+#-------------------------------------------------------#
 if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds")) {
+  # install tagtales and fishpals if not installed:
+
+  github.packages <- c("fishpals", "tagtales")
+
+  github.package_sites <- c("fishsciences/fishpals", "Myfanwy/tagtales")
+
+  new.gh.pkgs <- github.packages[!(github.packages %in% installed.packages()[, "Package"])]
+
+  if(length(new.gh.pkgs)) devtools::install_github(github.package_sites)
+  
+  # build fishpaths
   fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
   saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")
 } else{
   fp = readRDS("data_clean/jsats_dfa_detects_fishpaths.rds")
 }
+#-------------------------------------------------------#
 
-plot_track(fp, "FR2014-250")
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:

@@ -2,7 +2,6 @@
 # M. Johnston
 # Clean and prep tagging metadata - JSATS and YBUS
 # Fri Jul 24 09:33:14 2020 ------------------------------
-source("R/utils.R")
 ## Load and clean tag metadata
 
 tagging_meta <-
@@ -14,7 +13,7 @@ tagging_meta$Rel_datetime <-
              tz = "Etc/GMT+8", 
              format = "%m/%d/%Y %H:%M:%S")
 
-stopifnot(len(tagging_meta$FishID) == nrow(tagging_meta))     # test that each row represents a unique fishID
+stopifnot(length(unique(tagging_meta$FishID)) == nrow(tagging_meta))     # test that each row represents a unique fishID
 
 #### The following few lines of code massage things that could probably be rectified in the JSATS database ####
 ## Change fish_type "Chinook" to "RBDD Chinook" to be more informative

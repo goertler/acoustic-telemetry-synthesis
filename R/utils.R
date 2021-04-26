@@ -3,7 +3,6 @@
 # Utility/convenience functions for analysis 
 # Thursday 2020-07-23 14:40:19 ----------------# 
 
-
 # Analysis-specific cleaning functions
 
 # this function adds a date column and a water year column, and subsets down to the years you want.
