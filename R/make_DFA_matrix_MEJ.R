@@ -54,7 +54,7 @@ jsats$DetectDate = as.Date(jsats$DateTime_PST)
 #-------------------------------------------------------#
 
 # big test: all fish
-bigtest = dpd_allfish(jsats) # 
+bigtest = dpd_allfish(jsats) # 4K+ fish
 saveRDS(bigtest, "data_clean/distance_per_day.rds")
 
 bigtest = readRDS("data_clean/distance_per_day.rds")

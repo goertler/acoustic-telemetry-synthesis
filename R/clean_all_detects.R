@@ -163,7 +163,7 @@ chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020",
 "Delta2012-087", "Delta2012-090", "Delta2012-095", "Delta2012-097", 
 "Delta2012-098", "Delta2012-108")
 
-sum(ans$FishID %in% chk) # none of these are kept for the DFA analysis, but we'll remove the false dets just in case:
+sum(unique(ans$FishID) %in% chk) # none of these are kept for the DFA analysis, but we'll remove the false dets just in case:
 
 ans2 <-
   merge(ans, tagging_meta[, c("FishID", "Rel_datetime")], 
@@ -174,27 +174,18 @@ library(dplyr)
 
 ans2 %>% 
   group_by(FishID) %>% 
+  arrange(DateTime_PST) %>% 
   filter(DateTime_PST < Rel_datetime) %>% 
   ungroup() -> too_early
 
-length(chk)
-sum(chk %in% unique(too_early$FishID))
+length(chk) # 22 fish
+sum(chk %in% unique(too_early$FishID)) #16 of them detected prior to tagging
 
 too_early = data.frame(too_early)
 
-ans3 = anti_join(ans2, too_early) # removes the fish that were detected before they were tagged
-stopifnot(nrow(ans2) - nrow(too_early) == nrow(ans3))
-sum(ans3$FishID %in% chk) # 0
-
+ans3 = filter(ans2, !(FishID %in% unique(too_early$FishID)))
 
 ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
-plot_track(ans3, "FR2014-250") 
-plot_track(ans2, "WR2017-493")
-
-plot_track(ans3, "WR2017-094")
-plot_track(ans3, "WR2017-484")
-plot_track(ans3, "WR2017-545")
-plot_track(ans3, "WR2016-294")
 
 # functions to write:
 # identify fish that go backwards
@@ -203,7 +194,8 @@ plot_track(ans3, "WR2016-294")
 #-------------------------------------------------------#
 # Build/load fishpaths of all JSATs detections:
 #-------------------------------------------------------#
-if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds")) {
+remake_paths = FALSE # change to TRUE to remake this file
+if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds") | remake_paths) {
   # install tagtales and fishpals if not installed:
 
   github.packages <- c("fishpals", "tagtales")
@@ -253,7 +245,55 @@ get_stns = lapply(bsplit, FUN = function(x) y = x[["GEN"]] ) # get station path 
 
 len(get_stns)
 length(get_stns)
-unique(get_stns) # how to analyze these tracks???
+unique(get_stns) 
+#-------------------------------------------------------#
+loc.rkm <- unique(fpp[,c(4,5,7,8)])
+# break at Freeport OR 153.140
+
+# ID when fish move into tidal
+back.move.fish <- data.frame(FishID = NA, min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"))
+
+ 
+for (i in unique(fpp$FishID)){
+
+  temp.dat <- fpp[fpp$FishID == i,]
+
+  tidal <- subset(temp.dat, RKM <= 153.140)
+
+    min.time = min(tidal$DateTime_PST)
+
+    temp.results <- data.frame(FishID = i, min.time = as.POSIXct(min.time,
+
+                                                 tz = "Etc/GMT+8",
+
+                                                 format = "%m/%d/%Y %H:%M:%OS"))
+
+ 
+
+    back.move.fish <- rbind(back.move.fish, temp.results)
+
+}
+
+ 
+# then ask if RKM is greater than 153 after min.time (TRUE/FALSE)
+
+back.test <- merge(fpp, back.move.fish, by = "FishID")
+
+back.test2 <- data.frame(FishID = NA, DateTime_PST = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), StudyID  = NA, GEN = NA, RKM = NA, Fish_Type = NA, Rel_loc = NA, Rel_rkm = NA, Year = NA, Rel_datetime = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), arrival = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), departure = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"))
+
+for (i in unique(back.test$FishID)){
+
+    temp.dat <- back.test[back.test$FishID == i,]
+
+    test2 <- subset(temp.dat, DateTime_PST > min.time)
+
+    back.test2 <- rbind(back.test2, test2)
+
+  }
+
+ 
+max(back.test2$RKM, na.rm = TRUE) # maximum rkm = 153.14; FPT
+length(unique(back.test2$FishID)) # still 692 fish
 
 ## detection bins
 
@@ -262,7 +302,7 @@ ans3 %>%
   group_by(FishID) %>% 
   tally() -> detsumm
 
-summary(detsumm$n)
+summary(detsumm$n) # at minimum, fish have 16 detections
 
 detsumm %>%
   filter(n < 50) %>%
@@ -282,7 +322,6 @@ unique(ans3$GEN[ans3$FishID %in% onedet])
 
 # write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", 
 #           row.names = FALSE) # for Pascale
-
 
 
 saveRDS(ans3, "data_clean/jsats_dfa_detects.rds")
