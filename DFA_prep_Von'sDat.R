@@ -1,15 +1,12 @@
 # DFA with Von's data matrix
-setwd("C:/Users/pgoertler/Desktop/acoustic-telemetry-synthesis/results")
-dat.13<- read.csv("dfa_2013.csv")
-dat.16<- read.csv("dfa_2016.csv")
-dat.17<- read.csv("dfa_2017.csv")# need to transpose in Excel becuase R was adding an "x" in front of dates
+library(readr)
+dfa_2013 <- read_csv("results/dfa_2013.csv")
+dfa_2016 <- read_csv("results/dfa_2016.csv")
+dfa_2017 <- read_csv("results/dfa_2017.csv")
 
-head(dat.13)
-head(dat.16)
-head(dat.17)
-length(unique(dat.13$FishID)) #1290 (that is all JSATs, should only be 76  
-length(unique(dat.16$FishID)) #1713 (that is all JSATs, should only be 149  
-length(unique(dat.17$FishID)) #1714 (that is all JSATs, should only be 442  
+length(unique(dfa_2013$FishID)) #90 (that is all JSATs, should only be 76  
+length(unique(dfa_2016$FishID)) #149 (that is all JSATs, should only be 149  
+length(unique(dfa_2017$FishID)) #452 (that is all JSATs, should only be 442  
 
 #### 2017 
 
@@ -23,19 +20,30 @@ grps_17up<-subset(grps_17, Release_Group_SAIL=="Upper Sacramento River")#337
 grps_17md<-subset(grps_17, Release_Group_SAIL=="Middle Sacramento River")#50
 grps_17td<-subset(grps_17, Release_Group_SAIL=="Tidal Delta")#55
 
-setwd("C:/Users/pgoertler/Desktop/acoustic-telemetry-synthesis/results")
-dat.17<- read.csv("dfa_2017_t.csv")# need to transpose in Excel becuase R was adding an "x" in front of dates
+# hack to make my old code work... 
+dat.17 <- t(dfa_2017)
+header.true <- function(df) {
+  colnames(df) <- as.character(unlist(df[1,]))
+  df[-1,]
+}
+
+dat.17 <- header.true (dat.17)
 
 NameList<-unique(grps_17up$FishID)
-NameList_v2 = gsub('-', '.', NameList)
-dat_17up <-dat.17[,colnames(dat.17)%in%NameList_v2] #337
+dat_17up <-dat.17[,colnames(dat.17)%in%NameList] #337
 
+ncol(dat_17up)#337
 
+dat_17up <- data.frame(dat_17up)
 summary(dat_17up)
-sapply(dat_17up, mean, na.rm = T)  
+
 sapply(dat_17up, function(x)all(is.na(x)))
 dat_17up = as.data.frame(sapply(dat_17up, as.numeric))
+sapply(dat_17up, mean, na.rm = TRUE)  
 dat_17up<-dat_17up[rowSums(is.na(dat_17up)) != ncol(dat_17up), ]
+
+# plot
+matplot(y = dat_17up, type = 'l', lty = 1)
 
 dat.t<-t(dat_17up)
 
@@ -52,3 +60,4 @@ mod2<-runDFA(obs=dat.z,NumStates=2,ErrStruc='DE') #
 mod3<-runDFA(obs=dat.z,NumStates=3,ErrStruc='DE') #
 mod4<-runDFA(obs=dat.z,NumStates=4,ErrStruc='DE') #
 mod5<-runDFA(obs=dat.z,NumStates=5,ErrStruc='DE') #
+
