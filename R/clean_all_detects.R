@@ -217,11 +217,15 @@ if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds") | remake_paths) {
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
-ids = read.csv("data/tagging_data/dat4Von.csv", stringsAsFactors = FALSE) #667 JSATS fishIDs in the DFA years
-ans3 = ans3[ans3$Year %in% c(2013, 2016, 2017), ]
-sum(unique(ans3$FishID) %in% ids$FishID[ids$TagType == "JSATS"])
-exits = unique(ans3$FishID[ans3$GEN %in% c("Benicia", "ChippsW")]) # only use the fish detected at Chipps/Benicia
 
+ans3 = ans3[ans3$Year %in% c(2013, 2016, 2017), ]
+len(ans3$FishID)
+
+exits = unique(ans3$FishID[ans3$GEN %in% c("Benicia", "ChippsW")]) # only use the fish detected at Chipps/Benicia # 691 fish for DFA analysis
+
+ans3 = ans3[ans3$FishID %in% exits, ]
+
+len(ans3$FishID)
 #-------------------------------------------------------#
 # Only check backwards moving fish on the DFA Fish
 fpp = fp[fp$FishID %in% exits, ]
@@ -243,9 +247,6 @@ bsplit = split(backtracks, backtracks$FishID)
 
 get_stns = lapply(bsplit, FUN = function(x) y = x[["GEN"]] ) # get station path from each fish
 
-len(get_stns)
-length(get_stns)
-unique(get_stns) 
 #-------------------------------------------------------#
 loc.rkm <- unique(fpp[,c(4,5,7,8)])
 # break at Freeport OR 153.140
