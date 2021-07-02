@@ -62,7 +62,9 @@ coerce_index <- function( ... ) {
 
 library(ggplot2)
 
-plot_track <- function(df, ID) {
+plot_track <- function(df, ID, idcol = "FishID") {
+  df$FishID = df[[idcol]]
+  df = df[order(df$DateTime_PST), ]
   ggplot(subset(df, FishID == ID), aes(x = DateTime_PST, y = reorder(GEN, RKM))) +
     geom_point() +
     geom_path(aes(group = FishID)) +
