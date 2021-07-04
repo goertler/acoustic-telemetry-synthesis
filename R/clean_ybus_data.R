@@ -1,6 +1,6 @@
 # Clean ybus data - prep for distance matrix calcs
 #  M. Johnston
-# Sun Aug 16 17:20:14 2020 ------------------------------
+# Thu May 20 11:08:43 2021 ------------------------------
 
 #### Repeat for YBUS data (ybus data = 2016 only)
 
@@ -8,15 +8,14 @@ ybus<- read.csv("data/detection_data/ybus_detections.csv", stringsAsFactors = F)
 route <- read.csv("data/CV_data/ybusCV.csv", stringsAsFactors = F)
 
 ## Merge pertinent info
-ybus<- dplyr::rename(ybus, TagID=Transmitter) # I get an error (PG)
-colnames(ybus)[3] <- "TagID"
-ybus<- left_join(ybus, route, by= "TagID")
-ybus<-select(ybus,-c(1,6,8,11))
+ybus <- dplyr::rename(ybus, TagID = Transmitter) 
+ybus <- dplyr::left_join(ybus, route, by = "TagID")
+ybus <- ybus[, -c(1, 6, 8, 11)]
 str(ybus)
 
 ## Reformat dates, make sure we have hours/mins/secs
 ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S", tz='EST')
-unique(is.na(ybus$DetectDate)) # need to deal with NAs in date
+sum(is.na(ybus$DetectDate)) # need to deal with NAs in date
 ## delta and yolo measurements for non-mainstem routes were done from downstream going up, and should be
 ## upstream going down for this analysis. Therefore, I have remeasured some of the most frequented delta receivers from upstream going down.
 library(stringr)

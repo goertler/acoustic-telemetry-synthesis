@@ -1,22 +1,20 @@
 # Clean Yolo and ACE detections, 2013
 # M. Johnston
-# Fri May 21 12:04:52 2021 ------------------------------
+# Sat Jul  3 20:26:27 2021 ------------------------------
 source("R/utils.R")
-# data origins: from Myfanwy's 2018 publication; for convenience, pulled from the fishtrackr package:
-#jt = fishtrackr::alljuvtt
-#saveRDS(jt, "data/detection_data/YoloACE_2012-2013MEJ.rds")
-# sac13 data is from JuvSalmon_Manuscript/munge/No_fish_at_Chipps.R
+# data origins: from Myfanwy's 2018 publication
 #-------------------------------------------------------#
-library(dplyr)
+retidy_data = FALSE # set to true if you want to re-make
 
-reldet = readRDS("data/detection_data/YoloACE_2012-2013MEJ.rds")
-str(reldet)
-sort(unique(reldet$Station))
-chp = reldet[reldet$Station == "Chipps", ]
-tapply(chp$TagID, chp$TagGroup, len)
+if(retidy_data | !file.exists("data_clean/yoloace_dfa_detects.rds")){
 
-reldet %>% 
-  filter(TagID %in% chp$TagID) -> d
+  reldet = readRDS("data/detection_data/YoloACE_2012-2013MEJ.rds") # JuvSalmon_Manuscript/data/allfishtraveltime_starterdf.rds
+
+chp = reldet[reldet$Station == "Chipps", ] # fish detected @chipps
+
+tapply(chp$TagID, chp$TagGroup, len) # should be 30 fish in 2012, 33 in 2013
+
+d = subset(reldet, TagID %in% chp$TagID)
 
 d$DateTime_PST = lubridate::with_tz(d$DateTimeUTC, 
                                        tz = "Etc/GMT+8")
@@ -40,16 +38,14 @@ d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Yolo Bypass 2012",
 
 # load distance matrix (using DCC closed only)
 dm = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")
-str(dm)
 dmnames = tidyr::separate(dm, Name_corr, into = c("Nm1", "Nm2"), sep = "-")
 dmnames = unique(dmnames$Nm2)
 
-len(d$GEN)
-sum(unique(d$GEN) %in% unique(dmnames))
-setdiff(unique(d$GEN), unique(dmnames))
-setdiff(unique(dmnames), unique(d$GEN))
-sort(unique(dmnames))
+stopifnot(len(d$GEN) == sum(unique(d$GEN) %in% unique(dmnames))) # all recs should be in dmnames
+stopifnot(length(setdiff(unique(d$GEN), unique(dmnames))) == 0) # double-check
+setdiff(unique(dmnames), unique(d$GEN)) # MS15 is in the distance matrix but not in d; that's okay
 
+d$FishID = d$TagID # for the dpd function
 
 saveRDS(d, "data_clean/yoloace_dfa_detects.rds")
-
+}

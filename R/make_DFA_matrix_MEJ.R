@@ -42,11 +42,6 @@ source("R/utils.R")
 # load distance matrix (using DCC closed only)
 dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
 
-## Load Routes
-route <- read.csv("data/CV_data/JSATS_CV.csv", stringsAsFactors = FALSE)
-route = route[ , c("FishID", "Route")]
-stopifnot(sum(duplicated(route$FishID)) == 0) # make sure each row is distinct
-
 ## Load clean JSATs detections of interest
 jsats = readRDS("data_clean/jsats_dfa_detects.rds") # created in R/clean_all_detects.R, which sources clean_tagging_metadata.R
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
@@ -54,7 +49,7 @@ jsats$DetectDate = as.Date(jsats$DateTime_PST)
 #-------------------------------------------------------#
 
 # big test: all fish
-bigtest = dpd_allfish(jsats) # 4K+ fish
+bigtest = dpd_allfish(jsats, dm_closed) # 4K+ fish
 saveRDS(bigtest, "data_clean/distance_per_day.rds")
 
 bigtest = readRDS("data_clean/distance_per_day.rds")
@@ -122,3 +117,45 @@ dates = as.character(sort(as.Date(colnames(dt17)[2:149])))
 dt17 = dt17[ , c("FishID", dates)]
 
 write.csv(dt17, "results/dfa_2017.csv", row.names = FALSE)
+
+#-------------------------------------------------------#
+# DFA Matrix for Yolo/ACE 2012-2013 fish
+# Fri Jul  2 14:39:21 2021 ------------------------------
+
+# load distance matrix & prep for dpd_allfish function
+# This is not finalized - left as an example only; current results are incorrect as of 
+# Sat Jul  3 22:10:25 2021 ------------------------------
+#-------------------------------------------------------#
+dm_yoloace = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")
+dm_yoloace = dm_yoloace[ , c("Name_corr", "mean_Total_Length")]
+colnames(dm_yoloace) = c("Name", "Total_Length_m")
+dm_yoloace$Name = gsub("-", " - ", dm_yoloace$Name)
+
+## Load clean detections of interest
+yolo_ace = readRDS("data_clean/yoloace_dfa_detects.rds") # created in R/clean_yolo_ace.R
+yolo_ace$DetectDate = as.Date(yolo_ace$DateTime_PST)
+yolo_ace$Rel_rkm = yolo_ace$Rkm
+#-------------------------------------------------------#
+# 2012 fish
+ya12 = yolo_ace[lubridate::year(yolo_ace$DetectDate) == 2012, ]
+ya12 = dpd_allfish(ya12, dm = dm_yoloace) 
+
+library(dplyr)
+yamin = min(ya12$Date)
+yamax = max(ya12$Date)
+
+ya12 %>% 
+  group_by(FishID) %>% 
+  arrange(Date) %>% 
+  padr::pad(interval = "day",
+            start_val = yamin,
+            end_val = yamax) %>% 
+  ungroup() -> ya
+
+ya = tidyr::pivot_wider(ya, names_from = Date, values_from = Distance_m)
+ya[1:10, 1:5]
+dim(ya)
+dates = as.character(sort(as.Date(colnames(ya)[2:length(ya)])))
+
+ya12 = ya[ , c("FishID", dates)]
+write.csv(ya12, "results/yolo_ace2012.csv")
