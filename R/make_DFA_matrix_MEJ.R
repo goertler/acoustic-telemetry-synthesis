@@ -14,6 +14,8 @@
 
 # If detections are separated by many days, spread the distance evenly across the interval.
 
+# Input needed: detections data frame with FishID, DateTime_PST, GEN, Year, and RKM.
+
 # Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
 
 #-------------------------------------------------------#

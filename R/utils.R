@@ -103,7 +103,7 @@ dpd_allfish = function(detdf, dm) {
 
 calc_distance_per_day = function(df, distance_matrix = dm) {
   
-tt = df[ , c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
+tt = df[ , c("FishID", "DateTime_PST", "GEN")]
 tt = tt[order(tt$DateTime_PST), ]
 
 tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
