@@ -8,18 +8,29 @@ retidy_data = FALSE # set to true if you want to re-make
 
 if(retidy_data | !file.exists("data_clean/yoloace_dfa_detects.rds")){
 
-  reldet = readRDS("data/detection_data/YoloACE_2012-2013MEJ.rds") # JuvSalmon_Manuscript/data/allfishtraveltime_starterdf.rds
-
+  y = readRDS("data_clean/yolo2012-2013_dets.rds")
+  y$Year = lubridate::year(y$DateTimeUTC)
+  y$RelLoc = "Yolo"
+  y = dplyr::rename(y, Rkm = RKM)
+  ace = readRDS("data_clean/ace2012-2013_dets.rds")
+  ace$Year = lubridate::year(ace$DateTimeUTC)
+  ace$RelLoc = "Sac"
+  
+reldet= rbind(y, ace)
+reldet$TagGroup = paste0(reldet$RelLoc,reldet$Year)
+  
 chp = reldet[reldet$Station == "Chipps", ] # fish detected @chipps
 
 tapply(chp$TagID, chp$TagGroup, len) # should be 30 fish in 2012, 33 in 2013
 
-d = subset(reldet, TagID %in% chp$TagID)
-
+d = reldet
 d$DateTime_PST = lubridate::with_tz(d$DateTimeUTC, 
                                        tz = "Etc/GMT+8")
 
 d$GEN = d$Station
+d$GEN[d$GEN %in% c("BCE", "BCW")] <- "BC_joint"
+d$GEN[d$GEN %in% c("RM88_R", "RM88_L")] <- "RM88"
+d$GEN[d$GEN %in% c("RM71_L", "RM71_R")] <- "RM71"
 d[which(d$GEN == "I80_1"), "GEN"] <- "I_80_1"
 d[which(d$GEN == "BaseSac"), "GEN"] <- "SacMouth"
 d[which(d$GEN %in% c("BC2_joint", "BC_joint2", "BC_joint3")), "GEN"] <- "MS16"
@@ -29,12 +40,12 @@ d[which(d$GEN == "BlwGeorg"), "GEN"] <- "MS14"
 # differentiate release stations
 
 ## Sac
-d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Sacramento River 2012",
-"Sacramento River 2013")] <- "Sacramento_Release"
+d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Sac2012",
+"Sac2013")] <- "Sacramento_Release"
 
 ## Yolo
-d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Yolo Bypass 2012",
-                                             "Yolo Bypass 2013")] <- "Yolo_Release"
+d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Yolo2012",
+                                             "Yolo2013")] <- "Yolo_Release"
 
 # load distance matrix (using DCC closed only)
 dm = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")

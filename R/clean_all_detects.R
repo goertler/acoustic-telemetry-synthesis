@@ -1,6 +1,6 @@
 #-------------------------------------------------------#
 # Fix GEN locations in all_detects
-# M. Johnston - from T. Grimes & C. Michel's code; has not been altered
+# M. Johnston - re-factored from T. Grimes & C. Michel's code
 # DFA analysis
 # Fri Jul 24 14:01:50 2020 ------------------------------
 
