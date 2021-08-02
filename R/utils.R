@@ -126,7 +126,7 @@ tt3 =
   )
 
 tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST)
+tt3$Date = as.Date(tt3$DateTime_PST) # , tz = "Etc/GMT+8") should be added in but I've left it out to make sure yolo/ace are consistent with other results
 
 # I can get it to a data frame-like structure with this, but it strips the column names:
 ff =  tapply(tt3[ , "Total_Length_m"], 
