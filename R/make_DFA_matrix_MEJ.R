@@ -14,7 +14,7 @@
 
 # If detections are separated by many days, spread the distance evenly across the interval.
 
-# Input needed: detections data frame with FishID, DateTime_PST, GEN, Year, and RKM.
+# Input needed: cleaned detections data frame with FishID, DateTime_PST, GEN, Year, and RKM; Distance matrix dataframe with columns "Name" (movement name) and "Distance_m"
 
 # Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
 
@@ -161,3 +161,29 @@ dates = as.character(sort(as.Date(colnames(ya)[2:length(ya)])))
 
 ya12 = ya[ , c("FishID", dates)]
 write.csv(ya12, "results/yolo_ace2012.csv")
+
+#-------------------------------------------------------#
+# 2013 fish
+ya13 = yolo_ace[lubridate::year(yolo_ace$DetectDate) == 2013, ]
+ya13 = dpd_allfish(ya13, dm = dm_yoloace) 
+
+library(dplyr)
+yamin = min(ya13$Date)
+yamax = max(ya13$Date)
+
+ya13 %>% 
+  group_by(FishID) %>% 
+  arrange(Date) %>% 
+  padr::pad(interval = "day",
+            start_val = yamin,
+            end_val = yamax) %>% 
+  ungroup() -> ya
+
+ya = tidyr::pivot_wider(ya, names_from = Date, values_from = Distance_m)
+ya[1:10, 1:5]
+dim(ya)
+dates = as.character(sort(as.Date(colnames(ya)[2:length(ya)])))
+
+ya13 = ya[ , c("FishID", dates)]
+write.csv(ya13, "results/yolo_ace2013.csv")
+
