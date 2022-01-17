@@ -29,37 +29,6 @@ len <- function(x){length(unique(x))}
 csn <- function(x){colSums(is.na(x))}
 rsn <- function(x){rowSums(is.na(x))}
 
-# from the rethinking package
-coerce_index <- function( ... ) {
-    L <- list(...)
-    if ( is.list(L[[1]]) && length(L)==1 ) L <- L[[1]]
-    if ( length(L)==1 ) {
-        # first try to coerce straight to integer as test for any NAs
-        x <- as.integer(L[[1]])
-        if ( any(is.na(x)) ) 
-            # brute method
-            x <- as.integer(as.factor(as.character(L[[1]])))
-        return( x )
-    } else {
-        # multiple inputs
-        vnames <- match.call()
-        vnames <- as.character(vnames)[2:(length(L)+1)]
-        # generate levels that include all labels from all inputs
-        M <- L
-        for ( i in 1:length(L) ) M[[i]] <- as.character(L[[i]])
-        Mall <- M[[1]]
-        for ( i in 2:length(L) ) Mall <- c( Mall , M[[i]] )
-        Mall <- unique(Mall)
-        new_levels <- levels(as.factor(Mall))
-        for ( i in 1:length(L) ) {
-            M[[i]] <- factor(M[[i]],levels=new_levels)
-            M[[i]] <- as.integer(M[[i]])
-        }
-        names(M) <- paste( vnames , "_idx" , sep="" )
-        return(M)
-    } 
-}
-
 library(ggplot2)
 
 plot_track <- function(df, ID, idcol = "FishID") {
@@ -79,68 +48,96 @@ plot_track <- function(df, ID, idcol = "FishID") {
 
 # keep first and last detection at each receiver
 test_fl_onefish <- function (x, 
-                             dtc2 = "DateTime_PST", 
-                             tagc = "FishID", 
-                             stnc2 = "GEN") 
+                             dtc2 = "DateTime_PST") 
 {
-    x = x[order(x[[dtc2]]), ]
-    newdf = x[x[[dtc2]] == min(x[[dtc2]]) | x[[dtc2]] == max(x[[dtc2]]) ,  ]
-    
+    newdf = x[ x[[dtc2]] == min(x[[dtc2]]) | x[[dtc2]] == max(x[[dtc2]]) ,  ]
     return(newdf)
-    
 }
 
 ## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
 #df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
+# test: one fish
+df = v2[v2$FishID == "LFC0687", ]
+distance_matrix = mat
 
-dpd_allfish = function(detdf, dm) {
+
+dpd_allfish = function(detdf, distance_matrix) {
   f1 = split(detdf, detdf$FishID)
   f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
-  tmp = lapply(f1, calc_distance_per_day, distance_matrix = dm)
-  do.call(rbind, tmp)
+  tmp1 = lapply(f1, assign_station_visits)
+  tmp2 = lapply(tmp1, make_movements, distance_matrix = distance_matrix)
+  #tmp3 = lapply(tmp2, calc_dist_per_day)
+  #tmp4 = lapply(tmp3, pad_days)
+  do.call(rbind, tmp2)
 }
 
-calc_distance_per_day = function(df, distance_matrix = dm) {
+# get movements missing from matrix
+# Mon Jan 17 13:15:25 2022 ------------------------------
+f1 = split(v2, v2$FishID)
+f1 = f1[sapply(f1, nrow) > 0]
+tmp1 = lapply(f1, assign_station_visits)
+str(tmp1[1])
+
+tmp2 = lapply(tmp1, make_movements, distance_matrix = mat)
+str(tmp2[1])
+
+ans = do.call(rbind, tmp2)
+head(ans)
+missing_movements = setdiff(ans$movement, mat$Name)
+write.csv(missing_movements, "results/temporary/movements_mising_from_dist_matrix_2022-01-17.csv")
+
+#-------------------------------------------------------#
+# assign station visits
+#-------------------------------------------------------#
+assign_station_visits = function(df) { # add check to see if all movements are in there
   
 tt = df[ , c("FishID", "DateTime_PST", "GEN")]
 tt = tt[order(tt$DateTime_PST), ]
-
 tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
-
 
 tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
 
-
-
+return(tt2)
+}
 
 #-------------------------------------------------------#
-# SEPARATE
+# make/check movements
 #-------------------------------------------------------#
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
-#browser()
+make_movements = function(tt2, distance_matrix) {
+  
+tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; ensures that track goes from departure to departure across all the stations, which incorporates all the residence time in between receivers
+
 # make movements
 tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
 
-# pull movements from the matrix
-tt3 =
-  merge(
-    tt3,
-    distance_matrix[, c("Name", "Total_Length_m")],
-    by.x  = "movement",
-    by.y = "Name",
-    all.x = TRUE
-  )
+# if(!(length(setdiff(tt3$movement, distance_matrix$Name)) == 0)) {
+#   
+#   stop("Movements present in data are missing from distance matrix") # stop if there are movements in the data that aren't in the distance matrix
+# 
+#   } else {
+# # pull movements from the matrix
+# tt3 =
+#   merge(
+#     tt3,
+#     distance_matrix[, c("Name", "Total_Length_m")],
+#     by.x  = "movement",
+#     by.y = "Name",
+#     all.x = TRUE
+#   )
 
 tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
 tt3$Date = as.Date(tt3$DateTime_PST) # , tz = "Etc/GMT+8") should be added in but I've left it out to make sure yolo/ace are consistent with other results
+return(tt3)
+
+  }
+
 #-------------------------------------------------------#
 
-
-
-
 #-------------------------------------------------------#
-# SEPARATE
+# calculate distance per day
 #-------------------------------------------------------#
+calc_dist_per_day = function(tt3) {
+
 # I can get it to a data frame-like structure with this, but it strips the column names:
 ff =  tapply(tt3[ , "Total_Length_m"], 
                        tt3[ , c("FishID", "Date")], 
@@ -168,14 +165,17 @@ ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
 ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
 
 ff$dist_day = ff$tot_distance/ff$timediff
+
+return(ff)
+
+}
 #-------------------------------------------------------#
 
-
-
-
 #-------------------------------------------------------#
-# SEPARATE
+# Pad days for each track to make continuous
 #-------------------------------------------------------#
+pad_days = function(ff) {
+  
 dists = rep(ff$dist_day, ff$timediff)
 
 stopifnot(length(dists) == length(dates))
