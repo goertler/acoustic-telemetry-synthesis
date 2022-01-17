@@ -38,7 +38,6 @@
 
 # 7. join to a final data frame
 #-------------------------------------------------------#
-
 source("R/utils.R")
 library(lubridate)
 
@@ -56,26 +55,23 @@ stopifnot(sum(rowSums(is.na(mat))) == 0) # there should be no NAs
 ## Load detections of interest
 v = read.csv("data/detection_data/Query3.csv") # uploaded to Sharepoint by Pascale; see README
 v$DateTime_PST = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8")
-v$Date_Released = force_tz(mdy_hms(v$Date_Released), tzone = "Etc/GMT+8")
-v$DetectDate = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8")
+v$Date_Released = force_tz(mdy_hms(v$Date_Released), tzone = "Etc/GMT+8") # Release detection
+v$DetectDate = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8") # re-format
+stopifnot(identical(v$DateTime_PST, v$DetectDate))
 
 # TagIDs to keep
-keep = read.csv("data/travel_time/travel.time_CM.Vemco_v3.csv")
+keep = read.csv("data/travel_time/travel.time_CM.Vemco_v3.csv") # 296 fish
 keep = keep[ , c("FishID", "Release_Location", "Riverkm")]
 
 keepID = unique(keep$FishID)
-stopifnot(len(keepID) == sum(keepID %in% unique(v$FishID)))
+stopifnot(len(keepID) == sum(keepID %in% unique(v$FishID))) # make sure all the ones we want are found in the detection files
 
 # subset down to only these fish
 v = v[v$FishID %in% keepID, ]
 
 # add release detection
-names(v)
-names(keep)
-
 # build release detection df
 reldet = merge(keep, v[ !duplicated(v$FishID) , c("FishID", "Date_Released")]) # Bring in date_released col
-str(reldet)
 table(reldet$Release_Location, reldet$Riverkm)
 
 # re-structure dataframe to match v
@@ -86,15 +82,9 @@ reldet$General_Location = reldet$Location = reldet$Release_Location
 sum(!(colnames(reldet) %in% colnames(v)))
 identical(sort(colnames(v)) , sort(colnames(reldet)))
 
-vnames = c("FishID", "DetectDate", "Location", "General_Location", "Date_Released", 
-"Release_Location", "Lat", "Lon", "Riverkm", "DateTime_PST")
-
+# place them in the same order
+vnames = colnames(v)
 reldet = reldet[ , vnames]
-
-str(reldet)
-str(v)
-
-table(reldet$DateTime_PST)
 
 # add release detection df
 v2 = rbind(v, reldet)
@@ -102,7 +92,8 @@ v2$GEN = v2$General_Location
 v2$RKM = v2$Riverkm
 
 #-------------------------------------------------------#
-
+#firsttest
+test = dpd_allfish(v2[v2$FishID == "LFC0687", ], dm = mat)
 # big test: all fish
 bigtest = dpd_allfish(v2, mat) # 296 fish
 

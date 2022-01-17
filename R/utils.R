@@ -1,7 +1,7 @@
 #--------------------------------------------#
 # M. Johnston 
 # Utility/convenience functions for analysis 
-# Thursday 2020-07-23 14:40:19 ----------------# 
+# Fri Jan 14 10:24:36 2022 ------------------------------
 
 # Analysis-specific cleaning functions
 
@@ -75,7 +75,6 @@ plot_track <- function(df, ID, idcol = "FishID") {
 
 
 #-------------------------------------------------------#
-
 # refactor first_last
 
 # keep first and last detection at each receiver
@@ -108,10 +107,17 @@ tt = tt[order(tt$DateTime_PST), ]
 
 tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
 
+
 tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
 
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
 
+
+
+#-------------------------------------------------------#
+# SEPARATE
+#-------------------------------------------------------#
+tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
+#browser()
 # make movements
 tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
 
@@ -127,7 +133,14 @@ tt3 =
 
 tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
 tt3$Date = as.Date(tt3$DateTime_PST) # , tz = "Etc/GMT+8") should be added in but I've left it out to make sure yolo/ace are consistent with other results
+#-------------------------------------------------------#
 
+
+
+
+#-------------------------------------------------------#
+# SEPARATE
+#-------------------------------------------------------#
 # I can get it to a data frame-like structure with this, but it strips the column names:
 ff =  tapply(tt3[ , "Total_Length_m"], 
                        tt3[ , c("FishID", "Date")], 
@@ -155,7 +168,14 @@ ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
 ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
 
 ff$dist_day = ff$tot_distance/ff$timediff
+#-------------------------------------------------------#
 
+
+
+
+#-------------------------------------------------------#
+# SEPARATE
+#-------------------------------------------------------#
 dists = rep(ff$dist_day, ff$timediff)
 
 stopifnot(length(dists) == length(dates))
@@ -176,7 +196,7 @@ stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) ,
  )
 
 return(fin)
-
+#-------------------------------------------------------#
 }
 
 # find fish that go backwards
