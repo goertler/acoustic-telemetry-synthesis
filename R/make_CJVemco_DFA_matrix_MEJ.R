@@ -93,7 +93,8 @@ v2$RKM = v2$Riverkm
 
 #-------------------------------------------------------#
 #firsttest
-test = dpd_allfish(v2[v2$FishID == "LFC0687", ], dm = mat)
+test1 = dpd_allfish(detdf = v2[unique(v2$FishID)[2], ], distance_matrix = mat)
+test = dpd_allfish(df = v2[v2$FishID == "LFC0687", ], distance_matrix = mat)
 # big test: all fish
 bigtest = dpd_allfish(v2, mat) # 296 fish
 
