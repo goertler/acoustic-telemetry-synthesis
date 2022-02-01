@@ -42,10 +42,22 @@ source("R/utils.R")
 library(lubridate)
 
 # load distance matrix (emailed by CJM on 2021-09-)
-mat  <- read.table("data/distance_matrices/Vemco_dist_matrix_DCC-Yolo-Tisdale_closed.txt",
+mat <- read.csv("data/distance_matrices/Vemco_dist_matrix_DCC-Yolo-Tisdale_closed.txt",
                          sep =  ",",
                          header = TRUE)
 
+# add in battle creek movement that's missing from matrix
+battle = data.frame(ObjectID = range(mat$ObjectID)[2] + 1,
+                    Name = as.character("BtlCkAbatPnd - BattleCk10"),
+                    OriginID = NA,
+                    DestinationID = NA,
+                    DestinationRank = NA,
+                    Total_Length = as.numeric(6702.75))
+
+mat = rbind(mat, battle)
+# chk - this should be there:
+mat[mat$Name == "SR_OrdBend - SR_I-80/50Br", ]
+mat[mat$Name == "BtlCkAbatPnd - BattleCk10", ]
 mat$Total_Length_m = mat$Total_Length # rename so that the dpd_allfish fxn works
 
 # matrix data checks
@@ -91,9 +103,13 @@ v2 = rbind(v, reldet)
 v2$GEN = v2$General_Location
 v2$RKM = v2$Riverkm
 
+
+# test data frame:
+saveRDS(v2, "data_clean/v2.rds")
+
 #-------------------------------------------------------#
 #firsttest
-test1 = dpd_allfish(detdf = v2[unique(v2$FishID)[2], ], distance_matrix = mat)
+test1 = dpd_allfish(detdf = v2[v2$FishID == unique(v2$FishID)[2], ], distance_matrix = mat)
 test = dpd_allfish(df = v2[v2$FishID == "LFC0687", ], distance_matrix = mat)
 # big test: all fish
 bigtest = dpd_allfish(v2, mat) # 296 fish
