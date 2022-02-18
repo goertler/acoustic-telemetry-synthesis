@@ -58,3 +58,21 @@ stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) ,
           tolerance = 0.1)
  )
 }
+
+
+# test
+f2 = readRDS("data_clean/CJVemco_distance_per_day2022-02-17.rds")
+
+# same dates
+test = f2[f2$FishID %in% sort(unique(f2$FishID))[1:2], ] # first two fish
+chk = seq.Date(from = min(test$Date), to = max(test$Date), by = "day")
+setdiff(chk, test$Date)
+
+make_matrix(test)
+
+# different dates
+test = test[test$Date != "2007-02-04", ]
+chk = seq.Date(from = min(test$Date), to = max(test$Date), by = "day")
+as.Date(setdiff(chk, test$Date), origin = lubridate::origin)
+
+make_matrix(test)

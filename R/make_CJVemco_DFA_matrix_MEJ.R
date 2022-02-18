@@ -2,13 +2,7 @@
 # Distance Matrix calcs
 # refactored, M. Johnston
 # Mon Feb 15 11:52:30 2021 ------------------------------
-
-## In the clean_all_detects.R script:
- # - only need fish (JSATS) from: 2013, 2016, and 2017
- # - only need fish (all groups) that reach either Ben or Chipps recs
- # - End Recs: "BeniciaW"  "ChippsW"
- # - Rename some receiver locations to agree with the names in the distance matrices
-
+source("R/utils.R")
 #-------------------------------------------------------#
 # Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
 
@@ -19,169 +13,42 @@
 # Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
 
 #-------------------------------------------------------#
-# Re-factored approach to creating distance traveled matrix: dbd_allfish function
+if(FALSE) { # ran on 2022-02-17; need to add to makefile
+# inputs, made in R/clean_CM_Vemco_data.R
+v2 = readRDS("data_clean/v2.rds") 
+mat = readRDS("data_clean/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds")
 #-------------------------------------------------------#
+# Small tests
+test1 = dpd_allfish(detdf = v2[v2$FishID == unique(v2$FishID)[2], ],
+                    distance_matrix = mat)
+test = dpd_allfish(detdf = v2[v2$FishID == "LFC0687", ], 
+                   distance_matrix = mat)
 
-# 1. order detections by FishID and date; filter down to the first detection at each receiver
-
-# 2. create lagged detection columns; create movement column by pasting
-
-# 3. join with distance matrix data to get distance each movement represents
-
-# group by fishID & date; the total distance traveled column = the distance traveled from the previous recorded movement to that date
-
-# 4. Create column of lagged difftime = number of days elapsed since recorded previous movement
-
-# 5. create vector of full dates in between recorded detections for a given movement
-
-# 6. create vector of corresponding distances per day by dividing total distance by difftime
-
-# 7. join to a final data frame
-#-------------------------------------------------------#
-source("R/utils.R")
-library(lubridate)
-
-# load distance matrix (emailed by CJM on 2021-09-)
-mat <- read.csv("data/distance_matrices/Vemco_dist_matrix_DCC-Yolo-Tisdale_closed.txt",
-                         sep =  ",",
-                         header = TRUE)
-
-# add in battle creek movement that's missing from matrix
-battle = data.frame(ObjectID = range(mat$ObjectID)[2] + 1,
-                    Name = as.character("BtlCkAbatPnd - BattleCk10"),
-                    OriginID = NA,
-                    DestinationID = NA,
-                    DestinationRank = NA,
-                    Total_Length = as.numeric(6702.75))
-
-mat = rbind(mat, battle)
-# chk - this should be there:
-mat[mat$Name == "SR_OrdBend - SR_I-80/50Br", ]
-mat[mat$Name == "BtlCkAbatPnd - BattleCk10", ]
-mat$Total_Length_m = mat$Total_Length # rename so that the dpd_allfish fxn works
-
-# matrix data checks
-summary(mat$Total_Length)
-stopifnot(sum(rowSums(is.na(mat))) == 0) # there should be no NAs
-
-## Load detections of interest
-v = read.csv("data/detection_data/Query3.csv") # uploaded to Sharepoint by Pascale; see README
-v$DateTime_PST = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8")
-v$Date_Released = force_tz(mdy_hms(v$Date_Released), tzone = "Etc/GMT+8") # Release detection
-v$DetectDate = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8") # re-format
-stopifnot(identical(v$DateTime_PST, v$DetectDate))
-
-# TagIDs to keep
-keep = read.csv("data/travel_time/travel.time_CM.Vemco_v3.csv") # 296 fish
-keep = keep[ , c("FishID", "Release_Location", "Riverkm")]
-
-keepID = unique(keep$FishID)
-stopifnot(len(keepID) == sum(keepID %in% unique(v$FishID))) # make sure all the ones we want are found in the detection files
-
-# subset down to only these fish
-v = v[v$FishID %in% keepID, ]
-
-# add release detection
-# build release detection df
-reldet = merge(keep, v[ !duplicated(v$FishID) , c("FishID", "Date_Released")]) # Bring in date_released col
-table(reldet$Release_Location, reldet$Riverkm)
-
-# re-structure dataframe to match v
-reldet$Lat = reldet$Lon = 0
-reldet$DateTime_PST = reldet$DetectDate = reldet$Date_Released
-reldet$General_Location = reldet$Location = reldet$Release_Location
-
-sum(!(colnames(reldet) %in% colnames(v)))
-identical(sort(colnames(v)) , sort(colnames(reldet)))
-
-# place them in the same order
-vnames = colnames(v)
-reldet = reldet[ , vnames]
-
-# add release detection df
-v2 = rbind(v, reldet)
-v2$GEN = v2$General_Location
-v2$RKM = v2$Riverkm
-
-
-# test data frame:
-saveRDS(v2, "data_clean/v2.rds")
-
-#-------------------------------------------------------#
-#firsttest
-test1 = dpd_allfish(detdf = v2[v2$FishID == unique(v2$FishID)[2], ], distance_matrix = mat)
-test = dpd_allfish(df = v2[v2$FishID == "LFC0687", ], distance_matrix = mat)
 # big test: all fish
-bigtest = dpd_allfish(v2, mat) # 296 fish
+f1 = split(v2, v2$FishID)
+f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
-saveRDS(bigtest, "data_clean/CM_vemco_distance_per_day.rds")
+f2 = lapply(f1, dpd_allfish, distance_matrix = mat)
 
-bigtest = readRDS("data_clean/CM_vemco_distance_per_day.rds") # 2007-2011
-
-dt = bigtest[lubridate::year(bigtest$Date) == 2007, ]
-
-library(dplyr)
-
-dt %>% 
-  group_by(FishID) %>% 
-  arrange(Date) %>% 
-  padr::pad(interval = "day",
-            start_val = min(dt$Date),
-            end_val = max(dt$Date)) %>% 
-  ungroup() -> dt07
-
-dt07 = tidyr::pivot_wider(dt07, names_from = Date, values_from = Distance_m)
-dim(dt07)
-dt07[1:10, 1:5]
-dates = as.character(sort(as.Date(colnames(dt07)[2:336])))
-
-dt07 = dt07[ , c("FishID", dates)]
-
-write.csv(dt07, "results/CM_vemco_2007.csv", row.names = FALSE)
-
-#-------------------------------------------------------#
-dt08 = bigtest[lubridate::year(bigtest$Date) == 2008, ]
-
-dt08 %>% 
-  group_by(FishID) %>% 
-  arrange(Date) %>% 
-  padr::pad(interval = "day",
-            start_val = min(dt08$Date),
-            end_val = max(dt08$Date)) %>% 
-  ungroup() -> dt08
-
-csn(dt08)
-
-dt08 = tidyr::pivot_wider(dt08, names_from = Date, values_from = Distance_m)
-dim(dt08)
-dt08[110:115, 1:5]
-dates = as.character(sort(as.Date(colnames(dt08)[2:367])))
-dt08 = dt08[ , c("FishID", dates)]
-
-write.csv(dt08, "results/CM_vemco_2008.csv", row.names = FALSE)
-
+f2 = do.call(rbind, f2)
+saveRDS(f2, "data_clean/CJVemco_distance_per_day2022-02-17.rds")
+}
 #-------------------------------------------------------#
 
-dt09 = bigtest[lubridate::year(bigtest$Date) == 2009, ]
+# split into different years, make a data frame with days as columns
+# columns should go from minimum of data series for that year to maximum, with padded days in between for missing days and NAs for the fish with no data on those days
+f2 = readRDS("data_clean/CJVemco_distance_per_day2022-02-17.rds")
 
-dt09 %>% 
-  group_by(FishID) %>% 
-  arrange(Date) %>% 
-  padr::pad(interval = "day",
-            start_val = min(dt09$Date),
-            end_val = max(dt09$Date)) %>% 
-  ungroup() -> dt09
+# subset the dataset to only the years we need
+years = 2007:2009
 
-csn(dt09)
+f3 = subset(f2, lubridate::year(f2$Date) %in% years)
 
-dt09 = tidyr::pivot_wider(dt09, names_from = Date, values_from = Distance_m)
+f3_split = split(f3, lubridate::year(f3$Date)) # can split by anything - whatever we need
 
-dt09[1:10, 1:5]
-dim(dt09)
-dates = as.character(sort(as.Date(colnames(dt09)[2:366])))
-dt09 = dt09[ , c("FishID", dates)]
+ans = lapply(f3_split, make_matrix)
 
-write.csv(dt09, "results/CM_vemco_2009.csv", row.names = FALSE)
+mapply(write.csv, x = ans, file = paste0("results/CJVemco_DFA_", names(ans), ".csv"), row.names = FALSE)
 
 #-------------------------------------------------------#
 # DFA Matrix for Yolo/ACE 2012-2013 fish
