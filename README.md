@@ -1,14 +1,31 @@
 # acoustic-telemetry-synthesis
 acoustic telemetry synthesis for describing juvenile Chinook diversity 
 
-# File Dependencies:
+## Distance Per Day matrices needed:
 
-    R/utils.R : none
-    R/clean_all_detects.R: 
-      - data/detection_data/all_JSATS.csv
-      - data/tagging_data/dat4Von.csv
-      - R/clean_tagging_metadata:
-          - data/tagging_data/Tagging_Fish_Metadata.txt
+JSATS - 2013, 2014, 2015, 2016, 2017
+Yolo/Army corps - 2012, 2013, 2016 
+Cyril's Vemco data - 2007, 2008, 2009, 2010, 2011 (Water Years - October 1 to September 30)
+
+# Makefile tips
+
+script, input(s), then output (single)
+
+
+# Datasets:
+
+## JSATS
+
+  data_clean/jsats_dfa_detects.rds: R/clean_all_detects.R R/utils.R R/clean_tagging_metadata.R data/tagging_data/Tagging_Fish_Metadata.txt
+                                                          
+                                                          
+                                                                  
+  data_clean/jsats_dfa_detects_fishpaths.rds | needs: R/clean_all_detects.R                                                     
+
+
+## Yolo
+
+
     
 # Package Dependencies:
 

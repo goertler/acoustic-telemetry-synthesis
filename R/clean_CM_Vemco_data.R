@@ -24,10 +24,27 @@ battle = data.frame(ObjectID = range(mat$ObjectID)[2] + 1,
                     DestinationRank = NA,
                     Total_Length = as.numeric(6893.039)) # from Pascale, 2/17
 
-mat = rbind(mat, battle)
+mrgc = data.frame(ObjectID = range(mat$ObjectID)[2] + 1,
+                    Name = as.character("Richmond Bridge - MRGC"),
+                    OriginID = NA,
+                    DestinationID = NA,
+                    DestinationRank = NA,
+                    Total_Length = as.numeric(407.85)) # from Pascale, 2/17
+
+rich = data.frame(ObjectID = range(mat$ObjectID)[2] + 1,
+                    Name = as.character("MRGC - Richmond Bridge"),
+                    OriginID = NA,
+                    DestinationID = NA,
+                    DestinationRank = NA,
+                    Total_Length = as.numeric(407.85)) # from Pascale, 2/17
+
+mat = rbind(mat, battle, mrgc, rich)
 # chk - this should be there:
 mat[mat$Name == "SR_OrdBend - SR_I-80/50Br", ]
 mat[mat$Name == "BtlCkAbatPnd - BattleCk10", ]
+mat[mat$Name == "Richmond Bridge - MRGC", ]
+mat[mat$Name == "MRGC - Richmond Bridge", ]
+
 mat$Total_Length_m = mat$Total_Length # rename so that the dpd_allfish fxn works
 
 # matrix data checks

@@ -5,7 +5,7 @@
 # Fri Jul 24 14:01:50 2020 ------------------------------
 
 # this script gets sourced in line 30 of the DFA_dataorg_distmatrix_MEJ.R script
-# calls: R/clean_tagging_metadata
+# calls: R/clean_tagging_metadata, R/utils.R
 source("R/utils.R")
 #-------------------------------------------------------#
 if(FALSE){

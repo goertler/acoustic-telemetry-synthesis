@@ -1,5 +1,5 @@
 #-------------------------------------------------------#
-# Distance Matrix calcs
+# Distance Matrix calcs for JSATs data
 # refactored, M. Johnston
 # Mon Feb 15 11:52:30 2021 ------------------------------
 
