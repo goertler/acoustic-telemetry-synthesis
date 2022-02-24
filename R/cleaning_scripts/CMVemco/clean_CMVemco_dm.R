@@ -1,5 +1,5 @@
 # M. Johnston
-# Clean CJVemco_distance matrix
+# Load and clean CJVemco_distance matrix
 # Fri Feb 11 09:26:16 2022 ------------------------------
 
 source("R/utils.R")

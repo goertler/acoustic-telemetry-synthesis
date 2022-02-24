@@ -23,7 +23,16 @@ script, input(s), then output (single)
   data_clean/jsats_dfa_detects_fishpaths.rds | needs: R/clean_all_detects.R                                                     
 
 
-## Yolo
+## Yolo/Ace
+
+
+## CMVemco
+
+data_clean/CMVemco/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds: R/cleaning_scripts/CMVemco/clean_CMVemco_dm.R data/distance_matrices/Vemco_dist_matrix_DCC-Yolo-Tisdale_closed.txt
+
+data_clean/CMVemco/exclude_loc.clean.csv: R/cleaning_scripts/CMVemco/make_exclude_loc_csv.R
+
+data_clean/CMVemco/v2.rds: data/CMVemco/Query3.csv, data_clean/CMVemco/exclude_loc_clean.csv, data/CMVemco/travel.time_CM.Vemco_v3.csv
 
 
     

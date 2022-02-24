@@ -6,7 +6,7 @@ source("R/utils.R")
 library(lubridate)
 
 ## Load detections of interest
-v = as.data.frame(data.table::fread("data/detection_data/Query3.csv")) # uploaded to Sharepoint by Pascale; see README
+v = as.data.frame(data.table::fread("data/CMVemco/Query3.csv")) # uploaded to Sharepoint by Pascale; see README
 v$DateTime_PST = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8")
 v$Date_Released = force_tz(mdy_hms(v$Date_Released), tzone = "Etc/GMT+8") # Release detection
 v$DetectDate = force_tz(mdy_hms(v$DetectDate), tzone = "Etc/GMT+8") # re-format
@@ -19,7 +19,7 @@ stopifnot(length(loc.keep) == sum(loc.keep %in% unique(v$General_Location)))
 v = v[v$General_Location %in% loc.keep, ]
 
 # TagIDs to keep
-keep = read.csv("data/travel_time/travel.time_CM.Vemco_v3.csv") # 296 fish, 2007-2011
+keep = read.csv("data/CMVemco/travel.time_CM.Vemco_v3.csv") # 296 fish, 2007-2011
 keep = keep[ , c("FishID", "Release_Location", "Riverkm")]
 
 keepID = unique(keep$FishID)
