@@ -1,7 +1,8 @@
 #-------------------------------------------------------#
 # Distance Matrix calcs
 # refactored, M. Johnston
-# Mon Feb 15 11:52:30 2021 ------------------------------
+# Thu Feb 24 14:15:03 2022 ------------------------------
+
 source("R/utils.R")
 #-------------------------------------------------------#
 # Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
@@ -13,8 +14,8 @@ source("R/utils.R")
 # Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
 
 #-------------------------------------------------------#
-v2 = readRDS("data_clean/v2.rds") 
-mat = readRDS("data_clean/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds")
+v2 = readRDS("data_clean/CMVemco/v2.rds") 
+mat = readRDS("data_clean/CMVemco/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds")
 #-------------------------------------------------------#
 # Small tests
 test1 = dpd_allfish(detdf = v2[v2$FishID == unique(v2$FishID)[2], ],
@@ -42,5 +43,5 @@ ans = lapply(f3_split, make_matrix)
 
 mapply(write.csv, 
        x = ans, 
-       file = paste0("results/CJVemco_DFA_", names(ans), ".csv"), 
+       file = paste0("results/CJVemco/", names(ans), ".csv"), 
        row.names = FALSE)

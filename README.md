@@ -7,9 +7,7 @@ JSATS - 2013, 2014, 2015, 2016, 2017
 Yolo/Army corps - 2012, 2013, 2016 
 Cyril's Vemco data - 2007, 2008, 2009, 2010, 2011 (Water Years - October 1 to September 30)
 
-# Makefile tips
-
-script, input(s), then output (single)
+recipe: script, input(s), then output (single)
 
 
 # Datasets:
@@ -34,7 +32,7 @@ data_clean/CMVemco/exclude_loc.clean.csv: R/cleaning_scripts/CMVemco/make_exclud
 
 data_clean/CMVemco/v2.rds: data/CMVemco/Query3.csv, data_clean/CMVemco/exclude_loc_clean.csv, data/CMVemco/travel.time_CM.Vemco_v3.csv
 
-
+results/CJVemco/*.csv 
     
 # Package Dependencies:
 
