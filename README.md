@@ -14,12 +14,12 @@ recipe: script, input(s), then output (single)
 
 ## JSATS
 
-  data_clean/jsats_dfa_detects.rds: R/clean_all_detects.R R/utils.R R/clean_tagging_metadata.R data/tagging_data/Tagging_Fish_Metadata.txt
-                                                          
-                                                          
-                                                                  
-  data_clean/jsats_dfa_detects_fishpaths.rds | needs: R/clean_all_detects.R                                                     
+### detections
+data_clean/JSATS/jsats_detects2013-2017.rds: R/cleaning_scripts/clean_JSATS_dets R/utils.R data/tagging_data/Tagging_Fish_Metadata.txt, R/utils.R
 
+### dpd matrices:   
+results/JSATS/*.csv: R/results_scripts/JSATS_dpd.R, R/utils.R, data_clean/JSATS/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv, data_clean/JSATS/jsats_detects2013-2017.rds
+                                           
 
 ## Yolo/Ace
 
@@ -32,7 +32,8 @@ data_clean/CMVemco/exclude_loc.clean.csv: R/cleaning_scripts/CMVemco/make_exclud
 
 data_clean/CMVemco/v2.rds: data/CMVemco/Query3.csv, data_clean/CMVemco/exclude_loc_clean.csv, data/CMVemco/travel.time_CM.Vemco_v3.csv
 
-results/CJVemco/*.csv 
+### dpd matrices:
+results/CJVemco/*.csv : R/results_scripts/CMVemco_dpd.R R/utils.R data_clean/CMVemco/v2.rds, data_clean/CMVemco/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds
     
 # Package Dependencies:
 

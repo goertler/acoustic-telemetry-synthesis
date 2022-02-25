@@ -28,7 +28,7 @@ all_detects$DetectDate <- as.POSIXct(all_detects$DateTime_PST,
 #-------------------------------------------------------#
 
 # NEW METHOD: use Pascale's pre-made .csv (not uploaded to github b/c 550MB)
-all_detects = data.table::fread("data/detection_data/all_JSATS.csv")
+all_detects = data.table::fread("data/JSATS/all_JSATS.csv")
 all_detects = as.data.frame(all_detects)
 
 all_detects$DetectDate = as.Date(as.POSIXct(all_detects$DateTime_PST,
@@ -220,31 +220,20 @@ ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
 #-------------------------------------------------------#
 # Build/load fishpaths of all JSATs detections:
 #-------------------------------------------------------#
-remake_paths = FALSE # change to TRUE to remake this file
-if(!file.exists("data_clean/jsats_dfa_detects_fishpaths.rds") | remake_paths) {
-  # install tagtales and fishpals if not installed:
 
-  github.packages <- c("fishpals", "tagtales")
+new.gh.pkgs <- github.packages[!("tagtales" %in% installed.packages()[, "Package"])]
 
-  github.package_sites <- c("fishsciences/fishpals", "Myfanwy/tagtales")
-
-  new.gh.pkgs <- github.packages[!(github.packages %in% installed.packages()[, "Package"])]
-
-  if(length(new.gh.pkgs)) devtools::install_github(github.package_sites)
+if(length(new.gh.pkgs)) devtools::install_github("Myfanwy/tagtales")
   
-  # build fishpaths
-  fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
-  saveRDS(fp, "data_clean/jsats_dfa_detects_fishpaths.rds")
-} else{
-  fp = readRDS("data_clean/jsats_dfa_detects_fishpaths.rds")
-}
+fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
+
 #-------------------------------------------------------#
 
 
 #-------------------------------------------------------#
 # Subset down to the years and fish we need for the DFA:
 
-ans3 = ans3[ans3$Year %in% c(2013, 2016, 2017), ]
+ans3 = ans3[ans3$Year %in% 2013:2017, ]
 len(ans3$FishID)
 
 exits = unique(ans3$FishID[ans3$GEN %in% c("Benicia", "ChippsW")]) # only use the fish detected at Chipps/Benicia # 691 fish for DFA analysis
@@ -346,11 +335,6 @@ onedet = detsumm$FishID[detsumm$n == 1]
 
 unique(ans3$GEN[ans3$FishID %in% onedet])
 
-
-# write.csv(data.frame(FishID = DFAids), "results/JSATS_FishIDs_for_DFA_analysis.csv", 
-#           row.names = FALSE) # for Pascale
-
-
-saveRDS(ans3, "data_clean/jsats_dfa_detects.rds")
+saveRDS(ans3, "data_clean/JSATS/jsats_detects2013-2017.rds")
 
 
