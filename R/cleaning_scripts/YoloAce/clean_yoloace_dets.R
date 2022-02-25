@@ -1,20 +1,17 @@
-# Clean Yolo and ACE detections, 2013
+# Clean Yolo and ACE detections, 2012-2013
 # M. Johnston
-# Sat Jul  3 20:26:27 2021 ------------------------------
+# Thu Feb 24 21:32:12 2022 ------------------------------
 source("R/utils.R")
 # data origins: from Myfanwy's 2018 publication
 #-------------------------------------------------------#
-retidy_data = FALSE # set to true if you want to re-make
 
-if(retidy_data | !file.exists("data_clean/yoloace_dfa_detects.rds")){
-
-  y = readRDS("data_clean/yolo2012-2013_dets.rds")
-  y$Year = lubridate::year(y$DateTimeUTC)
-  y$RelLoc = "Yolo"
-  y = dplyr::rename(y, Rkm = RKM)
-  ace = readRDS("data_clean/ace2012-2013_dets.rds")
-  ace$Year = lubridate::year(ace$DateTimeUTC)
-  ace$RelLoc = "Sac"
+y = readRDS("data_clean/YoloAce/yolo2012-2013_dets.rds")
+y$Year = lubridate::year(y$DateTimeUTC)
+y$RelLoc = "Yolo"
+y = dplyr::rename(y, Rkm = RKM)
+ace = readRDS("data_clean/YoloAce/ace2012-2013_dets.rds")
+ace$Year = lubridate::year(ace$DateTimeUTC)
+ace$RelLoc = "Sac"
   
 reldet= rbind(y, ace)
 reldet$TagGroup = paste0(reldet$RelLoc,reldet$Year)
@@ -58,5 +55,4 @@ setdiff(unique(dmnames), unique(d$GEN)) # MS15 is in the distance matrix but not
 
 d$FishID = d$TagID # for the dpd function
 
-saveRDS(d, "data_clean/yoloace_dfa_detects.rds")
-}
+saveRDS(d, "data_clean/YoloAce/yoloace_dfa_detects.rds")
