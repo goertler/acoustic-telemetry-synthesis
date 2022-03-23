@@ -4,6 +4,8 @@
 # Thu Feb 24 14:15:03 2022 ------------------------------
 
 source("R/utils.R")
+devtools::install_github("fishsciences/cfs.misc")
+
 #-------------------------------------------------------#
 # Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
 
@@ -33,15 +35,11 @@ f2 = do.call(rbind, f2)
 
 
 # subset the dataset to only the years we need
-years = 2007:2011
-
-f3 = subset(f2, lubridate::year(f2$Date) %in% years)
-
-f3_split = split(f3, lubridate::year(f3$Date)) # can split by anything - whatever we need
+f3_split = split(f2, cfs.misc::water_year(f2$Date)) # can split by anything - whatever we need
 
 ans = lapply(f3_split, make_matrix)
 
 mapply(write.csv, 
        x = ans, 
-       file = paste0("results/CJVemco/", names(ans), ".csv"), 
+       file = paste0("results/CJVemco/", names(ans), "_CJVemco_dpd.csv"), 
        row.names = FALSE)

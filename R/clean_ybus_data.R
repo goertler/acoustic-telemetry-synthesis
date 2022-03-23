@@ -1,24 +1,34 @@
 # Clean ybus data - prep for distance matrix calcs
 #  M. Johnston
-# Thu May 20 11:08:43 2021 ------------------------------
-
+# Fri Feb 25 09:15:19 2022 ------------------------------
+library(lubridate)
+library(stringr)
 #### Repeat for YBUS data (ybus data = 2016 only)
 
-ybus<- read.csv("data/detection_data/ybus_detections.csv", stringsAsFactors = F)
-route <- read.csv("data/CV_data/ybusCV.csv", stringsAsFactors = F)
+ybus = read.csv("data/YBUS/ybus_detections.csv", stringsAsFactors = F)
+route = read.csv("data/YBUS/ybusCV.csv", stringsAsFactors = F)
+
+dist_DCC_Yolo_Tisd_closed  <-
+  read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv",
+           stringsAsFactors = FALSE)
+
+dist_DCC_Yolo_Tisd_open <-
+  read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_open_new.csv",
+           stringsAsFactors = FALSE)
+
 
 ## Merge pertinent info
-ybus <- dplyr::rename(ybus, TagID = Transmitter) 
-ybus <- dplyr::left_join(ybus, route, by = "TagID")
-ybus <- ybus[, -c(1, 6, 8, 11)]
-str(ybus)
+ybus = dplyr::rename(ybus, TagID = Transmitter) 
+ybus = dplyr::left_join(ybus, route, by = "TagID") # bring in FishID
+dropcols = c("X.x", "route", "X.y", "travel_time")
+keep = setdiff(colnames(ybus), dropcols)
+
+ybus = ybus[ , keep]
 
 ## Reformat dates, make sure we have hours/mins/secs
 ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S", tz='EST')
-sum(is.na(ybus$DetectDate)) # need to deal with NAs in date
-## delta and yolo measurements for non-mainstem routes were done from downstream going up, and should be
-## upstream going down for this analysis. Therefore, I have remeasured some of the most frequented delta receivers from upstream going down.
-library(stringr)
+
+
 ## Now fix some GEN loc names that don't  match in detection files vs dist matrices
 ybus[which(ybus$GEN == "3A"|ybus$GEN == "3B"|ybus$GEN == "3C"|ybus$GEN == "3D"),"GEN"] <- "Hood"
 ybus[which(ybus$GEN == "MAL.2"|
@@ -62,19 +72,52 @@ ybus <- ybus[!ybus$GEN %in% missing,]
 all_detects <- ybus[order(ybus$FishID, ybus$DetectDate), ] 
 all_detects$prev_FishID <- NA
 all_detects$prev_GEN <- NA
-all_detects[,c("prev_FishID", "prev_GEN")] <- as.data.frame(shift(x = all_detects[,c("FishID", "GEN")], n = 1, fill = NA, type = "lag") ) 
-first_detects <- all_detects[all_detects$FishID != all_detects$prev_FishID | all_detects$GEN != all_detects$prev_GEN,] #first detections or first detections at a new receiver
-first_detects$movement <- paste(first_detects$prev_GEN,"-", first_detects$GEN, sep = " ")
+
+all_detects[, c("prev_FishID", "prev_GEN")] <-
+  as.data.frame(data.table::shift(
+    x = all_detects[, c("FishID", "GEN")],
+    n = 1,
+    fill = NA,
+    type = "lag"
+  ))
+
+first_detects <-
+  all_detects[all_detects$FishID != all_detects$prev_FishID |
+                all_detects$GEN != all_detects$prev_GEN, ] #first detections or first detections at a new receiver
+
+first_detects$movement <-
+  paste(first_detects$prev_GEN, "-", first_detects$GEN, sep = " ")
 
 ## removes unneccessary columns from distance matrices to prepare for a join with the detection data
 
-test<- filter(first_detects,Route!="Yolo_Bypass")
-test<- merge(test, dist_DCC_Yolo_Tisd_closed[,c("Name","Total_Length_m")], by.x  ="movement", by.y = "Name", all.x = T)
-yolo<- filter(first_detects, Route=="Yolo_Bypass")
-yolo<- merge(yolo, dist_DCC_Yolo_Tisd_open[,c("Name","Total_Length_m")], by.x  ="movement", by.y = "Name", all.x = T)
-first_detects<- bind_rows(test, yolo)
-first_detects <- first_detects[order(first_detects$FishID, first_detects$DetectDate),]
-first_detects[which(first_detects$FishID != first_detects$prev_FishID), "Total_Length_m"] <- 0 
+test <- filter(first_detects,Route!="Yolo_Bypass")
+
+test <-
+  merge(
+    test,
+    dist_DCC_Yolo_Tisd_closed[, c("Name", "Total_Length_m")],
+    by.x  = "movement",
+    by.y = "Name",
+    all.x = T
+  )
+
+yolo <- filter(first_detects, Route == "Yolo_Bypass")
+
+yolo <-
+  merge(
+    yolo,
+    dist_DCC_Yolo_Tisd_open[, c("Name", "Total_Length_m")],
+    by.x  = "movement",
+    by.y = "Name",
+    all.x = T
+  )
+
+first_detects <- bind_rows(test, yolo)
+
+first_detects <-
+  first_detects[order(first_detects$FishID, first_detects$DetectDate), ]
+first_detects[which(first_detects$FishID != first_detects$prev_FishID), "Total_Length_m"] <-
+  0
 
 ## Manually add in some distances not in matrix
 first_detects[first_detects$movement == "YB_OldRiverRd - I80_yolo", "Total_Length_m"] <- 12880

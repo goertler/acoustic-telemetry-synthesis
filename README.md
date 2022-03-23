@@ -10,12 +10,12 @@ Cyril's Vemco data - 2007, 2008, 2009, 2010, 2011 (Water Years - October 1 to Se
 recipe: script, input(s), then output (single)
 
 
-# Datasets:
+# Datasets and Recipes:
 
 ## JSATS
 
 ### detections
-data_clean/JSATS/jsats_detects2013-2017.rds: R/cleaning_scripts/clean_JSATS_dets R/utils.R data/tagging_data/Tagging_Fish_Metadata.txt, R/utils.R
+data_clean/JSATS/jsats_detects2013-2017.rds: R/cleaning_scripts/clean_JSATS_dets R/utils.R data/tagging_data/Tagging_Fish_Metadata.txt R/utils.R
 
 ### dpd matrices:   
 results/JSATS/*.csv: R/results_scripts/JSATS_dpd.R R/utils.R data_clean/JSATS/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv data_clean/JSATS/jsats_detects2013-2017.rds
@@ -42,6 +42,8 @@ data_clean/CMVemco/v2.rds: data/CMVemco/Query3.csv, data_clean/CMVemco/exclude_l
 results/CJVemco/*.csv : R/results_scripts/CMVemco_dpd.R R/utils.R data_clean/CMVemco/v2.rds, data_clean/CMVemco/CM_vemco_distance_matrix_DCC-Yolo-Tisdale_closed_clean.rds
 
 ## YBUS
+
+### detections
 
 
     

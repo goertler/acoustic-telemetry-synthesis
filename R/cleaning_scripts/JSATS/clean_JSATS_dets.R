@@ -2,11 +2,10 @@
 # Fix GEN locations in all_detects
 # M. Johnston - re-factored from T. Grimes & C. Michel's code
 # DFA analysis
-# Fri Jul 24 14:01:50 2020 ------------------------------
+# Thu Mar 3 21:13:30 2022 ------------------------------
 
-# this script gets sourced in line 30 of the DFA_dataorg_distmatrix_MEJ.R script
-# calls: R/clean_tagging_metadata, R/utils.R
 source("R/utils.R")
+library(dplyr)
 #-------------------------------------------------------#
 if(FALSE){
 # OLD METHOD: build from raw detection files
@@ -28,8 +27,7 @@ all_detects$DetectDate <- as.POSIXct(all_detects$DateTime_PST,
 #-------------------------------------------------------#
 
 # NEW METHOD: use Pascale's pre-made .csv (not uploaded to github b/c 550MB)
-all_detects = data.table::fread("data/JSATS/all_JSATS.csv")
-all_detects = as.data.frame(all_detects)
+all_detects = as.data.frame(data.table::fread("data/JSATS/all_JSATS.csv"))
 
 all_detects$DetectDate = as.Date(as.POSIXct(all_detects$DateTime_PST,
                                             tz = "Etc/GMT+8",
@@ -40,13 +38,37 @@ all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
                                        tz = "Etc/GMT+8", 
                                       format = "%m/%d/%Y %H:%M:%OS")
 
+#-------------------------------------------------------#
+# Subset down to the years and fish we need for the DFA:
+all_detects = all_detects[lubridate::year(all_detects$DetectDate) != 2012, ] # we want 2013:2017
+
+## combine certain locations where receivers are too close together
+exits = unique(all_detects$FishID[all_detects$GEN %in% c("ChippsE", "ChippsW", "Benicia")]) # only use the fish detected at Chipps/Benicia # 575 fish for DFA analysis
+
+all_detects = all_detects[all_detects$FishID %in% exits, ]
+
+## Remove detections at some key locations which seem to have a lot of false detects
+all_detects <-
+  all_detects[!all_detects$GEN %in% c(
+    "Battle_Conf",
+    "ButteBr",
+    "AbvColusaBrRT",
+    "BattleCk2",
+    "BattleCk3",
+    "Sac_Ist_Bridge_Rel",
+    "MillCk2_Rel",
+    "FR_Vance_Rel",
+    "MinerNorth"
+  ), ] # added Sac_Ist_Bridge_Rel,MillCk2_Rel,and FR_Vance_Rel because they are not in the distance matrix
+
+## Remove detections for certain fish, seems to have bad data (maybe 2 tags in system with that tag code? Or just false detects)
+all_detects <- all_detects[!all_detects$FishID %in% c(
+  "CFC2013-080",
+  "CFR2016-079"
+), ]
 
 # load and clean tagging metadata
 #-------------------------------------------------------#
-# M. Johnston
-# Clean and prep tagging metadata - JSATS and YBUS
-# Fri Jul 24 09:33:14 2020 ------------------------------
-## Load and clean tag metadata
 
 tagging_meta <-
   read.csv("data/JSATS/Tagging_Fish_Metadata.txt",
@@ -55,20 +77,20 @@ tagging_meta <-
 tagging_meta$Rel_datetime <-
   as.POSIXct(tagging_meta$Rel_datetime, 
              tz = "Etc/GMT+8", 
-             format = "%m/%d/%Y %H:%M:%S")
+             format = "%m/%d/%Y %H:%M:%OS")
 
 stopifnot(length(unique(tagging_meta$FishID)) == nrow(tagging_meta))     # test that each row represents a unique fishID
 
-#### The following few lines of code massage things that could probably be rectified in the JSATS database ####
-## Change fish_type "Chinook" to "RBDD Chinook" to be more informative
 
+## Change fish_type "Chinook" to "RBDD Chinook" to be more informative
 # original code:
 tagging_meta[tagging_meta$Fish_Type == "Chinook" & tagging_meta$StudyID == "RBDD-2017", "Fish_Type"] <- "RBDD Chinook"
-
 
 ## Change Fish_Type "Fall run Chinook" for StudyID "ColemanFall_2016" to more informative "CNFH Fall Chinook"
 tagging_meta[tagging_meta$Fish_Type == "Fall run Coleman", "Fish_Type"] <- "CNFH Fall Chinook"
 
+# make sure all analysis fish are in the metadata:
+stopifnot(setdiff(all_detects$FishID, tagging_meta$FishID) == 0)
 
 ## Merge in pertinent data for grouping by runs/years
 all_detects <-
@@ -92,74 +114,51 @@ all_detects  = all_detects[ , c("FishID",
                                 )]
 
 
-## Remove detections at some key locations which seem to have a lot of false detects
-all_detects <-
-  all_detects[!all_detects$GEN %in% c(
-    "Battle_Conf",
-    "ButteBr",
-    "AbvColusaBrRT",
-    "BattleCk2",
-    "BattleCk3",
-    "Sac_Ist_Bridge_Rel",
-    "MillCk2_Rel",
-    "FR_Vance_Rel",
-    "MinerNorth"
-  ), ] # added Sac_Ist_Bridge_Rel,MillCk2_Rel,and FR_Vance_Rel because they are not in the distance matrix
-
-## Remove detections for certain fish, seems to have bad data (maybe 2 tags in system with that tag code? Or just false detects)
-all_detects <- all_detects[!all_detects$FishID %in% c(
-  "CFC2013-080",
-  "CFR2016-079"
-  ), ]
-
 ## Now fix some GEN loc names that don't exactly match in detection files vs dist matrices
-all_detects[which(all_detects$GEN == "BattleCk_RST"), "GEN"] <-
+all_detects[all_detects$GEN == "BattleCk_RST", "GEN"] <-
   "BattleCk_RST_Rel"
-all_detects[which(all_detects$GEN == "FR Gridley Release"), "GEN"] <-
+all_detects[all_detects$GEN == "FR Gridley Release", "GEN"] <-
   "Gridley_Rel"
-all_detects[which(all_detects$GEN == "RBDD Release"), "GEN"] <-
+all_detects[all_detects$GEN == "RBDD Release", "GEN"] <-
   "RedBluffDivDam"
 ## Fixing more GEN loc names that don't match
-all_detects[which(all_detects$GEN == "MillCk_RST"), "GEN"] <-
+all_detects[all_detects$GEN == "MillCk_RST", "GEN"] <-
   "MillCk_RST_Rel"
-all_detects[which(all_detects$GEN == "I80-50_Br"), "GEN"] <-
+all_detects[all_detects$GEN == "I80-50_Br", "GEN"] <-
   "I80_Br"
-all_detects[which(all_detects$GEN == "BeniciaW"), "GEN"] <-
+all_detects[all_detects$GEN == "BeniciaW", "GEN"] <-
   "Benicia"
-all_detects[which(all_detects$GEN == "BlwGeorg_1"), "GEN"] <-
+all_detects[all_detects$GEN == "BlwGeorg_1", "GEN"] <-
   "BlwGeorgiana"
-all_detects[which(all_detects$GEN == "SutterBypass_Weir2_RST_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "SutterBypass_Weir2_RST_Rel", "GEN"] <-
   "SutterBypass Weir2 RST"
-all_detects[which(all_detects$GEN == "GeorgSl_1"), "GEN"] <-
+all_detects[all_detects$GEN == "GeorgSl_1", "GEN"] <-
   "Georgiana_Slough"
-all_detects[which(all_detects$GEN == "FR_Gridley_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "FR_Gridley_Rel", "GEN"] <-
   "Gridley_Rel"
-all_detects[which(all_detects$GEN == "RBDD_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "RBDD_Rel", "GEN"] <-
   "RedBluffDivDam"
-all_detects[which(all_detects$GEN == "RBDD1"), "GEN"] <-
+all_detects[all_detects$GEN == "RBDD1", "GEN"] <-
   "RedBluffDivDam"
-all_detects[which(all_detects$GEN == "RBDD2"), "GEN"] <-
+all_detects[all_detects$GEN == "RBDD2", "GEN"] <-
   "RedBluffDivDam"
-all_detects[which(all_detects$GEN == "FR_Boyds_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "FR_Boyds_Rel", "GEN"] <-
   "FR Boyds Release"
-all_detects[which(all_detects$GEN == "Tower_Bridge_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "Tower_Bridge_Rel", "GEN"] <-
   "TowerBridge"
-all_detects[which(all_detects$GEN == "AR_Sunrise_Ramp_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "AR_Sunrise_Ramp_Rel", "GEN"] <-
   "AR_Sunrise_Ramp"
-all_detects[which(all_detects$GEN == "DeerCk_RST_Rel"), "GEN"] <-
+all_detects[all_detects$GEN == "DeerCk_RST_Rel", "GEN"] <-
   "DeerCk_RST"
-all_detects[which(all_detects$GEN == "FreeportDiv"), "GEN"] <-
+all_detects[all_detects$GEN == "FreeportDiv", "GEN"] <-
   "Freeport"
 
 ## combine certain locations where receivers are too close together
-all_detects[which(all_detects$GEN == "ChippsE"), "GEN"] <- "ChippsW" # this is how it is in the dist matrix
-all_detects[which(all_detects$GEN == "GoldenGateE"), "GEN"] <- "GoldenGateW"
+all_detects[all_detects$GEN == "ChippsE", "GEN"] <- "ChippsW" # this is how it is in the dist matrix
+all_detects[all_detects$GEN == "GoldenGateE", "GEN"] <- "GoldenGateW"
 
 ## remove mokbase since it is one site we don't have distance matrix for
-all_detects <- all_detects[which(all_detects$GEN != "MokBase"),]
-
-all_detects$Year = lubridate::year(all_detects$DateTime_PST)
-len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2013])
+all_detects <- all_detects[all_detects$GEN != "MokBase",]
 
 #-------------------------------------------------------#
 # QAQC
@@ -169,7 +168,7 @@ len(all_detects$FishID[all_detects$GEN == "Benicia" & all_detects$Year == 2013])
 stopifnot(anyDuplicated(tagging_meta$FishID) == 0)
 
 # check for simultaneous detections within fish and locations
-i = duplicated(all_detects) # 5848 duplicate rows
+i = duplicated(all_detects) 
 i2 = duplicated(all_detects, fromLast = TRUE)
 
 dups = all_detects[i,]
@@ -196,7 +195,6 @@ ans2 <-
         by = "FishID",
         all.x = TRUE)
 
-library(dplyr)
 
 ans2 %>% 
   group_by(FishID) %>% 
@@ -209,132 +207,122 @@ sum(chk %in% unique(too_early$FishID)) #16 of them detected prior to tagging
 
 too_early = data.frame(too_early)
 
+# get rid of all the fish that had detections before tagging
 ans3 = filter(ans2, !(FishID %in% unique(too_early$FishID)))
+len(ans2$FishID) - len(ans3$FishID)
 
 ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
 
-# functions to write:
-# identify fish that go backwards
-# identify fish that have x number of detections
 
-#-------------------------------------------------------#
-# Build/load fishpaths of all JSATs detections:
-#-------------------------------------------------------#
-
-new.gh.pkgs <- github.packages[!("tagtales" %in% installed.packages()[, "Package"])]
-
-if(length(new.gh.pkgs)) devtools::install_github("Myfanwy/tagtales")
-  
-fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
-
-#-------------------------------------------------------#
-
-
-#-------------------------------------------------------#
-# Subset down to the years and fish we need for the DFA:
-
-ans3 = ans3[ans3$Year %in% 2013:2017, ]
-len(ans3$FishID)
-
-exits = unique(ans3$FishID[ans3$GEN %in% c("Benicia", "ChippsW")]) # only use the fish detected at Chipps/Benicia # 691 fish for DFA analysis
-
-ans3 = ans3[ans3$FishID %in% exits, ]
-
-len(ans3$FishID)
-#-------------------------------------------------------#
-# Only check backwards moving fish on the DFA Fish
-fpp = fp[fp$FishID %in% exits, ]
-
-test_split = split(fpp, fpp$FishID)
-
-test_split = test_split[sapply(test_split, nrow) > 0 ]
-bck1 = lapply(test_split, FUN = backwards_onefish)
-
-sum(bck1>0)
-bck1[bck1>5]
-
-# fish paths for those fish that go backwards
-bck2 = data.frame(FishID = names(bck1), nrev = as.integer(bck1))
-bck2 = bck2[bck2$nrev>0 , ]
-
-backtracks = fpp[fpp$FishID %in% bck2$FishID, ]
-bsplit = split(backtracks, backtracks$FishID)
-
-get_stns = lapply(bsplit, FUN = function(x) y = x[["GEN"]] ) # get station path from each fish
-
-#-------------------------------------------------------#
-loc.rkm <- unique(fpp[,c(4,5,7,8)])
-# break at Freeport OR 153.140
-
-# ID when fish move into tidal
-back.move.fish <- data.frame(FishID = NA, min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"))
-
- 
-for (i in unique(fpp$FishID)){
-
-  temp.dat <- fpp[fpp$FishID == i,]
-
-  tidal <- subset(temp.dat, RKM <= 153.140)
-
-    min.time = min(tidal$DateTime_PST)
-
-    temp.results <- data.frame(FishID = i, min.time = as.POSIXct(min.time,
-
-                                                 tz = "Etc/GMT+8",
-
-                                                 format = "%m/%d/%Y %H:%M:%OS"))
-
- 
-
-    back.move.fish <- rbind(back.move.fish, temp.results)
-
-}
-
- 
-# then ask if RKM is greater than 153 after min.time (TRUE/FALSE)
-
-back.test <- merge(fpp, back.move.fish, by = "FishID")
-
-back.test2 <- data.frame(FishID = NA, DateTime_PST = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), StudyID  = NA, GEN = NA, RKM = NA, Fish_Type = NA, Rel_loc = NA, Rel_rkm = NA, Year = NA, Rel_datetime = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), arrival = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), departure = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"), min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"))
-
-for (i in unique(back.test$FishID)){
-
-    temp.dat <- back.test[back.test$FishID == i,]
-
-    test2 <- subset(temp.dat, DateTime_PST > min.time)
-
-    back.test2 <- rbind(back.test2, test2)
-
-  }
-
- 
-max(back.test2$RKM, na.rm = TRUE) # maximum rkm = 153.14; FPT
-length(unique(back.test2$FishID)) # still 692 fish
-
-## detection bins
-
-ans3 %>% 
-  filter(FishID %in% exits) %>% 
-  group_by(FishID) %>% 
-  tally() -> detsumm
-
-summary(detsumm$n) # at minimum, fish have 16 detections
-
-detsumm %>%
-  filter(n < 50) %>%
-  ggplot(aes(x = as.integer(n))) +
-  geom_histogram(
-    binwidth = 1,
-    position = position_dodge(width = 1),
-    color = "black",
-    fill = "transparent"
-  ) +
-  theme_minimal()
-
-onedet = detsumm$FishID[detsumm$n == 1]
-
-unique(ans3$GEN[ans3$FishID %in% onedet])
 
 saveRDS(ans3, "data_clean/JSATS/jsats_detects2013-2017.rds")
+
+
+
+# all following code  is to check backwards movements - it is not used to make any of the analysis products
+#-------------------------------------------------------#
+if(FALSE) {
+
+  # Build/load fishpaths of all JSATs detections:
+  #-------------------------------------------------------#
+  
+  if(!require("tagtales")) devtools::install_github("Myfanwy/tagtales")
+  
+  fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
+  
+  #-------------------------------------------------------#
+
+# Only check backwards moving fish on the DFA Fish
+  fpp = fp[fp$FishID %in% exits,]
+  
+  test_split = split(fpp, fpp$FishID)
+  
+  test_split = test_split[sapply(test_split, nrow) > 0]
+  bck1 = lapply(test_split, FUN = backwards_onefish)
+  
+  # fish paths for those fish that go backwards
+  bck2 = data.frame(FishID = names(bck1), nrev = as.integer(bck1))
+  bck2 = bck2[bck2$nrev > 0 ,]
+  
+  backtracks = fpp[fpp$FishID %in% bck2$FishID,]
+  bsplit = split(backtracks, backtracks$FishID)
+  
+  get_stns = lapply(
+    bsplit,
+    FUN = function(x)
+      y = x[["GEN"]]
+  ) # get station path from each fish
+  
+  #-------------------------------------------------------#
+  loc.rkm <- unique(fpp[, c(4, 5, 7, 8)])
+  # break at Freeport OR 153.140
+  
+  # ID when fish move into tidal
+  back.move.fish <-
+    data.frame(
+      FishID = NA,
+      min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8")
+    )
+  
+  
+  for (i in unique(fpp$FishID)) {
+    temp.dat <- fpp[fpp$FishID == i, ]
+    
+    tidal <- subset(temp.dat, RKM <= 153.140)
+    
+    min.time = min(tidal$DateTime_PST)
+    
+    temp.results <-
+      data.frame(
+        FishID = i,
+        min.time = as.POSIXct(min.time,
+                              
+                              tz = "Etc/GMT+8",
+                              
+                              format = "%m/%d/%Y %H:%M:%OS")
+      )
+    
+    
+    
+    back.move.fish <- rbind(back.move.fish, temp.results)
+    
+  }
+  
+  
+  # then ask if RKM is greater than 153 after min.time (TRUE/FALSE)
+  
+  back.test <- merge(fpp, back.move.fish, by = "FishID")
+  
+  back.test2 <-
+    data.frame(
+      FishID = NA,
+      DateTime_PST = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"),
+      StudyID  = NA,
+      GEN = NA,
+      RKM = NA,
+      Fish_Type = NA,
+      Rel_loc = NA,
+      Rel_rkm = NA,
+      Year = NA,
+      Rel_datetime = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"),
+      arrival = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"),
+      departure = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"),
+      min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8")
+    )
+  
+  for (i in unique(back.test$FishID)) {
+    temp.dat <- back.test[back.test$FishID == i, ]
+    
+    test2 <- subset(temp.dat, DateTime_PST > min.time)
+    
+    back.test2 <- rbind(back.test2, test2)
+    
+  }
+  
+  
+  max(back.test2$RKM, na.rm = TRUE) # maximum rkm = 153.14; FPT
+  length(unique(back.test2$FishID)) # still 692 fish
+  
+}
 
 
