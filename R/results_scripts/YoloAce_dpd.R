@@ -4,15 +4,8 @@
 # Fri Feb 25 08:48:44 2022 ------------------------------
 
 source("R/utils.R")
-
 #-------------------------------------------------------#
-# DFA Matrix for Yolo/ACE 2012-2013 fish
-# Fri Jul  2 14:39:21 2021 ------------------------------
 
-# load distance matrix & prep for dpd_allfish function
-# This is not finalized - left as an example only; current results are incorrect as of 
-# Sat Jul  3 22:10:25 2021 ------------------------------
-#-------------------------------------------------------#
 dm_yoloace = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")
 dm_yoloace = dm_yoloace[ , c("Name_corr", "mean_Total_Length")]
 colnames(dm_yoloace) = c("Name", "Total_Length_m")
@@ -23,8 +16,6 @@ yolo_ace = readRDS("data_clean/YoloAce/yoloace_dfa_detects.rds") # created in R/
 yolo_ace$DetectDate = as.Date(yolo_ace$DateTime_PST)
 yolo_ace$Rel_rkm = yolo_ace$Rkm
 #-------------------------------------------------------#
-# 2012 fish
-
 # big test: all fish
 f1 = split(yolo_ace, yolo_ace$FishID)
 f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det

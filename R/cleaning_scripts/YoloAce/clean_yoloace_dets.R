@@ -28,23 +28,23 @@ d$GEN = d$Station
 d$GEN[d$GEN %in% c("BCE", "BCW")] <- "BC_joint"
 d$GEN[d$GEN %in% c("RM88_R", "RM88_L")] <- "RM88"
 d$GEN[d$GEN %in% c("RM71_L", "RM71_R")] <- "RM71"
-d[which(d$GEN == "I80_1"), "GEN"] <- "I_80_1"
-d[which(d$GEN == "BaseSac"), "GEN"] <- "SacMouth"
-d[which(d$GEN %in% c("BC2_joint", "BC_joint2", "BC_joint3")), "GEN"] <- "MS16"
-d[which(d$GEN == "TopofSutter"), "GEN"] <- "Sutter"
-d[which(d$GEN == "BlwGeorg"), "GEN"] <- "MS14"
+d[d$GEN == "I80_1", "GEN"] <- "I_80_1"
+d[d$GEN == "BaseSac", "GEN"] <- "SacMouth"
+d[d$GEN %in% c("BC2_joint", "BC_joint2", "BC_joint3"), "GEN"] <- "MS16"
+d[d$GEN == "TopofSutter", "GEN"] <- "Sutter"
+d[d$GEN == "BlwGeorg", "GEN"] <- "MS14"
 
 # differentiate release stations
 
 ## Sac
-d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Sac2012",
-"Sac2013")] <- "Sacramento_Release"
+d$GEN[d$GEN == "Release" &
+        d$TagGroup %in% c("Sac2012", "Sac2013")] <- "Sacramento_Release"
 
 ## Yolo
 d$GEN[d$GEN == "Release" & d$TagGroup %in% c("Yolo2012",
                                              "Yolo2013")] <- "Yolo_Release"
 
-# load distance matrix (using DCC closed only)
+# load distance matrix 
 dm = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")
 dmnames = tidyr::separate(dm, Name_corr, into = c("Nm1", "Nm2"), sep = "-")
 dmnames = unique(dmnames$Nm2)
