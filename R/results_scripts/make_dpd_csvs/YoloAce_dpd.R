@@ -35,5 +35,5 @@ ans = lapply(f3_split, make_matrix)
 
 mapply(write.csv, 
        x = ans, 
-       file = paste0("results/YoloAce/", names(ans), "_yoloace_dpd.csv"), 
+       file = paste0("results/YoloAce/distance_per_day/", names(ans), "_yoloace_dpd.csv"), 
        row.names = FALSE)

@@ -3,30 +3,45 @@
 # Fri Feb 25 09:15:19 2022 ------------------------------
 library(lubridate)
 library(stringr)
-#### Repeat for YBUS data (ybus data = 2016 only)
+library(dplyr)
 
-ybus = read.csv("data/YBUS/ybus_detections.csv", stringsAsFactors = F)
-route = read.csv("data/YBUS/ybusCV.csv", stringsAsFactors = F)
 
-dist_DCC_Yolo_Tisd_closed  <-
-  read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv",
-           stringsAsFactors = FALSE)
+#TODO: # Fri Apr  8 15:35:28 2022 ------------------------------
+#  - get release datetimes from relGEN, add to ybus
+#  - get fishID from fishID_key, add to ybus
+# - make release detection data frame, join with ybus
+#  - keep only the ybus fish that are in fishID_key - that will keep only fish with >= 2 detections & that are detected at Chipps 
+#  - check that all GENS are in distance matrix 
+#  - save clean ybus data
+#  - bring in fishID key to clean_yoloace and remake results
 
-dist_DCC_Yolo_Tisd_open <-
-  read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_open_new.csv",
-           stringsAsFactors = FALSE)
+ybus = read.csv("data/YBUS/ybus_detections.csv", stringsAsFactors = FALSE)
+ybus = dplyr::rename(ybus, TagID = Transmitter) 
+relGEN = readxl::read_excel("data/YBUS/ybusTagIDs.xlsx") # has relGEN
+ybus = merge(ybus, relGEN[ , c("TagID", "RelLoc", "time")], by = "TagID", all.x = TRUE) # keep all the fish from ybus, but not relGEN, because that's ALL the fish
 
+fishID = read.csv("data/common_data/FishID_key.csv") # has fishID
+ybus = merge(ybus, fishID[ , c("TagID", "FishID")], by = "TagID", all.x = TRUE)
+
+dist_ybus = read.csv("data/distance_matrices/Distance_Matrix_YBUS_corr.csv")
+dist_ybus = select(dist_ybus, Name = Name_corr, Total_Length_m = Total_Length)
 
 ## Merge pertinent info
-ybus = dplyr::rename(ybus, TagID = Transmitter) 
-ybus = dplyr::left_join(ybus, route, by = "TagID") # bring in FishID
-dropcols = c("X.x", "route", "X.y", "travel_time")
-keep = setdiff(colnames(ybus), dropcols)
+ybus$DateTimePST <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S", tz="Etc/GMT+8")
+ybus$RelTime = ymd_hms(ybus$time, tz = "Etc/GMT+8")
 
+# make release detections df
+reldet = select(ybus, FishID, DateTimePST = RelTime)
+reldet$GEN = "Release"
+reldet %>% 
+  group_by(FishID) %>% 
+  filter(DateTimePST == min(DateTimePST)) -> reldet
+reldet = as.data.frame(reldet)
+
+keep = c("FishID", "DateTimePST", "GEN")
 ybus = ybus[ , keep]
 
-## Reformat dates, make sure we have hours/mins/secs
-ybus$DetectDate <- as.POSIXct(ybus$DateTime, format = "%Y-%m-%d %H:%M:%S", tz='EST')
+ybus = rbind(ybus, reldet)
 
 
 ## Now fix some GEN loc names that don't  match in detection files vs dist matrices
@@ -66,8 +81,26 @@ ybus <- ybus[!ybus$GEN %in% c("5D","5A", "5B","5C"),]
 ybus <- ybus[!ybus$GEN %in% c("1A", "1C", "Above Swanstons Rd. Crossing"),]
 ## Receivers for which we dont have metadata
 missing <- c("BF.1","BF.2","BF.4","LPS.u","LPS.d")
-ybus <- ybus[!ybus$GEN %in% missing,]
+ybus <- ybus[!(ybus$GEN %in% missing),]
 
+
+# make sure all fish are detected at Chipps
+chipps = unique(ybus$FishID[ybus$GEN == "ChippsE"])
+stopifnot(all.equal(chipps, unique(ybus$FishID)))
+
+yolo = readRDS("data_clean/YoloAce/yoloace_dfa_detects.rds")
+
+
+# ending dataframe: FishID", "DateTime_PST", "GEN"
+
+# only include fish with >1 detection
+tapply(ybus$DateTimePST, ybus$FishID)
+
+# check that all movements are in the distance matrices
+
+
+
+if(FALSE){
 ## First merge in the new correct rkms
 all_detects <- ybus[order(ybus$FishID, ybus$DetectDate), ] 
 all_detects$prev_FishID <- NA
@@ -146,3 +179,4 @@ ybus_test<- first_detects1 %>%
   arrange(DetectDate, .by_group = TRUE) %>% # in date/time order
   #mutate(diff = abs(lag(UpdateRkm, default = first(UpdateRkm))- UpdateRkm)) %>% #adds column for absolute value of distance traveled between detections
   select(FishID, Date, Total_Length_m) 
+}
