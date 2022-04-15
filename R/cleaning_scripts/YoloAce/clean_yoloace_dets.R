@@ -4,7 +4,7 @@
 source("R/utils.R")
 # data origins: from Myfanwy's 2018 publication
 #-------------------------------------------------------#
-
+fishID = read.csv("data/common_data/FishID_key.csv") # has fishID
 y = readRDS("data_clean/YoloAce/yolo2012-2013_dets.rds")
 y$Year = lubridate::year(y$DateTimeUTC)
 y$RelLoc = "Yolo"
@@ -19,6 +19,8 @@ reldet$TagGroup = paste0(reldet$RelLoc,reldet$Year)
 chp = reldet[reldet$Station == "Chipps", ] # fish detected @chipps
 
 tapply(chp$TagID, chp$TagGroup, len) # should be 30 fish in 2012, 33 in 2013
+
+stopifnot(all(setdiff(reldet$TagID, fishID$TagID)))
 
 d = reldet
 d$DateTime_PST = lubridate::with_tz(d$DateTimeUTC, 
