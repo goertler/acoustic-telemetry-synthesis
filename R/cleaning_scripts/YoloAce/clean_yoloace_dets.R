@@ -5,11 +5,11 @@ source("R/utils.R")
 # data origins: from Myfanwy's 2018 publication
 #-------------------------------------------------------#
 fishID = read.csv("data/common_data/FishID_key.csv") # has fishID
-y = readRDS("data_clean/YoloAce/yolo2012-2013_dets.rds")
+y = readRDS("data/YoloAce/yolo2012-2013_dets.rds")
 y$Year = lubridate::year(y$DateTimeUTC)
 y$RelLoc = "Yolo"
 y = dplyr::rename(y, Rkm = RKM)
-ace = readRDS("data_clean/YoloAce/ace2012-2013_dets.rds")
+ace = readRDS("data/YoloAce/ace2012-2013_dets.rds")
 ace$Year = lubridate::year(ace$DateTimeUTC)
 ace$RelLoc = "Sac"
   

@@ -42,7 +42,7 @@
 source("R/utils.R")
 
 # load distance matrix (using DCC closed only)
-dm_closed  <- read.csv("data_clean/JSATS/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
+dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
 
 ## Load clean JSATs detections of interest
 jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #

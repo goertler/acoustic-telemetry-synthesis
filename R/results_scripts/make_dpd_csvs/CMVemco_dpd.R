@@ -4,7 +4,7 @@
 # Thu Feb 24 14:15:03 2022 ------------------------------
 
 source("R/utils.R")
-devtools::install_github("fishsciences/cfs.misc")
+#devtools::install_github("fishsciences/cfs.misc")
 
 #-------------------------------------------------------#
 # Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
