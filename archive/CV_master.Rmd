@@ -1,0 +1,223 @@
+---
+title: "CV_master"
+author: "Pascale"
+date: "3/13/2020"
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## master data for Chips
+
+# load data
+
+```{r, echo=FALSE}
+c.dat<-read.csv("CyrilforCV.csv")
+head(c.dat)
+colnames(c.dat)[c(10)] <- "relRkm"
+# add julian day of last detection date
+c.dat$last_detect<-format(as.POSIXct(strptime(c.dat$last_arrival,format="%Y-%m-%d %H:%M:%S", tz="")),"%j")
+c.dat$Date<-as.Date(c.dat$last_arrival,"%Y-%m-%d")
+
+j.dat<-read.csv("JSATS_CV_v3.csv")
+head(j.dat)
+colnames(j.dat)[c(7,9)] <- c("wateryear","Run")
+# add julian day of last detection date
+j.dat$last_detect<-format(as.POSIXct(strptime(j.dat$last_arrival,format="%m/%d/%Y %H:%M", tz="")),"%j")
+j.dat$Date<-as.Date(j.dat$last_arrival,"%m/%d/%Y %H:%M")
+
+yb.dat<-read.csv("YB1213CV.csv")
+head(yb.dat)
+colnames(yb.dat)[c(9)] <- "wateryear"
+# add julian day of last detection date
+yb.dat$last_detect<-format(as.POSIXct(strptime(yb.dat$last_arrival,format="%m/%d/%Y %H:%M", tz="")),"%j")
+yb.dat$Date<-as.Date(yb.dat$last_arrival,"%m/%d/%Y %H:%M")
+
+ybus.dat<-read.csv("ybusCV_v2.csv")
+head(ybus.dat)
+# add julian day of last detection date
+ybus.dat$last_detect<-format(as.POSIXct(strptime(ybus.dat$last_arrival,format="%Y-%m-%d %H:%M:%S", tz="")),"%j")
+ybus.dat$Date<-as.Date(ybus.dat$last_arrival,"%Y-%m-%d")
+```
+
+# combine
+
+```{r}
+chip.dat<-rbind(c.dat[,c(-1,-4)], j.dat[,c(-3,-10)], yb.dat[,c(-4)], ybus.dat[,c(-1)])
+head(chip.dat)
+```
+
+# simplify release groups
+
+```{r}
+unique(chip.dat$Release_Group)
+grps<-data.frame(
+  Release_Group = c("Battle Creek", "Middle Sacramento River", "Upper Sacramento River",
+            "American River", "Tidal Delta", "Feather River", "Mill Creek", "Butte Creek"),
+  Release_Group_SAIL = c("Upper Sacramento River","Middle Sacramento River","Upper Sacramento River",
+            "Middle Sacramento River","Tidal Delta", "Middle Sacramento River",
+            "Middle Sacramento River","Middle Sacramento River"), stringsAsFactors = FALSE)
+
+chip.dat<-merge(chip.dat, grps, by="Release_Group")
+chip.dat$last_detect<-as.numeric(chip.dat$last_detect)
+```
+
+## master data for benicia
+
+# load data
+
+```{r, echo=FALSE}
+c.ben<-read.csv("CyrilforCV_ben.csv")
+head(c.ben)
+colnames(c.ben)[c(10)] <- "relRkm"
+c.ben$last_detect<-format(as.POSIXct(strptime(c.ben$last_arrival,format="%Y-%m-%d %H:%M:%S", tz="")),"%j")
+c.ben$Date<-as.Date(c.ben$last_arrival,"%Y-%m-%d")
+
+j.ben<-read.csv("JSATS_CV_ben.csv")
+head(j.ben)
+colnames(j.ben)[c(8,10)] <- c("wateryear","Run")
+j.ben$last_detect<-format(as.POSIXct(strptime(j.ben$last_arrival,format="%Y-%m-%d %H:%M:%S", tz="")),"%j")
+j.ben$Date<-as.Date(j.ben$last_arrival,"%Y-%m-%d")
+```
+
+# combine
+
+```{r}
+ben.dat<-rbind(c.ben[,c(-1)], j.ben[,c(-1,-11)])
+head(ben.dat)
+```
+
+# simplify release groups
+
+```{r}
+unique(ben.dat$Release_Group)
+
+ben.dat<-merge(ben.dat, grps, by="Release_Group")
+
+ben.dat$last_detect<-as.numeric(ben.dat$last_detect)
+```
+
+## use "salmon-season" instead of Julian Day
+
+```{r}
+dates<-read.csv("STB_CHN_Dates_updated.csv")
+dates$Date<-as.Date(dates$Date)
+head(dates)
+
+chip.dat<-merge(chip.dat, dates, by="Date", all.x=TRUE)
+ben.dat<-merge(ben.dat, dates, by="Date", all.x=TRUE)
+
+write.csv(chip.dat, "masterCV_chip.csv")
+write.csv(ben.dat, "masterCV_benicia.csv")
+```
+
+## heatmaps 
+
+```{r, echo=FALSE}
+library(tidyverse)
+```
+
+# chips
+
+# summarize CV in travel time
+```{r}
+CV_chip.tt <- chip.dat %>%
+  filter(FishID !="Delta2013-043")%>%
+  group_by(wateryear, Route, Release_Group_SAIL, add=TRUE) %>%
+  summarize(count = n(),
+            mean = mean(travel_time, na.rm=TRUE),
+            SD = sd(travel_time, na.rm=TRUE))%>%
+  mutate(CV=SD/mean)
+```
+
+# plot CV in travel time
+```{r, fig.width=14, fig.height=12}
+ggplot(CV_chip.tt, aes(wateryear, Route)) +
+  geom_raster(aes(fill = CV)) +
+  scale_fill_distiller(palette = "Blues", direction = -1)+ 
+  theme(
+    panel.background = element_rect(fill = NA),
+    panel.grid.major = element_line(colour = "grey50"),
+    panel.ontop = TRUE
+  )+
+  facet_wrap(~ Release_Group_SAIL)
+```
+
+# summarize CV in date of last detection
+```{r}
+CV_chip.ld <- chip.dat %>%
+  filter(FishID !="Delta2013-043")%>%
+  group_by(wateryear, Route, Release_Group_SAIL, add=TRUE) %>%
+  summarize(count = n(),
+            mean = mean(Salmon.Season, na.rm=TRUE),
+            SD = sd(Salmon.Season, na.rm=TRUE))%>%
+  mutate(CV=SD/mean)
+```
+
+# plot CV in date of last detection
+```{r, fig.width=14, fig.height=12}
+ggplot(CV_chip.ld, aes(wateryear, Route)) +
+  geom_raster(aes(fill = CV)) +
+  scale_fill_distiller(palette = "Blues", direction = -1)+ #previously used "Spectral"
+  theme(
+    panel.background = element_rect(fill = NA),
+    panel.grid.major = element_line(colour = "grey50"),
+    panel.ontop = TRUE
+  )+
+  facet_wrap(~ Release_Group_SAIL)
+```
+
+# benicia
+
+# summarize CV in travel time
+```{r}
+CV_ben.tt <- ben.dat %>%
+  group_by(wateryear, Route, Release_Group_SAIL, add=TRUE) %>%
+  summarize(count = n(),
+            mean = mean(travel_time, na.rm=TRUE),
+            SD = sd(travel_time, na.rm=TRUE))%>%
+  mutate(CV=SD/mean)
+```
+
+# plot CV in travel time
+```{r, fig.width=14, fig.height=12}
+ggplot(CV_ben.tt, aes(wateryear, Route)) +
+  geom_raster(aes(fill = CV)) +
+  scale_fill_distiller(palette = "Blues", direction = -1)+ 
+  theme(
+    panel.background = element_rect(fill = NA),
+    panel.grid.major = element_line(colour = "grey50"),
+    panel.ontop = TRUE
+  )+
+  facet_wrap(~ Release_Group_SAIL)
+```
+
+# summarize CV in last detection
+```{r}
+CV_ben.ld <- ben.dat %>%
+  group_by(wateryear, Route, Release_Group_SAIL, add=TRUE) %>%
+  summarize(count = n(),
+            mean = mean(Salmon.Season, na.rm=TRUE),
+            SD = sd(Salmon.Season, na.rm=TRUE))%>%
+  mutate(CV=SD/mean)
+```
+
+# plot CV in last detection
+```{r, fig.width=14, fig.height=12}
+ggplot(CV_ben.ld, aes(wateryear, Route)) +
+  geom_raster(aes(fill = CV)) +
+  scale_fill_distiller(palette = "Blues", direction = -1)+ 
+  theme(
+    panel.background = element_rect(fill = NA),
+    panel.grid.major = element_line(colour = "grey50"),
+    panel.ontop = TRUE
+  )+
+  facet_wrap(~ Release_Group_SAIL)
+```
+

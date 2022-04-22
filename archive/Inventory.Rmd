@@ -1,0 +1,22 @@
+---
+title: "Inventory"
+author: "Pascale"
+date: "3/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Please link all files added to this repository here with a breif description and category:
+
+- Study Summaries
+- Map
+- [CV Data](CV_master.html) 
+- [CV Data diagnositcs](CV_summary_stats.html)
+- CV Analysis
+- DFA Data
+- DFA Anlysis
+
+The "CV Data" file is the code for the assembly of final datasets, which combined Tracy's travel time estimates into single files (depending on final detection location), calculated final salmon-day of detection and includes CV plots.
