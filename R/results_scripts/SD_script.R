@@ -11,7 +11,8 @@ source("R/01_setup.R")
 
 # load data from results
 file_names <- list.files(path = "results/CJVemco",recursive = TRUE)
-setwd("C:/Users/pgoertler/Desktop/MJ's Repo/acoustic-telemetry-synthesis/results/CJVemco")
+# need to move into folder to run the rest of the code
+setwd("C:/Users/pgoertler/Desktop/MJ's Repo/merged/acoustic-telemetry-synthesis/results/CJVemco")
 
 for(i in file_names){
   file <- read.csv(i)
@@ -52,4 +53,6 @@ unique(dat_goods$Year)
 dat_goods$rel <-  as.Date(gsub('\\.', '-', dat_goods$rel))
 dat_goods$end <-  as.Date(gsub('\\.', '-', dat_goods$end))
 
+# back out
+setwd("C:/Users/pgoertler/Desktop/MJ's Repo/merged/acoustic-telemetry-synthesis")
 write.csv(dat_goods, "results/SD/CMVemco.csv")
