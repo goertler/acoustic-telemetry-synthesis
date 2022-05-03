@@ -1,18 +1,13 @@
 source("R/01_setup.R")
 
 # estimate variation in travel time (sd)
-# test
-#test <- read.csv("results/CJVemco/2007_CJVemco_dpd.csv")
-#spread_test <- transform(test, SD=apply(test[c(2:ncol(test))],1, sd, na.rm = TRUE))
-#rel <- names(spread_test[-1])[max.col(!is.na(spread_test[-1]), "first")]
-#end <- names(spread_test[-ncol(spread_test)])[max.col(!is.na(spread_test[-ncol(spread_test)]), "last")]
 
 # make it reproducible
 
 # load data from results
-file_names <- list.files(path = "results/CJVemco",recursive = TRUE)
+file_names <- list.files(path = "results/YoloAce",recursive = TRUE)
 # need to move into folder to run the rest of the code
-setwd("C:/Users/pgoertler/Desktop/MJ's Repo/merged/acoustic-telemetry-synthesis/results/CJVemco")
+setwd("C:/Users/pgoertler/Desktop/MJ's Repo/merged/acoustic-telemetry-synthesis/results/YoloAce")
 
 for(i in file_names){
   file <- read.csv(i)
@@ -55,4 +50,12 @@ dat_goods$end <-  as.Date(gsub('\\.', '-', dat_goods$end))
 
 # back out
 setwd("C:/Users/pgoertler/Desktop/MJ's Repo/merged/acoustic-telemetry-synthesis")
-write.csv(dat_goods, "results/SD/CMVemco.csv")
+
+# need to get fishID
+FishID_key <- read_csv("data/common_data/FishID_key.csv")
+colnames(dat_goods)[1] <- "TagID"
+
+dat_goods_ID <- merge(dat_goods, FishID_key[,c(2,10)], by = "TagID", all.x = TRUE)
+head(dat_goods_ID)
+
+write.csv(dat_goods_ID[,-1], "results/SD/YoloAce.csv")
