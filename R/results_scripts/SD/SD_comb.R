@@ -24,3 +24,5 @@ sum(is.na(sd_meta) == TRUE)
 summary(sd_meta) # looks okay
 
 write.csv(sd_meta[,-c(2,6,16)], "results/SD/SD_dat.csv")
+
+

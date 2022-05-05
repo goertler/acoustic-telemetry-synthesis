@@ -54,5 +54,7 @@ colnames(model_df)[16] <- "Year"
 
 sapply(X = model_df, FUN = function(x) sum(is.na(x))) #just the 50 JSATS
 check_sd <- model_df[is.na(model_df$SD),] #6, all YBUS
+Tags <- unique(check_sd$TagID)
+
 
 write.csv(model_df[,-6], "results/SD/model_dat.csv")

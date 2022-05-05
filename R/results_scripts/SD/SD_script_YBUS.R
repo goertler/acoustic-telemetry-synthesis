@@ -24,3 +24,5 @@ sd_dat$Year <- "2016"
 length(unique(sd_dat$FishID))
 
 write.csv(sd_dat, "results/SD/YBUS.csv")
+
+
