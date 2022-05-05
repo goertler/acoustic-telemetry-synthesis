@@ -10,18 +10,18 @@ library(dplyr)
 if(FALSE){
 # OLD METHOD: build from raw detection files
   ## Load detections
-temp = list.files(path = "data/detection_data/study-detections-JSATS", 
-                  full.names = TRUE, 
-                  pattern="*.csv") 
+temp = list.files(path = "data/detection_data/study-detections-JSATS",
+                  full.names = TRUE,
+                  pattern="*.csv")
 
 ## Bind all detections into one mother dataframe
-all_detects <- do.call("rbind", lapply(temp, 
-                                       read.csv, 
+all_detects <- do.call("rbind", lapply(temp,
+                                       read.csv,
                                        stringsAsFactors = FALSE))
 
 # fix date formats
-all_detects$DetectDate <- as.POSIXct(all_detects$DateTime_PST, 
-                                       tz = "Etc/GMT+8", 
+all_detects$DetectDate <- as.POSIXct(all_detects$DateTime_PST,
+                                       tz = "Etc/GMT+8",
                                       format = "%m/%d/%Y %H:%M:%OS")
 }
 #-------------------------------------------------------#
@@ -34,8 +34,8 @@ all_detects$DetectDate = as.Date(as.POSIXct(all_detects$DateTime_PST,
                                             format = "%m/%d/%Y %H:%M:%OS"))
 
 
-all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST, 
-                                       tz = "Etc/GMT+8", 
+all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
+                                       tz = "Etc/GMT+8",
                                       format = "%m/%d/%Y %H:%M:%OS")
 
 #-------------------------------------------------------#
@@ -43,7 +43,7 @@ all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
 all_detects = all_detects[lubridate::year(all_detects$DetectDate) != 2012, ] # we want 2013:2017
 
 ## combine certain locations where receivers are too close together
-exits = unique(all_detects$FishID[all_detects$GEN %in% c("ChippsE", "ChippsW", "Benicia")]) # only use the fish detected at Chipps/Benicia # 575 fish for DFA analysis
+exits = unique(all_detects$FishID[all_detects$GEN %in% c("ChippsE", "ChippsW", "Benicia", "BeniciaW" )]) # only use the fish detected at Chipps/Benicia # 575 fish for DFA analysis
 
 all_detects = all_detects[all_detects$FishID %in% exits, ]
 
@@ -75,8 +75,8 @@ tagging_meta <-
            stringsAsFactors = F)
 
 tagging_meta$Rel_datetime <-
-  as.POSIXct(tagging_meta$Rel_datetime, 
-             tz = "Etc/GMT+8", 
+  as.POSIXct(tagging_meta$Rel_datetime,
+             tz = "Etc/GMT+8",
              format = "%m/%d/%Y %H:%M:%OS")
 
 stopifnot(length(unique(tagging_meta$FishID)) == nrow(tagging_meta))     # test that each row represents a unique fishID
@@ -94,11 +94,11 @@ stopifnot(setdiff(all_detects$FishID, tagging_meta$FishID) == 0)
 
 ## Merge in pertinent data for grouping by runs/years
 all_detects <-
-  merge(all_detects, tagging_meta[, c("FishID", 
-                                      "StudyID", 
-                                      "Fish_Type", 
-                                      "Rel_loc", 
-                                      "Rel_rkm")], 
+  merge(all_detects, tagging_meta[, c("FishID",
+                                      "StudyID",
+                                      "Fish_Type",
+                                      "Rel_loc",
+                                      "Rel_rkm")],
         by = "FishID",
         all.x = TRUE)
 
@@ -168,7 +168,7 @@ all_detects <- all_detects[all_detects$GEN != "MokBase",]
 stopifnot(anyDuplicated(tagging_meta$FishID) == 0)
 
 # check for simultaneous detections within fish and locations
-i = duplicated(all_detects) 
+i = duplicated(all_detects)
 i2 = duplicated(all_detects, fromLast = TRUE)
 
 dups = all_detects[i,]
@@ -181,25 +181,25 @@ alldups = alldups[order(alldups$FishID, alldups$DateTime_PST), ]
 ans = all_detects[!i,]
 
 # TagIDs with suspicious detections (detected before released)
-chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020", 
-"CFC2012-022", "CFC2012-023", "Delta2012-001", "Delta2012-002", 
-"Delta2012-003", "Delta2012-021", "Delta2012-031", "Delta2012-034", 
-"Delta2012-039", "Delta2012-052", "Delta2012-054", "Delta2012-080", 
-"Delta2012-087", "Delta2012-090", "Delta2012-095", "Delta2012-097", 
+chk = c("CFC2012-007", "CFC2012-018", "CFC2012-019", "CFC2012-020",
+"CFC2012-022", "CFC2012-023", "Delta2012-001", "Delta2012-002",
+"Delta2012-003", "Delta2012-021", "Delta2012-031", "Delta2012-034",
+"Delta2012-039", "Delta2012-052", "Delta2012-054", "Delta2012-080",
+"Delta2012-087", "Delta2012-090", "Delta2012-095", "Delta2012-097",
 "Delta2012-098", "Delta2012-108")
 
 sum(unique(ans$FishID) %in% chk) # none of these are kept for the DFA analysis, but we'll remove the false dets just in case:
 
 ans2 <-
-  merge(ans, tagging_meta[, c("FishID", "Rel_datetime")], 
+  merge(ans, tagging_meta[, c("FishID", "Rel_datetime")],
         by = "FishID",
         all.x = TRUE)
 
 
-ans2 %>% 
-  group_by(FishID) %>% 
-  arrange(DateTime_PST) %>% 
-  filter(DateTime_PST < Rel_datetime) %>% 
+ans2 %>%
+  group_by(FishID) %>%
+  arrange(DateTime_PST) %>%
+  filter(DateTime_PST < Rel_datetime) %>%
   ungroup() -> too_early
 
 length(chk) # 22 fish
@@ -225,74 +225,74 @@ if(FALSE) {
 
   # Build/load fishpaths of all JSATs detections:
   #-------------------------------------------------------#
-  
+
   if(!require("tagtales")) devtools::install_github("Myfanwy/tagtales")
-  
+
   fp = tagtales::tag_tales(ans3, ans3$FishID, ans3$GEN, "DateTime_PST")
-  
+
   #-------------------------------------------------------#
 
 # Only check backwards moving fish on the DFA Fish
   fpp = fp[fp$FishID %in% exits,]
-  
+
   test_split = split(fpp, fpp$FishID)
-  
+
   test_split = test_split[sapply(test_split, nrow) > 0]
   bck1 = lapply(test_split, FUN = backwards_onefish)
-  
+
   # fish paths for those fish that go backwards
   bck2 = data.frame(FishID = names(bck1), nrev = as.integer(bck1))
   bck2 = bck2[bck2$nrev > 0 ,]
-  
+
   backtracks = fpp[fpp$FishID %in% bck2$FishID,]
   bsplit = split(backtracks, backtracks$FishID)
-  
+
   get_stns = lapply(
     bsplit,
     FUN = function(x)
       y = x[["GEN"]]
   ) # get station path from each fish
-  
+
   #-------------------------------------------------------#
   loc.rkm <- unique(fpp[, c(4, 5, 7, 8)])
   # break at Freeport OR 153.140
-  
+
   # ID when fish move into tidal
   back.move.fish <-
     data.frame(
       FishID = NA,
       min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8")
     )
-  
-  
+
+
   for (i in unique(fpp$FishID)) {
     temp.dat <- fpp[fpp$FishID == i, ]
-    
+
     tidal <- subset(temp.dat, RKM <= 153.140)
-    
+
     min.time = min(tidal$DateTime_PST)
-    
+
     temp.results <-
       data.frame(
         FishID = i,
         min.time = as.POSIXct(min.time,
-                              
+
                               tz = "Etc/GMT+8",
-                              
+
                               format = "%m/%d/%Y %H:%M:%OS")
       )
-    
-    
-    
+
+
+
     back.move.fish <- rbind(back.move.fish, temp.results)
-    
+
   }
-  
-  
+
+
   # then ask if RKM is greater than 153 after min.time (TRUE/FALSE)
-  
+
   back.test <- merge(fpp, back.move.fish, by = "FishID")
-  
+
   back.test2 <-
     data.frame(
       FishID = NA,
@@ -309,20 +309,20 @@ if(FALSE) {
       departure = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8"),
       min.time = strptime(NA, format = "%m/%d/%Y %H:%M:%OS", tz = "Etc/GMT+8")
     )
-  
+
   for (i in unique(back.test$FishID)) {
     temp.dat <- back.test[back.test$FishID == i, ]
-    
+
     test2 <- subset(temp.dat, DateTime_PST > min.time)
-    
+
     back.test2 <- rbind(back.test2, test2)
-    
+
   }
-  
-  
+
+
   max(back.test2$RKM, na.rm = TRUE) # maximum rkm = 153.14; FPT
   length(unique(back.test2$FishID)) # still 692 fish
-  
+
 }
 
 
