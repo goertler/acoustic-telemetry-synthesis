@@ -15,6 +15,9 @@ dm_ybus$Name = gsub("-", " - ", dm_ybus$Name)
 ybus = readRDS("data_clean/ybus/ybus_clean.rds") # created in R/clean_ybus.R
 ybus$DetectDate = as.Date(ybus$DateTime_PST)
 
+#check these FishIDs
+c("168.YBUS", "246.YBUS", "326.YBUS", "365.YBUS", "413.YBUS",
+  "439.YBUS")
 #-------------------------------------------------------#
 # big test: all fish
 f1 = split(ybus, ybus$FishID)
@@ -24,11 +27,11 @@ f2 = lapply(f1, dpd_allfish, distance_matrix = dm_ybus)
 
 f2 = do.call(rbind, f2)
 
-f3_split = split(f2, lubridate::year(f2$Date)) 
+f3_split = split(f2, lubridate::year(f2$Date))
 
 ans = lapply(f3_split, make_matrix)
 
-mapply(write.csv, 
-       x = ans, 
-       file = paste0("results/YBUS/", names(ans), "_ybus_dpd.csv"), 
+mapply(write.csv,
+       x = ans,
+       file = paste0("results/YBUS/", names(ans), "_ybus_dpd.csv"),
        row.names = FALSE)
