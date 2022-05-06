@@ -67,5 +67,10 @@ ybus2$GEN[ybus2$GEN == "RSTR (Rotary Screw Trap)"] <- "Abv_rstr"
 stopifnot(all(setdiff(ybus2$GEN, dist_ybus$Location)))
 setdiff(dist_ybus$Location, ybus2$GEN) # it's okay that none of these are in the detections records - they are grouped locations, or HR2s from other studies
 
+# Chipps locations will likely need to be grouped, in all scripts - need to find a way to do that consistently.
+ch = unique(grep(pattern = "MAL", x = dist_ybus$Location, value = TRUE))
+ch = subset(dist_ybus, Location %in% ch)
+arrange(ch, Location)
+
 # save cleaned data
 saveRDS(ybus2, "data_clean/YBUS/ybus_clean.rds")
