@@ -63,14 +63,18 @@ ybus2$GEN[ybus2$GEN == "Base of Toe Drain"] <- "YB_ToeDrain_Base"
 ybus2$GEN[ybus2$GEN == "Below Lisbon Weir"] <- "Lisbon Weir 180kHz"
 ybus2$GEN[ybus2$GEN == "Above Swanstons Rd. Crossing"] <- "Abv_swanston_180"
 ybus2$GEN[ybus2$GEN == "RSTR (Rotary Screw Trap)"] <- "Abv_rstr"
+ybus2$GEN[ybus2$GEN %in% c("MAL.6", "MAL.10b", "MAL.5", "MAL.10a", "MAL.4", "MAL.1", "MAL.2", 
+                             "MAL.12b", "MAL.18", "MAL.8a", "MAL.17", "MAL.7b", "MAL.12a", 
+                             "MAL.14", "MAL.11b", "MAL.13", "MAL.7a", "MAL.8b", "MAL.11a")] <- "MAL.10b"
 
 stopifnot(all(setdiff(ybus2$GEN, dist_ybus$Location)))
 setdiff(dist_ybus$Location, ybus2$GEN) # it's okay that none of these are in the detections records - they are grouped locations, or HR2s from other studies
 
-# Chipps locations will likely need to be grouped, in all scripts - need to find a way to do that consistently.
-ch = unique(grep(pattern = "MAL", x = dist_ybus$Location, value = TRUE))
-ch = subset(dist_ybus, Location %in% ch)
-arrange(ch, Location)
+# Checking MAL grouping
+# ch = unique(grep(pattern = "MAL", x = dist_ybus$Location, value = TRUE))
+# unique(grep(pattern = "MAL", x = dist_ybus$Location, value = TRUE))
+# ch = subset(dist_ybus, Location %in% ch)
+# head(arrange(ch, Location))
 
 # save cleaned data
 saveRDS(ybus2, "data_clean/YBUS/ybus_clean.rds")

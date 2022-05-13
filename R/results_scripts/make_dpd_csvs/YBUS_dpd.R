@@ -16,8 +16,9 @@ ybus = readRDS("data_clean/ybus/ybus_clean.rds") # created in R/clean_ybus.R
 ybus$DetectDate = as.Date(ybus$DateTime_PST)
 
 #check these FishIDs
-c("168.YBUS", "246.YBUS", "326.YBUS", "365.YBUS", "413.YBUS",
+chk = c("168.YBUS", "246.YBUS", "326.YBUS", "365.YBUS", "413.YBUS",
   "439.YBUS")
+
 #-------------------------------------------------------#
 # big test: all fish
 f1 = split(ybus, ybus$FishID)
@@ -35,3 +36,23 @@ mapply(write.csv,
        x = ans,
        file = paste0("results/YBUS/", names(ans), "_ybus_dpd.csv"),
        row.names = FALSE)
+
+
+## debugging movements
+if(FALSE) {
+View(ans$`2016`[ans$`2016`$FishID %in% chk, ])
+View(ybus[ybus$FishID == chk[2], ])
+# debugging dpd_allfish
+chk1 = ybus[ybus$FishID == chk[2], ]
+debug(assign_station_visits) # this all looks fine - move on to next fxn
+
+debugonce(make_movements)
+chk2 = assign_station_visits(chk1)
+chk3 = make_movements(chk2, distance_matrix = dm_ybus)
+
+debugonce(calc_dist_per_day)
+chk4 = calc_dist_per_day(chk3)
+
+debugonce(pad_days)
+pad_days(chk4)
+}

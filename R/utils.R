@@ -149,7 +149,10 @@ return(tt3)
 calc_dist_per_day = function(tt3) {
 
 # browser()
-ff =  aggregate(Total_Length_m ~ FishID + Date, data = tt3, FUN = sum, na.rm = TRUE)
+ff =  aggregate(Total_Length_m ~ FishID + Date, 
+                data = tt3, 
+                FUN = sum, 
+                na.action = function(x) x) #, na.rm = TRUE)
 # calculate vector of time differences & add as column
 ff$timediff = c(1, as.numeric(diff(ff$Date))) # add 1 day for the NA of first movement
 
