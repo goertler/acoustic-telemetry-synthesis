@@ -1,130 +1,87 @@
 # Tests
 
-source("R/make_DFA_matrix_MEJ.R") # fin$distance_m and sum(ff$total_dist) need to be closer
-library(ggplot2)
-
-ggplot(test, aes(x = Date, y=Distance_m)) +
-  geom_point(aes(group = FishID, color = FishID)) +
-  geom_path(aes(group = FishID, color = FishID)) +
-  theme_minimal()
+d = readRDS("data_clean/YBUS/ybus_clean.rds")
+x = subset(d, FishID == "1.YBUS")
 
 
-ggplot(jsats[jsats$FishID == test$FishID[1], ],
-       aes(x = DateTime_PST, y = RKM)) +
-  geom_point() +
-  geom_path(aes(group = FishID))
+dm_ybus = read.csv("data/distance_matrices/Distance_Matrix_YBUS_corr_07_21.csv")
+dm_ybus = dm_ybus[ , c("Name_corr", "Total_Length")]
+colnames(dm_ybus) = c("Name", "Total_Length_m")
+dm_ybus$Name = gsub("-", " - ", dm_ybus$Name)
 
-#-------------------------------------------------------#
-# Check 1 fish line by line
-#-------------------------------------------------------#
-
-tt = jsats[jsats$FishID == "CFC2017-127", 
-           c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
-
-tt = tt[order(tt$DateTime_PST), ]
-
-tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
-
-tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
-
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
-
-# make movements
-tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
-
-# pull movements from the matrix
-tt3 =
-  merge(
-    tt3,
-    dm_closed[, c("Name", "Total_Length_m")],
-    by.x  = "movement",
-    by.y = "Name",
-    all.x = TRUE
-  )
-
-tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST)
-
-# I can get it to a data frame-like structure with this, but it strips the column names:
-ff =  tapply(tt3[ , "Total_Length_m"], 
-                       tt3[ , c("FishID", "Date")], 
-                       sum, 
-                       na.rm = TRUE,
-                       simplify = TRUE)
-
-ff = as.data.frame(cbind(t(ff), dimnames(ff)[[1]]))
-ff$Date = as.Date(row.names(ff))
-colnames(ff) = c("tot_distance", "FishID", "Date")
-
-# calculate vector of time differences & add as column
-ff$timediff = abs(as.numeric(difftime(dplyr::lag(ff$Date), # time 1
-                                     ff$Date, # time 2
-                                     units = "days")))
-
-# create vector of dates for the total time period
-dates = seq.Date(from = ff$Date[1], # from 1st date
-                 to = ff$Date[length(ff$Date)], # to final date
-                by = "days"
-                  ) 
-
-ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
-
-ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
-
-ff$dist_day = ff$tot_distance/ff$timediff
-
-dists = rep(ff$dist_day, ff$timediff)
-
-stopifnot(length(dists) == length(dates))
-
-fin = data.frame(FishID = unique(ff$FishID),
-           Date = dates, 
-           Distance_m = dists)
-
-stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.rm = TRUE)))
-
-
-
-
-
-
-
-
-#-------------------------------------------------------#
-# know it works within itself - now need to check a fish "by hand" and test
-#-------------------------------------------------------#
-if(FALSE){
+add_lag_col = function(df, order_by = "DateTime_PST", col_to_lag, lagged_col_name, ...) {
   
-source("R/make_DFA_matrix_MEJ.R")
+  df = df[order(df[[order_by]]), ]
+  df[[lagged_col_name]] = data.table::shift(df[[col_to_lag]], ...)
+  return(df)
+  
+}
 
-f1 = jsats[jsats$FishID == "WR2017-484", ] # fish with the fewest movements
- 
-tt = f1[order(f1$DateTime_PST), ]
+make_movements = function(df, col_to_lead, lagged_col_name, sep = " - ") {
+  
+  df[[lagged_col_name]] = paste(df[[col_to_lead]], dplyr::lead(df[[col_to_lead]]), sep = sep)
+  return(df)
+}
 
-tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
-
-tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
-
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
-
-# make movements
-tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
-
-# pull movements from the matrix
-tt3 =
-  merge(
+rm_nas_and_merge = function(df, dist_mat, na_col = "first_arrs") {
+  
+  tt3 = df[!is.na(df[[na_col]]), ] # remove last row, as the arrival at last receiver is now on the second-to-last row
+  
+  tt3 = merge(
     tt3,
-    dm_closed[, c("Name", "Total_Length_m")],
+    dist_mat[, c("Name", "Total_Length_m")],
     by.x  = "movement",
     by.y = "Name",
     all.x = TRUE
   )
-
-tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST)
-
-write.csv(tt3, "tests/movements_WR2017-484.csv")
-
-f2 = bigtest[bigtest$FishID == unique(tt3$FishID), ]
-all.equal(sum(f2$Distance_m, na.rm = TRUE), sum(tt3$Total_Length_m, na.rm = TRUE))
+  
+  tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
+  tt3$Date = as.Date(tt3$DateTime_PST, tz = "Etc/GMT+8") # # this needs a tz, otherwise some departure dates turn over to the next day
+  return(tt3)
+  
 }
+
+# test on one
+chk2 = add_lag_col(x, order_by = 'DateTime_PST', 
+                   col_to_lag = 'DateTime_PST' ,  
+                   lagged_col_name = 'first_arrs', 
+                   type = 'lead')
+
+head(chk2)
+chk3 = make_movements(chk2, 'GEN', 'movement')
+chk3
+chk4 = rm_nas_and_merge(chk3, dist_mat = dm_ybus)
+chk4
+
+chk5 = do.call(rbind, mapply(div_dist, 
+                             start = chk4$departure, 
+                             end = chk4$first_arrs, 
+                             distance = chk4$Total_Length_m, 
+                             time_units = "hour",
+                             SIMPLIFY = FALSE))
+
+chk5
+all.equal(sum(chk5$prop_dist), sum(chk4$Total_Length_m), tolerance = 0.001) # might want to fix eventually; can end up way off with additive small differences.
+
+
+# all fish
+f1 = split(f1, f1$FishID)
+
+f2 = lapply(f1, add_lag_col, 'arrival', 'first_arrs', type = 'lead')
+
+f3 = lapply(f2, make_movements, 'GEN', 'movement')
+
+tt3 = lapply(f3, rm_nas_and_merge, dist_mat = dm_ybus, na_col = "first_arrs")
+
+hs = function(df) {
+  
+  do.call(rbind, mapply(div_dist, 
+                        start = df$departure, 
+                        end = df$first_arrs, 
+                        distance = df$Total_Length_m, 
+                        time_units = "hour",
+                        SIMPLIFY = FALSE))
+  
+}
+
+ans3 = lapply(tt3, hs)

@@ -67,6 +67,21 @@ ybus2$GEN[ybus2$GEN %in% c("MAL.6", "MAL.10b", "MAL.5", "MAL.10a", "MAL.4", "MAL
                              "MAL.12b", "MAL.18", "MAL.8a", "MAL.17", "MAL.7b", "MAL.12a", 
                              "MAL.14", "MAL.11b", "MAL.13", "MAL.7a", "MAL.8b", "MAL.11a")] <- "MAL.10b"
 
+ybus2$GEN[ybus2$GEN %in% c("BF.1", "BF.2", "BF.4", "BF.3")] <- "BF.1" # south river road on mainstem
+ybus2$GEN[ybus2$GEN %in% c("SBE.u", "SBE.d")] <- "SBE.u" # south of elk slough
+ybus2$GEN[ybus2$GEN %in% c("STMU.1", "STMU.2")] <- "STMU.1" #Steamboat slough
+ybus2$GEN[ybus2$GEN %in% c("STMD.1", "STMD.4", "STMD.2", "STMD.3")] <- "STMD.4" # downstream steamboat
+ybus2$GEN[ybus2$GEN %in% c("SACD.1", "SACD.2", "SACD.3", "SACD.4")] <- "SACD.4" # downstream SAC
+ybus2$GEN[ybus2$GEN %in% c("SACU.1", "SACU.2", "SACU.3", "SACU.4")] <- "SACU.4" # UPstream SAC
+ybus2$GEN[ybus2$GEN %in% c("CCH.1", "CCH.2")] <- "CCH.1" # liberty island
+ybus2$GEN[ybus2$GEN %in% c("SBGD.2", "SBGU.2")] <- "SBGU.2" # liberty island
+# stopping pt # Fri May 20 15:39:23 2022 ------------------------------
+# still need: MOK.u/d, LPS.u/d, all the "1A/2C/3C etc?"
+
+
+sort(grep("SB", unique(ybus2$GEN), value = TRUE))
+sort(unique(ybus2$GEN))
+
 stopifnot(all(setdiff(ybus2$GEN, dist_ybus$Location)))
 setdiff(dist_ybus$Location, ybus2$GEN) # it's okay that none of these are in the detections records - they are grouped locations, or HR2s from other studies
 
