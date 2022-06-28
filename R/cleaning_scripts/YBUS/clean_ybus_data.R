@@ -103,3 +103,4 @@ setdiff(dist_ybus$Location, ybus2$GEN) # it's okay that none of these are in the
 
 # save cleaned data
 saveRDS(ybus2, "data_clean/YBUS/ybus_clean.rds")
+

@@ -57,10 +57,70 @@ test_fl_onefish <- function (x,
     return(newdf)
 }
 
+
+#----------------------------------------------------#
+# refactor dpd with telemetry::div_dist()
+# Tue Jun 28 10:37:34 2022 ------------------------------
+#----------------------------------------------------#
+# div_dist setup functions:
+add_lag_col = function(df, order_by = "DateTime_PST", col_to_lag, lagged_col_name, ...) {
+  
+  df = df[order(df[[order_by]]), ]
+  df[[lagged_col_name]] = c(df[[col_to_lag]][-1], NA)
+  return(df)
+  
+}
+
+# make the movements:
+make_movements = function(df, col_to_lead, lagged_col_name, sep = " - ") {
+  
+  df[[lagged_col_name]] = paste(df[[col_to_lead]], dplyr::lead(df[[col_to_lead]]), sep = sep)
+  return(df)
+}
+
+# remove the NAs and merge with the distance matrix function:
+rm_nas_and_merge = function(df, dist_mat, na_col = "next_arrival") {
+  
+  tt3 = df[!is.na(df[[na_col]]), ] # remove last row, as the arrival at last receiver is now on the second-to-last row
+  
+  tt3 = merge(
+    tt3,
+    dist_mat[, c("Name", "Total_Length_m")],
+    by.x  = "movement",
+    by.y = "Name",
+    all.x = TRUE
+  )
+  
+  tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
+  tt3$Date = as.Date(tt3$DateTime_PST, tz = "Etc/GMT+8") # # this needs a tz, otherwise some departure dates turn over to the next day
+  return(tt3)
+  
+}
+
+# remove movements w/ dist = 0m
+
+rm_zero_dists = function(x) x[x$Total_Length_m != 0, ]
+
+
+# mapply the div_dist function:
+hs = function(df) {
+  
+  do.call(rbind, mapply(div_dist, 
+                        start = df$DateTime_PST, 
+                        end = df$next_arrival, 
+                        distance = df$Total_Length_m, 
+                        time_units = "hour",
+                        SIMPLIFY = FALSE))
+  
+}
+
+
+#----------------------------------------------------#
+
 ## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
 #df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
 
-
+if(FALSE){
 dpd_allfish = function(detdf, distance_matrix) {
 
   tmp1 = assign_station_visits(detdf)
@@ -72,7 +132,7 @@ dpd_allfish = function(detdf, distance_matrix) {
 
 # get movements missing from matrix
 # Mon Jan 17 13:15:25 2022 ------------------------------
-if(FALSE){ f1 = split(v2, v2$FishID)
+ f1 = split(v2, v2$FishID)
 f1 = f1[sapply(f1, nrow) > 0]
 tmp1 = lapply(f1, assign_station_visits)
 str(tmp1[1])
@@ -84,7 +144,7 @@ ans = do.call(rbind, tmp2)
 head(ans)
 missing_movements = setdiff(ans$movement, mat$Name)
 write.csv(missing_movements, "results/temporary/movements_mising_from_dist_matrix_2022-01-17.csv")
-}
+
 
 #-------------------------------------------------------#
 # 1. assign station visits
@@ -194,7 +254,7 @@ stopifnot(
   )
 
 return(fin)
-#-------------------------------------------------------#
+  }
 }
 
 #-------------------------------------------------------#
