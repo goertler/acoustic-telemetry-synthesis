@@ -4,6 +4,7 @@
 # Tue Jun 28 10:41:48 2022 ------------------------------
 
 source("R/utils.R")
+remotes::install_github("fishsciences/telemetry")
 library(telemetry)
 
 #-------------------------------------------------------#
@@ -23,8 +24,8 @@ f1 = ybus
 
 f1 = split(f1, f1$FishID)
 
-f2 = lapply(f1, add_lag_col, order_by = 'DateTime_PST', 
-            col_to_lag = 'DateTime_PST', 
+f2 = lapply(f1, add_lag_col, order_by = 'DateTime_PST',
+            col_to_lag = 'DateTime_PST',
             lagged_col_name = 'next_arrival')
 
 f3 = lapply(f2, make_movements, col_to_lead = 'GEN', lagged_col_name = 'movement')
