@@ -10,6 +10,7 @@ head(ybus_dpd)
 # make matrix
 ybus_dpd$date <- as.Date(ybus_dpd$date_time)
 str(ybus_dpd)
+length(unique(ybus_dpd$date))
 
 ybus_dpd_matrix <- dcast(summary_ybus_dpd, FishID~date, fun = sum)
 head(ybus_dpd_matrix)
@@ -18,11 +19,11 @@ ybus_dpd_matrix[ybus_dpd_matrix == 0] <- NA
 min(ybus_dpd_matrix[,-1], na.rm = TRUE)
 
 # SD
-spread_ybus <- transform(ybus_dpd, SD=apply(ybus_dpd[c(2:ncol(ybus_dpd))],1, sd, na.rm = TRUE))
+spread_ybus <- transform(ybus_dpd_matrix, SD=apply(ybus_dpd_matrix[c(2:ncol(ybus_dpd_matrix))],1, sd, na.rm = TRUE))
 rel <- names(spread_ybus[-1])[max.col(!is.na(spread_ybus[-1]), "first")]
 end <- names(spread_ybus[-ncol(spread_ybus)])[max.col(!is.na(spread_ybus[-ncol(spread_ybus)]), "last")]
 
-sd_dat <- data.frame(spread_ybus[,c(1,72)], rel, end)
+sd_dat <- data.frame(spread_ybus[,c(1,44)], rel, end)
 head(sd_dat)
 
 # fix date
