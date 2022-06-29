@@ -12,6 +12,10 @@ ybus_dpd$date <- as.Date(ybus_dpd$date_time)
 str(ybus_dpd)
 length(unique(ybus_dpd$date))
 
+summary_ybus_dpd <- ybus_dpd %>%
+  group_by(FishID, date) %>%
+  summarise(dist = sum(prop_dist))
+
 ybus_dpd_matrix <- dcast(summary_ybus_dpd, FishID~date, fun = sum)
 head(ybus_dpd_matrix)
 
