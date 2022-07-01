@@ -2,11 +2,8 @@
 # Distance Matrix calcs for YBUS data
 # refactored, M. Johnston
 # Tue Jun 28 10:41:48 2022 ------------------------------
-
-source("R/utils.R")
-remotes::install_github("fishsciences/telemetry")
 library(telemetry)
-
+source("R/utils.R")
 #-------------------------------------------------------#
 
 dm_ybus = read.csv("data/distance_matrices/Distance_Matrix_YBUS_corr_07_21.csv")
@@ -24,22 +21,14 @@ f1 = ybus
 
 f1 = split(f1, f1$FishID)
 
-f2 = lapply(f1, add_lag_col, order_by = 'DateTime_PST',
-            col_to_lag = 'DateTime_PST',
-            lagged_col_name = 'next_arrival')
+test = lapply(f1, dpd_allfish, distance_matrix = dm_ybus)
 
-f3 = lapply(f2, make_movements, col_to_lead = 'GEN', lagged_col_name = 'movement')
+ans4 = lapply(test, hs)
+  
+ans5 = data.table::rbindlist(ans4, idcol = TRUE)
+  
+colnames(ans5) <- c("FishID", "date_time", "prop_dist")
+  
+head(ans5)
 
-tt3 = lapply(f3, rm_nas_and_merge, dist_mat = dm_ybus, na_col = "next_arrival")
-
-tt4 = lapply(tt3, function(x) x[x$Total_Length_m != 0, ])
-
-ans3 = lapply(tt4, hs)
-
-ans = data.table::rbindlist(ans3, idcol = TRUE)
-str(ans)
-
-ans = data.frame(ans)
-head(ans)
-colnames(ans) <- c("FishID", "date_time", "prop_dist")
-write.csv(ans, "results/YBUS/2016_ybus_dpd_refactor.csv")
+write.csv(ans5, "results/YBUS/2016_ybus_dpd_refactor.csv")

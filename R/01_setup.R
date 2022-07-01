@@ -1,5 +1,7 @@
 # setup - Analysis steps
 
+#remotes::install_github("fishsciences/telemetry")
+
 if(!dir.exists("data_clean")) {
    dir.create("data_clean")
    dir.create("data_clean/YoloAce")
@@ -12,9 +14,9 @@ if(!dir.exists("data_clean")) {
     dir.create("results/YoloAce")
     dir.create("results/YBUS")
     dir.create("results/JSATS")
-    dir.create("results/CJVemco")}
+    dir.create("results/CMVemco")}
   
-  
+
 
 # CM Vemco:
 # ---------------------

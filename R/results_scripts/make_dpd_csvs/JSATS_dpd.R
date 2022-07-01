@@ -2,7 +2,8 @@
 # Distance Matrix calcs for JSATs data
 # refactored, M. Johnston
 # Mon Feb 15 11:52:30 2021 ------------------------------
-
+library(telemetry)
+source("R/utils.R")
 ## In the clean_all_detects.R script:
  # - only need fish (JSATS) from: 2013-2017
  # - only need fish (all groups) that reach either Ben or Chipps recs
@@ -39,15 +40,12 @@
 # 7. join to a final data frame
 #-------------------------------------------------------#
 
-source("R/utils.R")
-
 # load distance matrix (using DCC closed only)
 dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
 
 ## Load clean JSATs detections of interest
 jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
-
 #-------------------------------------------------------#
 
 # big test: all fish
@@ -56,19 +54,13 @@ f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
 f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
 
-f2 = do.call(rbind, f2)
+ans4 = lapply(f2, hs)
 
-# subset the dataset to only the years we need
-years = 2013:2017
+ans5 = data.table::rbindlist(ans4, idcol = TRUE)
 
-f3 = subset(f2, lubridate::year(f2$Date) %in% years)
+colnames(ans5) <- c("FishID", "date_time", "prop_dist")
 
-f3_split = split(f3, lubridate::year(f3$Date)) 
+head(ans5)
 
-ans = lapply(f3_split, make_matrix)
-
-mapply(write.csv, 
-       x = ans, 
-       file = paste0("results/JSATS/", names(ans), "_jsats_dpd.csv"), 
-       row.names = FALSE)
+write.csv(ans5, "results/JSATS/jsats_dpd_refactor.csv")
 
