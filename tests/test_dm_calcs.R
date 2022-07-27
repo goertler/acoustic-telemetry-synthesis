@@ -65,6 +65,34 @@ tt3 = lapply(f3, rm_nas_and_merge, dist_mat = dm_ybus, na_col = "next_arrival")
 
 tt4 = lapply(tt3, function(x) x[x$Total_Length_m != 0, ])
 
-ans3 = lapply(tt4, hs)
+ans3 = lapply(tt4, function(x) try(hs(x)))
 
 lapply(ans3, tail)
+
+##-----------------------------------------
+
+# load distance matrix (using DCC closed only)
+dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
+
+## Load clean JSATs detections of interest
+jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #
+jsats$DetectDate = as.Date(jsats$DateTime_PST)
+#-------------------------------------------------------#
+
+# big test: all fish
+f1 = split(jsats, jsats$FishID)
+f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
+
+ans = lapply(f1, add_lag_col, "DateTime_PST", "DateTime_PST", "new_arrival")
+
+f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
+
+"Tisdale2013-022"
+
+mapply(div_dist, 
+       start = x$DateTime_PST, 
+       end = x$next_arrival, 
+       distance = x$Total_Length_m, 
+       time_units = "hour",
+       SIMPLIFY = FALSE)
+

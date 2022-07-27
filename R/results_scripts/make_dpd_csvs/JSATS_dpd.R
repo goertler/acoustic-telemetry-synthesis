@@ -4,41 +4,6 @@
 # Mon Feb 15 11:52:30 2021 ------------------------------
 library(telemetry)
 source("R/utils.R")
-## In the clean_all_detects.R script:
- # - only need fish (JSATS) from: 2013-2017
- # - only need fish (all groups) that reach either Ben or Chipps recs
- # - End Recs: "BeniciaW"  "ChippsW"
- # - Rename some receiver locations to agree with the names in the distance matrices
-
-#-------------------------------------------------------#
-# Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
-
-# If detections are separated by many days, spread the distance evenly across the interval.
-
-# Input needed: cleaned detections data frame with FishID, DateTime_PST, GEN, Year, and RKM; Distance matrix dataframe with columns "Name" (movement name) and "Distance_m"
-
-# Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
-
-#-------------------------------------------------------#
-# Re-factored approach to creating distance traveled matrix: dbd_allfish function
-#-------------------------------------------------------#
-
-# 1. order detections by FishID and date; filter down to the first detection at each receiver
-
-# 2. create lagged detection columns; create movement column by pasting
-
-# 3. join with distance matrix data to get distance each movement represents
-
-# group by fishID & date; the total distance traveled column = the distance traveled from the previous recorded movement to that date
-
-# 4. Create column of lagged difftime = number of days elapsed since recorded previous movement
-
-# 5. create vector of full dates in between recorded detections for a given movement
-
-# 6. create vector of corresponding distances per day by dividing total distance by difftime
-
-# 7. join to a final data frame
-#-------------------------------------------------------#
 
 # load distance matrix (using DCC closed only)
 dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
@@ -46,6 +11,10 @@ dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdal
 ## Load clean JSATs detections of interest
 jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
+csn(jsats)
+key = read.csv("data/common_data/FishID_key.csv")
+jsats = jsats[jsats$FishID %in% key$FishID, ]
+
 #-------------------------------------------------------#
 
 # big test: all fish
@@ -54,7 +23,32 @@ f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
 f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
 
-ans4 = lapply(f2, hs)
+ans4 = lapply(f2, function(x) try(hs(x)))
+idx = sapply(ans4, is, "try-error")
+lapply(f2[idx], hs) # only calling it with the ones that tripped an error
+chk_f1 = f1[idx] # list of data frames that throw error
+
+# see if there are NAs
+lapply(chk_f1, function(x) csn(x)) # no NAS; they're being introduced by dpd_allfish
+
+dpd_allfish(chk_f1[[9]], dm_closed) # this movement isn't in the matrix
+
+chk = f2[idx]
+lapply(chk, function(x) all(is.na(x[1, ]))) # do all of these have NAs in their first row? Y
+
+test = f2[["FR-Delta2015-194"]]
+div_dist(
+         start = test$DateTime_PST, 
+         end = test$next_arrival, 
+         distance = test$Total_Length_m, 
+         time_units = "hour")
+
+hs(test)
+
+names(idx[1])
+chk = names(idx[idx])
+plot(jsats$RKM[jsats$FishID == chk[7]])
+csn(jsats[jsats$FishID == chk[8], ])
 
 ans5 = data.table::rbindlist(ans4, idcol = TRUE)
 

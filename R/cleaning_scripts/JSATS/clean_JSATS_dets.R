@@ -39,9 +39,6 @@ all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
                                       format = "%m/%d/%Y %H:%M:%OS")
 
 #-------------------------------------------------------#
-# Subset down to the years and fish we need for the DFA:
-all_detects = all_detects[lubridate::year(all_detects$DetectDate) != 2012, ] # we want 2013:2017
-
 ## combine certain locations where receivers are too close together
 exits = unique(all_detects$FishID[all_detects$GEN %in% c("ChippsE", "ChippsW", "Benicia", "BeniciaW" )]) # only use the fish detected at Chipps/Benicia # 575 fish for DFA analysis
 
@@ -203,7 +200,7 @@ ans2 %>%
   ungroup() -> too_early
 
 length(chk) # 22 fish
-sum(chk %in% unique(too_early$FishID)) #16 of them detected prior to tagging
+sum(chk %in% unique(too_early$FishID)) #3 of them detected prior to tagging
 
 too_early = data.frame(too_early)
 
@@ -213,6 +210,14 @@ len(ans2$FishID) - len(ans3$FishID)
 
 ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
 
+x = all_detects$DateTime_PST[1:5] 
+y = as.POSIXct(x,
+               tz = "Etc/GMT+8",
+               format = "%m/%d/%Y %H:%M:%S")
+
+all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
+                                      tz = "Etc/GMT+8",
+                                      format = "%m/%d/%Y %H:%M:%S")
 
 
 saveRDS(ans3, "data_clean/JSATS/jsats_detects2013-2017.rds")

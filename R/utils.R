@@ -99,7 +99,7 @@ rm_nas_and_merge = function(df, dist_mat, na_col = "next_arrival") {
 
 # remove movements w/ dist = 0m
 
-rm_zero_dists = function(x) x[x$Total_Length_m != 0, ]
+rm_zero_dists = function(x) x[x$Total_Length_m != 0, ] # does not take care of NAs - just propagates them
 
 
 # mapply the div_dist function:
@@ -117,13 +117,16 @@ hs = function(df) {
 
 dpd_allfish = function(detdf, distance_matrix) {
   
-  tmp1 = add_lag_col(detdf, order_by = "DateTime_PST",
+  tmp1 = add_lag_col(detdf, 
+                     order_by = "DateTime_PST",
                      col_to_lag = "DateTime_PST",
                      lagged_col_name = "next_arrival")
   
   tmp2 = make_movements(tmp1, 
                         col_to_lead = 'GEN', 
                         lagged_col_name = 'movement')
+  
+  stopifnot(all(tmp2$movement %in% distance_matrix$Name)) # added to debug jsats records
   
   tmp3 = rm_nas_and_merge(tmp2, dist_mat = distance_matrix, na_col = "next_arrival")
   
