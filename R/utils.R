@@ -114,6 +114,21 @@ hs = function(df) {
   
 }
 
+# add movement column so we can compare with the distance matrix
+movement_col = function(detdf, distance_matrix) {
+  
+  tmp1 = add_lag_col(detdf, 
+                     order_by = "DateTime_PST",
+                     col_to_lag = "DateTime_PST",
+                     lagged_col_name = "next_arrival")
+  
+  make_movements(tmp1, 
+                        col_to_lead = 'GEN', 
+                        lagged_col_name = 'movement')
+  
+
+}
+
 
 dpd_allfish = function(detdf, distance_matrix) {
   
@@ -125,8 +140,6 @@ dpd_allfish = function(detdf, distance_matrix) {
   tmp2 = make_movements(tmp1, 
                         col_to_lead = 'GEN', 
                         lagged_col_name = 'movement')
-  
-  stopifnot(all(tmp2$movement %in% distance_matrix$Name)) # added to debug jsats records
   
   tmp3 = rm_nas_and_merge(tmp2, dist_mat = distance_matrix, na_col = "next_arrival")
   

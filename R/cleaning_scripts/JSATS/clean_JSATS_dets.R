@@ -154,8 +154,9 @@ all_detects[all_detects$GEN == "FreeportDiv", "GEN"] <-
 all_detects[all_detects$GEN == "ChippsE", "GEN"] <- "ChippsW" # this is how it is in the dist matrix
 all_detects[all_detects$GEN == "GoldenGateE", "GEN"] <- "GoldenGateW"
 
-## remove mokbase since it is one site we don't have distance matrix for
+## remove mokbase and GG since we don't have distance matrix distances for
 all_detects <- all_detects[all_detects$GEN != "MokBase",]
+all_detects <- all_detects[all_detects$GEN != "GoldenGateW",]
 
 #-------------------------------------------------------#
 # QAQC
@@ -192,7 +193,6 @@ ans2 <-
         by = "FishID",
         all.x = TRUE)
 
-
 ans2 %>%
   group_by(FishID) %>%
   arrange(DateTime_PST) %>%
@@ -210,14 +210,19 @@ len(ans2$FishID) - len(ans3$FishID)
 
 ans3 = ans3[order(ans3$FishID, ans3$DateTime_PST), ]
 
-x = all_detects$DateTime_PST[1:5] 
-y = as.POSIXct(x,
-               tz = "Etc/GMT+8",
-               format = "%m/%d/%Y %H:%M:%S")
-
-all_detects$DateTime_PST = as.POSIXct(all_detects$DateTime_PST,
-                                      tz = "Etc/GMT+8",
-                                      format = "%m/%d/%Y %H:%M:%S")
+# remove the 8 fish that complete backward movements from Benicia and/or Chipps
+ans3 = ans3[!(
+  ans3$FishID %in% c(
+    "ARF2017-064",
+    "CFR2016-111",
+    "SB2016-094",
+    "WR2016-265",
+    "WR2016-555",
+    "WR2017-020",
+    "WR2017-158",
+    "WR2017-493"
+  )
+),]
 
 
 saveRDS(ans3, "data_clean/JSATS/jsats_detects2013-2017.rds")

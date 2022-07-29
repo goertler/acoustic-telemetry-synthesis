@@ -1,4 +1,6 @@
 Name,OriginID,DestinationID,Total_Length_m
+Tisdale Release - BlwTisdale,1,1,5985.78
+Hood_Rel - Above_Hood,1,1,826.18
 Above_Hood - Above_Hood,1,1,0
 Above_Hood - Hood_RT,1,91,664.5838723
 Above_Hood - Hood,1,89,699.6894073
