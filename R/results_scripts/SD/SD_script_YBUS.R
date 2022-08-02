@@ -1,5 +1,6 @@
 source("R/01_setup.R")
 library(reshape2)
+library(dplyr)
 
 # estimate variation in travel time (sd)
 
@@ -19,7 +20,7 @@ summary_ybus_dpd <- ybus_dpd %>%
 ybus_dpd_matrix <- dcast(summary_ybus_dpd, FishID~date, fun = sum)
 head(ybus_dpd_matrix)
 
-ybus_dpd_matrix[ybus_dpd_matrix == 0] <- NA
+ybus_dpd_matrix[ybus_dpd_matrix == 0] <- NA # should double check that this isn't breaking up time series (if zero between > 0 values)
 min(ybus_dpd_matrix[,-1], na.rm = TRUE)
 
 # SD
