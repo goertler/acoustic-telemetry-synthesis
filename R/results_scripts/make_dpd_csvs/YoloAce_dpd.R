@@ -9,6 +9,15 @@ source("R/utils.R")
 dm_yoloace = read.csv("data/distance_matrices/Distance_Matrix_MJ_corr_mean.csv")
 dm_yoloace = dm_yoloace[ , c("Name_corr", "mean_Total_Length")]
 colnames(dm_yoloace) = c("Name", "Total_Length_m")
+
+dm_yoloace = tidyr::separate(dm_yoloace, Name, into = c("Rec1", "Rec2"),  sep = "-", remove = FALSE)
+
+i = dm_yoloace$Rec1 == dm_yoloace$Rec2
+
+dm_yoloace$Total_Length_m[i] <- 0
+
+dm_yoloace[i, ] # chk
+
 dm_yoloace$Name = gsub("-", " - ", dm_yoloace$Name)
 
 ## Load clean detections of interest
