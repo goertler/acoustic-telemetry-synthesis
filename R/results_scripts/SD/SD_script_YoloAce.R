@@ -76,9 +76,12 @@ yoloace_13_summary <- yoloace_dpd_13 %>%
   arrange(date, .by_group = TRUE) %>%
   complete(date = seq.Date(min(date), max(date), by="days"), fill = list(prop_dist = 0))
 
-head(summary_yoloace_dpd_13)
+head(yoloace_13_summary)
 
-yoloace_dpd_matrix_13 <- dcast(test_summary, FishID~date, fun = sum, fill = NA_real_)
+yoloace_dpd_matrix_12 <- dcast(yoloace_12_summary, FishID~date, fun = sum, fill = NA_real_)
+head(yoloace_dpd_matrix_12)
+
+yoloace_dpd_matrix_13 <- dcast(yoloace_13_summary, FishID~date, fun = sum, fill = NA_real_)
 head(yoloace_dpd_matrix_13)
 
 #test.yoloace_dpd_matrix_13 <- yoloace_dpd_matrix_13
@@ -96,28 +99,6 @@ head(yoloace_dpd_matrix_13)
 
 #head(test.yoloace_dpd_matrix_13)
 
-test.yoloace_dpd_matrix_13
-
-
-yoloace_dpd_matrix_13 <- dcast(summary_yoloace_dpd_13, FishID~date, fun.aggregate = function(x) if(length(x) == 0) NA_real_ else sum(x, na.rm = TRUE))
-head(yoloace_dpd_matrix_13)
-
-yoloace_dpd_matrix_13 <- dcast(summary_yoloace_dpd_13, FishID~date, value.var = "date", fun.aggregate = function(x) lubridate::as_date(x), fill = 0)
-
-min(yoloace_dpd_matrix_12[,-1], na.rm = TRUE)
-yoloace_dpd_matrix_12[yoloace_dpd_matrix_12 == 0] <- NA
-
-min(yoloace_dpd_matrix_13[,-1], na.rm = TRUE)
-yoloace_dpd_matrix_13[yoloace_dpd_matrix_13 == 0] <- NA
-
-# need to investigate NA vs 0 issue...
-
-MJ_63 <- subset(yoloace_dpd, TagID == "5870") # 2013-03-16 is missing
-MJ_45 <- subset(summary_yoloace_dpd_13, FishID == "45.MJ") # 2013-03-13 is missing
-
-test <- MJ_63 %>%
-  complete(date, by = 'day')
-
 # fix date
 #dat_goods$rel <-  as.Date(gsub('\\.', '-', dat_goods$rel))
 #dat_goods$end <-  as.Date(gsub('\\.', '-', dat_goods$end))
@@ -133,3 +114,36 @@ test <- MJ_63 %>%
 #head(dat_goods_ID)
 
 #write.csv(dat_goods_ID[,-1], "results/SD/YoloAce.csv")
+
+# SD
+spread_yoloace_12 <- transform(yoloace_dpd_matrix_12, SD=apply(yoloace_dpd_matrix_12[c(2:ncol(yoloace_dpd_matrix_12))],1, sd, na.rm = TRUE))
+
+rel <- names(yoloace_dpd_matrix_12[-1])[max.col(!is.na(yoloace_dpd_matrix_12[-1]), "first")]
+end <- names(yoloace_dpd_matrix_12[-ncol(yoloace_dpd_matrix_12)])[max.col(!is.na(yoloace_dpd_matrix_12[-ncol(yoloace_dpd_matrix_12)]), "last")]
+
+sd_yoloace_12 <- data.frame(spread_yoloace_12[,c(1,19)], rel, end)
+
+head(sd_yoloace_12)
+str(sd_yoloace_12)
+
+spread_yoloace_13 <- transform(yoloace_dpd_matrix_13, SD=apply(yoloace_dpd_matrix_13[c(2:ncol(yoloace_dpd_matrix_13))],1, sd, na.rm = TRUE))
+
+rel <- names(yoloace_dpd_matrix_13[-1])[max.col(!is.na(yoloace_dpd_matrix_13[-1]), "first")]
+end <- names(yoloace_dpd_matrix_13[-ncol(yoloace_dpd_matrix_13)])[max.col(!is.na(yoloace_dpd_matrix_13[-ncol(yoloace_dpd_matrix_13)]), "last")]
+
+sd_yoloace_13 <- data.frame(spread_yoloace_13[,c(1,28)], rel, end)
+
+head(sd_yoloace_13)
+str(sd_yoloace_13)
+
+
+sd_yoloace_12$Year <- "2012"
+length(unique(sd_yoloace_12$FishID))
+
+sd_yoloace_13$Year <- "2013"
+length(unique(sd_yoloace_13$FishID))
+
+write.csv(sd_yoloace_12, "results/SD/YoloAce_12.csv")
+write.csv(sd_yoloace_13, "results/SD/YoloAce_13.csv")
+
+
