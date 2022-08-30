@@ -138,10 +138,10 @@ str(sd_yoloace_13)
 
 
 sd_yoloace_12$Year <- "2012"
-length(unique(sd_yoloace_12$FishID))
+length(unique(sd_yoloace_12$FishID))#30
 
 sd_yoloace_13$Year <- "2013"
-length(unique(sd_yoloace_13$FishID))
+length(unique(sd_yoloace_13$FishID))#33
 
 write.csv(sd_yoloace_12, "results/SD/YoloAce_12.csv")
 write.csv(sd_yoloace_13, "results/SD/YoloAce_13.csv")
