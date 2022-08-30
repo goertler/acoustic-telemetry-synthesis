@@ -1,6 +1,7 @@
 source("R/01_setup.R")
 library(reshape2)
 library(dplyr)
+library(tidyr)
 
 # estimate variation in travel time (sd)
 
