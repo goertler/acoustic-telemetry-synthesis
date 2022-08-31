@@ -169,3 +169,14 @@ write.csv(sd_jsats_17, "results/SD/JSATS_17.csv")
 # these are fish that have no travel time because of Benicia combination rule
 
 # still need to check which fish were dropped from 2016 and 2017
+ID_16 <- unique(jsats_16$FishID)
+ID_17 <- unique(jsats_17$FishID)
+
+final_16 <- unique(sd_jsats_16$FishID)
+final_17 <- unique(sd_jsats_17$FishID)
+
+setdiff(ID_16, final_16) #"CFR2016-111" "SB2016-094"  "WR2016-265"  "WR2016-555"
+setdiff(ID_17, final_17) #"ARF2017-064" "WR2017-020"  "WR2017-158"  "WR2017-493"
+
+check_jstat <- c(setdiff(ID_16, final_16), setdiff(ID_17, final_17))
+key[(key$FishID %in% check_jstat), ]
