@@ -57,161 +57,96 @@ test_fl_onefish <- function (x,
     return(newdf)
 }
 
-## function for all fish: assumes input will be a single data frame; need to split large data frame by FishID
-#df = jsats; fish = "ARF2017-211" ; distance_matrix = dm_closed# testing
 
-
-dpd_allfish = function(detdf, distance_matrix) {
-
-  tmp1 = assign_station_visits(detdf)
-  tmp2 = make_movements(tmp1, distance_matrix = distance_matrix)
-  tmp3 = calc_dist_per_day(tmp2)
-  pad_days(tmp3)
-
-}
-
-# get movements missing from matrix
-# Mon Jan 17 13:15:25 2022 ------------------------------
-if(FALSE){ f1 = split(v2, v2$FishID)
-f1 = f1[sapply(f1, nrow) > 0]
-tmp1 = lapply(f1, assign_station_visits)
-str(tmp1[1])
-
-tmp2 = lapply(tmp1, make_movements, distance_matrix = mat)
-str(tmp2[1])
-
-ans = do.call(rbind, tmp2)
-head(ans)
-missing_movements = setdiff(ans$movement, mat$Name)
-write.csv(missing_movements, "results/temporary/movements_mising_from_dist_matrix_2022-01-17.csv")
-}
-
-#-------------------------------------------------------#
-# 1. assign station visits
-#-------------------------------------------------------#
-# this function takes a data frame of detections for a single fish, orders it by the date time column, 
-# and creates a new column called VisitID that labels each row with a sequential ID by station; for example,
-# if a fish has one release detection, three detections at the station 1, and 8 detections at station 2, and then another detection at station 1, the VisitID column would read: 1 2 2 2 3 3 3 3 3 3 3 3 4
-# then it splits the detection data frame on the VisitID column, so that we have one data frame for each visit it.  Then it applies the get test_first_last function to each visitID data frame
-# and binds all the resulting 1-2 row data frames back into a single data frame and returns it.
-
-assign_station_visits = function(df) { # add check to see if all movements are in there
+#----------------------------------------------------#
+# refactor dpd with telemetry::div_dist()
+# Tue Jun 28 10:37:34 2022 ------------------------------
+#----------------------------------------------------#
+# div_dist setup functions:
+add_lag_col = function(df, order_by = "DateTime_PST", col_to_lag, lagged_col_name, ...) {
   
-tt = df[ , c("FishID", "DateTime_PST", "GEN")]
-tt = tt[order(tt$DateTime_PST), ]
-tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
-
-tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
-
-return(tt2)
+  df = df[order(df[[order_by]]), ]
+  df[[lagged_col_name]] = c(df[[col_to_lag]][-1], NA)
+  return(df)
+  
 }
 
-#-------------------------------------------------------#
-# make/check movements
-#-------------------------------------------------------#
-# function expects a single data frame with one fish in it and all its station visits (first and last detection at each)
-
-make_movements = function(tt2, distance_matrix) {
+# make the movements:
+make_movements = function(df, col_to_lead, lagged_col_name, sep = " - ") {
   
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; ensures that track goes from departure to departure across all the stations, which incorporates all the residence time in between receivers
+  df[[lagged_col_name]] = paste(df[[col_to_lead]], dplyr::lead(df[[col_to_lead]]), sep = sep)
+  return(df)
+}
 
-# make movements
-tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
-# browser()
-# if(!(length(setdiff(tt3$movement, distance_matrix$Name)) == 0)) {
-# 
-#   stop("Movements present in data are missing from distance matrix") # stop if there are movements in the data that aren't in the distance matrix
-# 
-#   } else {
-# pull movements from the matrix
-
-tt3 =
-  merge(
+# remove the NAs and merge with the distance matrix function:
+rm_nas_and_merge = function(df, dist_mat, na_col = "next_arrival") {
+  
+  tt3 = df[!is.na(df[[na_col]]), ] # remove last row, as the arrival at last receiver is now on the second-to-last row
+  
+  tt3 = merge(
     tt3,
-    distance_matrix[, c("Name", "Total_Length_m")],
+    dist_mat[, c("Name", "Total_Length_m")],
     by.x  = "movement",
     by.y = "Name",
     all.x = TRUE
   )
-
-tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST, tz = "Etc/GMT+8") # # this needs a tz, otherwise some departure dates turn over to the next day
-return(tt3)
-
-  }
-#}
-
-#-------------------------------------------------------#
-
-#-------------------------------------------------------#
-# calculate distance per day
-#-------------------------------------------------------#
-calc_dist_per_day = function(tt3) {
-
-# browser()
-ff =  aggregate(Total_Length_m ~ FishID + Date, data = tt3, FUN = sum, na.rm = TRUE)
-# calculate vector of time differences & add as column
-ff$timediff = c(1, as.numeric(diff(ff$Date))) # add 1 day for the NA of first movement
-
-#ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
-
-ff$tot_distance = round(as.numeric(ff$Total_Length_m), 2)
-
-ff$dist_day = ff$tot_distance/ff$timediff
-
-return(ff)
-
-}
-#-------------------------------------------------------#
-
-#-------------------------------------------------------#
-# Pad days for each track to make one continuous date vector from first detection to last detection;
-# return final data frame of fishID, dates, and distance traveled per date
-#-------------------------------------------------------#
-pad_days = function(ff) {
   
-  # create vector of dates for the total time period represented by a movement
-dates = seq.Date(from = ff$Date[1], # from 1st date
-                 to = ff$Date[length(ff$Date)], # to final date
-                by = "days"
-                  ) 
+  tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
+  tt3$Date = as.Date(tt3$DateTime_PST, tz = "Etc/GMT+8") # # this needs a tz, otherwise some departure dates turn over to the next day
+  return(tt3)
   
-dists = rep(ff$dist_day, ff$timediff)
-
-stopifnot(length(dists) == length(dates))
-
-fin = data.frame(FishID = unique(ff$FishID),
-           Date = dates, 
-           Distance_m = dists)
-
-stopifnot(
-  all.equal(sum(fin$Distance_m, na.rm = TRUE) , 
-            sum(ff$tot_distance, na.rm = TRUE),
-         tolerance = 0.1 )
-  )
-
-return(fin)
-#-------------------------------------------------------#
 }
 
-#-------------------------------------------------------#
-# Function to make final data frame
+# remove movements w/ dist = 0m
 
-make_matrix = function(dt) {
+rm_zero_dists = function(x) x[x$Total_Length_m != 0, ] # does not take care of NAs - just propagates them
+
+
+# mapply the div_dist function:
+hs = function(df) {
   
-    chk = seq.Date(from = min(dt$Date), to = max(dt$Date), by = "day")
-    date_diff = setdiff(chk, dt$Date)
-    
-    if(length(date_diff)) {
-      dt = rbind(dt, data.frame(FishID = NA,
-                                Date = as.Date(date_diff, origin = "1970-01-01"),
-                                Distance_m = NA)) }
-    
-    dt = as.data.frame(tidyr::pivot_wider(dt, names_from = Date, values_from = Distance_m))
-    
-    dt[!is.na(dt$FishID) , c("FishID", as.character(chk))] # order the data frame by the correct date sequence
+  do.call(rbind, mapply(div_dist, 
+                        start = df$DateTime_PST, 
+                        end = df$next_arrival, 
+                        distance = df$Total_Length_m, 
+                        time_units = "hour",
+                        SIMPLIFY = FALSE))
+  
+}
 
-  }
+# add movement column so we can compare with the distance matrix
+movement_col = function(detdf, distance_matrix) {
+  
+  tmp1 = add_lag_col(detdf, 
+                     order_by = "DateTime_PST",
+                     col_to_lag = "DateTime_PST",
+                     lagged_col_name = "next_arrival")
+  
+  make_movements(tmp1, 
+                        col_to_lead = 'GEN', 
+                        lagged_col_name = 'movement')
+  
+
+}
+
+
+dpd_allfish = function(detdf, distance_matrix) {
+  
+  tmp1 = add_lag_col(detdf, 
+                     order_by = "DateTime_PST",
+                     col_to_lag = "DateTime_PST",
+                     lagged_col_name = "next_arrival")
+  
+  tmp2 = make_movements(tmp1, 
+                        col_to_lead = 'GEN', 
+                        lagged_col_name = 'movement')
+  
+  tmp3 = rm_nas_and_merge(tmp2, dist_mat = distance_matrix, na_col = "next_arrival")
+  
+  rm_zero_dists(tmp3)
+  
+}
+
 
 # find fish that go backwards
 #riverkilometer increases after having previously decreased
