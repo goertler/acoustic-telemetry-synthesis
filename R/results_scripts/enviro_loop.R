@@ -1,5 +1,11 @@
+# library
+library(dplyr)
+library(imputeTS)
+library(contentid)
+
 # load data
 
+# stage at Rio Vista
 stage <- read.csv("data/enviro_data/RVB_Stage.csv")
 stage$Date <- as.Date(stage$Date)
 stage <- subset(stage, DATA_FLAG != "N")
@@ -7,33 +13,65 @@ head(stage)
 str(stage)
 sum(is.na(stage$VALUE)) #1.2%
 plot(stage$Date, stage$VALUE) # a few outlier looking values in 2009
-stage_cehck <- subset(stage, Date < as.Date("2010-01-01"))
-plot(stage_cehck$Date, stage_cehck$VALUE)
-# get rid of negative data and then use daily mean
-stage_clean <- subset(stage, VALUE>=0)
 
-#temp <- read.csv("data/enviro_data/RVB-TEMP.csv")
-#temp$Date <- as.Date(temp$Date)
-#temp$RVB.TEMP <- as.numeric(temp$RVB.TEMP)
-#plot(temp$Date, temp$RVB.TEMP)# weird values
-#temp_clean <- subset(temp, RVB.TEMP<=100 & RVB.TEMP>=0)
+#plot(stage_check$Date, stage_check$VALUE, data = subset(stage, Date < as.Date("2010-01-01") & Date > as.Date("2008-01-01")))
+stage_09 <- subset(stage, Date < as.Date("2009-11-01") & Date > as.Date("2009-09-01"))
+plot(stage_09$Date, stage_09$VALUE) # 1.19 looks like the correct break to remove those values
 
-#min(temp_clean$Date, na.rm = TRUE) #2007-05-31, need to start at or before 2007-01-31
-temp_fill <- read.csv("data/enviro_data/RIV_25.csv")
-temp_fill$Date <- as.Date(temp_fill$OBS.DATE)
-head(temp_fill)
-str(temp_fill)
-temp_fill$RIV.TEMP <- as.numeric(temp_fill$RIV.TEMP)
-plot(temp_fill$Date, temp_fill$RIV.TEMP)# weird values
-temp_fill_clean <- subset(temp_fill, RIV.TEMP<=40 & RIV.TEMP>=0)
-min(temp_fill_clean$Date, na.rm = TRUE) # easier to substitute
+stage_clean <- subset(stage, VALUE > 1.19)
 
-fish_dat <- read.csv("results/SD/SD_dat.csv")
-head(fish_dat)
-str(fish_dat)
-fish_dat$rel <- as.Date(fish_dat$rel)
-fish_dat$end <- as.Date(fish_dat$end)
-length(unique(fish_dat$FishID))
+# check sampling interval
+stage_freq <- stage_clean %>%
+  group_by(Date) %>%
+  summarize(n()) # between 1 and 24
+
+#only include those with great than 20 measurements in a day (21/24 = 0.875)
+exclude_dates <- subset(stage_freq, `n()` < 20) # drops 46 days
+
+stage_cont = stage_clean[!(stage_clean$Date %in% exclude_dates$Date), ] #removes 624 values
+
+# make daily
+cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
+
+stage_daily <- stage_cont[,c(7,10)] %>%
+  group_by(Date) %>%
+  summarise_each(funs(mean = mean(., na.rm = TRUE), max = max(., na.rm = TRUE), min = min(., na.rm = TRUE), sd = sd(., na.rm = TRUE), cv, n = sum(!is.na(.))))
+
+stage_daily <- subset(stage_daily, n > 20) # still had a few, must have been NA values and real dates
+
+# check for missing days
+continous_dates <- data.frame (x = 1:3777, Date = seq(as.Date('2007-02-15'),as.Date('2017-06-18'),by='day'))
+stage_daily_cont <- merge(stage_daily, continous_dates, by = "Date", all = TRUE)
+
+stage_daily_NA <- stage_daily_cont[is.na(stage_daily_cont$mean),] # only 51 out of 4000 obs.
+
+stage_daily_NA$group <- cumsum(c(1, diff.Date(stage_daily_NA$Date)) >= 2)
+
+stage_daily_NA_summary <- stage_daily_NA %>%
+  group_by(group) %>%
+  summarise(length = length(group)) %>%
+  as.data.frame(stage_daily_NA_summary) # seven or less consecutive missing values
+
+# small enough, comfortable imputing missing data
+stage_daily_cont$mean <- na_ma(stage_daily_cont$mean, k = 7, weighting = "exponential", maxgap = Inf)
+
+write.csv(stage_daily_cont, "results/SD/stage_daily_mean.csv")
+
+# temperature at Rio Vista
+data_URL = "https://portal.edirepository.org/nis/dataviewer?packageid=edi.1178.1&entityid=5055c89851653f175078378a6e8ba6eb"
+integrated_data_id <- contentid::store(data_URL)
+integrated_temp <- read.csv(contentid::retrieve(integrated_data_id))
+str(integrated_temp)
+integrated_temp$date <- as.Date(integrated_temp$date)
+
+temp_daily <- subset(integrated_temp, region == "river_downstream")
+
+source(SD_comb.R)
+head(sd_meta)
+str(sd_meta)
+sd_meta$rel <- as.Date(sd_meta$rel)
+sd_meta$end <- as.Date(sd_meta$end)
+length(unique(sd_meta$FishID))
 
 Keeper_dat <- data.frame(FishID = NA, Date_min = as.Date("1900-01-01"),  Date_max = as.Date("1900-01-01"), Temp_mean = NA, Temp_sd = NA, Stage_mean = NA, Stage_sd = NA)
 
