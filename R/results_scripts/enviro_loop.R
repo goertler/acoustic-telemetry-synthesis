@@ -54,8 +54,8 @@ stage_daily_NA_summary <- stage_daily_NA %>%
 
 # small enough, comfortable imputing missing data
 stage_daily_cont$mean <- na_ma(stage_daily_cont$mean, k = 7, weighting = "exponential", maxgap = Inf)
-
-write.csv(stage_daily_cont, "results/SD/stage_daily_mean.csv")
+colnames(stage_daily_cont)[1] <- "date"
+write.csv(stage_daily_cont[,-8], "results/SD/stage_daily_mean.csv")
 
 # temperature at Rio Vista
 data_URL = "https://portal.edirepository.org/nis/dataviewer?packageid=edi.1178.1&entityid=5055c89851653f175078378a6e8ba6eb"
@@ -73,26 +73,25 @@ sd_meta$rel <- as.Date(sd_meta$rel)
 sd_meta$end <- as.Date(sd_meta$end)
 length(unique(sd_meta$FishID))
 
-Keeper_dat <- data.frame(FishID = NA, Date_min = as.Date("1900-01-01"),  Date_max = as.Date("1900-01-01"), Temp_mean = NA, Temp_sd = NA, Stage_mean = NA, Stage_sd = NA)
+keeper_dat <- data.frame(FishID = NA, date_min = as.Date("1900-01-01"),  date_max = as.Date("1900-01-01"), temp_mean = NA, temp_sd = NA, stage_mean = NA, stage_sd = NA)
 
-for(i in unique(fish_dat$FishID)){
-  temp_dat <- subset(fish_dat, FishID == i)
-  Temp_df <- subset(temp_fill_clean, Date >= min(temp_dat$rel) & Date <= max(temp_dat$end))
-  Stage_df <- subset(stage_clean, Date >= min(temp_dat$rel) & Date <= max(temp_dat$end))
-  new_dat <- data.frame(FishID = i, Date_min = min(temp_dat$rel),  Date_max = max(temp_dat$end), Temp_mean = mean(Temp_df$RIV.TEMP, na.rm=TRUE), Temp_sd = sd(Temp_df$RIV.TEMP, na.rm=TRUE), Stage_mean = mean(Stage_df$VALUE, na.rm=TRUE), Stage_sd = sd(Stage_df$VALUE, na.rm=TRUE))
-  Keeper_dat <- rbind(Keeper_dat, new_dat)
+for(i in unique(sd_meta$FishID)){
+  temp_dat <- subset(sd_meta, FishID == i)
+  temp_df <- subset(temp_daily, date >= min(temp_dat$rel) & date <= max(temp_dat$end))
+  stage_df <- subset(stage_daily_cont, date >= min(temp_dat$rel) & date <= max(temp_dat$end))
+  new_dat <- data.frame(FishID = i, date_min = min(temp_dat$rel),  date_max = max(temp_dat$end), temp_mean = mean(temp_df$mean), temp_sd = sd(temp_df$mean), stage_mean = mean(stage_df$mean), stage_sd = sd(stage_df$mean))
+  keeper_dat <- rbind(keeper_dat, new_dat)
 }
 
-head(Keeper_dat)
-Keeper_dat <- Keeper_dat[-1,]
+head(keeper_dat)
+keeper_dat <- keeper_dat[-1,]
 
-model_df <- merge(Keeper_dat[,-c(2:3)], fish_dat, by = "FishID", all = TRUE)
+model_df <- merge(keeper_dat[,-c(2:3)], sd_meta, by = "FishID", all = TRUE)
 head(model_df)
-colnames(model_df)[16] <- "Year"
 
-sapply(X = model_df, FUN = function(x) sum(is.na(x))) #just the 50 JSATS
-check_sd <- model_df[is.na(model_df$SD),] #6, all YBUS
-Tags <- unique(check_sd$TagID)
+sapply(X = model_df, FUN = function(x) sum(is.na(x))) #just the 8 JSATS
+check_sd <- model_df[is.na(model_df$SD),]
 
+# missing fish size
 
 write.csv(model_df[,-6], "results/SD/model_dat.csv")
