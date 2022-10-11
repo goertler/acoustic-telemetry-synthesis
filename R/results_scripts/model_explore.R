@@ -170,3 +170,13 @@ plot(data_doy$stage_sd, data_doy$travel_time)
 
 # look into cyclical spline for mean_temp
 # look at stage data
+
+# summary table
+
+table <- data_na %>%
+  group_by(Release_Group_SAIL, Year, Group, origin) %>%
+  summarise(n = sum(!is.na(unique(FishID))))
+
+write.csv(table, "table_1.csv")
+
+
