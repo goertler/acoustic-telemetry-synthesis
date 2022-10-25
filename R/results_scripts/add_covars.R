@@ -1,5 +1,6 @@
 # add SAC dayflow
 # add inundation data
+library(dplyr)
 library(devtools)
 devtools::install_github("goertler/inundation")
 
@@ -40,7 +41,7 @@ write.csv(model_df[,-6], "results/SD/model_dat.csv")
 # add PDO
 pdo <- read.csv("data/enviro_data/PDO.csv")
 
-month_dat <- model_df[,c(1,14,21,22)] %>%
+month_dat <- model_df[,c(1,15,25,26)] %>%
   mutate(month_end = lubridate::month(end),
          year_end  = lubridate::year(end),
          month_rel = lubridate::month(rel),
@@ -83,6 +84,17 @@ combo_2 <- c("3 _ 2012 - 4 _ 2012",
 
 combo_2_dat = month_dat[(month_dat$combo %in% combo_2), ] #630
 
+combo_2_dat$label <- paste(combo_2_dat$month_rel, "_", combo_2_dat$year_rel)
+combo_2_dat <- merge(combo_2_dat, pdo[,1:2], by = "label")
+colnames(combo_2_dat)[11] <- "rel_pdo"
+combo_2_dat <- combo_2_dat[,-1]
+
+combo_2_dat$label <- paste(combo_2_dat$month_end, "_", combo_2_dat$year_end)
+combo_2_dat <- merge(combo_2_dat, pdo[,1:2], by = "label")
+colnames(combo_2_dat)[12] <- "end_pdo"
+
+combo_2_dat$PDO <- ((combo_2_dat$rel_pdo+combo_2_dat$end_pdo)/2)
+
 # more (should be 56 remaining)
 combo_3 <- c("12 _ 2007 - 2 _ 2008",
                "1 _ 2008 - 3 _ 2008",
@@ -94,7 +106,18 @@ combo_3 <- c("12 _ 2007 - 2 _ 2008",
                "1 _ 2011 - 3 _ 2011",
                "2 _ 2017 - 4 _ 2017")
 
+combo_3_dat = month_dat[(month_dat$combo %in% combo_3), ] #48 (8 NAs from JSATS)
 
+# wasn't sure how else to do this
+combo_3_pdo <- read.csv("data/enviro_data/combo_3_pdo.csv")
+combo_3_dat <- merge(combo_3_dat, combo_3_pdo, by = "combo")
+
+
+pdo_all <- rbind(combo_1_dat[,c(2,3,10)], combo_2_dat[,c(2,3,13)], combo_3_dat[,c(2,3,14)])
+
+model_df_pdo <- merge(sd_meta[,-1], pdo_all[,c(1,3)], by = "FishID", all.x = TRUE)
+
+write.csv(model_df_pdo, "results/SD/model_dat.csv")
 
 # add transport distance fish size and release temperature
 
