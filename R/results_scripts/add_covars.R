@@ -120,5 +120,85 @@ model_df_pdo <- merge(sd_meta[,-1], pdo_all[,c(1,3)], by = "FishID", all.x = TRU
 write.csv(model_df_pdo, "results/SD/model_dat.csv")
 
 # add transport distance fish size and release temperature
+# already organized for JSTAS, MJ and CM (but need to deal with YBUS)
+setwd("C:/Users/pgoertler/Documents/fishtrackr")
+dat.mj <- read.csv("chiptt_MJ.csv")
+dat.mj$FishID = paste(dat.mj$X, "MJ", sep = ".")
+head(dat.mj)
 
+dat.mj <- dat.mj[,-c(1,11)]
+dat.mj$Transport_distance <- ifelse(dat.mj$Release_Group_SAIL == "Middle Sacramento River", 252.667,
+                                    ifelse(dat.mj$Release_Group_SAIL == "Tidal Delta", 230.136, "NA" ))
 
+colnames(dat.mj)[12] <- "River_temp"
+
+setwd("C:/Users/pgoertler/OneDrive - deltacouncil/AT Diversity ms/DFA/study-detections")
+dat.cm <- read.csv("travel.time_CM.Vemco_v3.csv", check.names = FALSE)
+head(dat.cm)
+
+colnames(dat.cm)[15] <- "FL"
+colnames(dat.cm)[18] <- "Transport_distance"
+colnames(dat.cm)[19] <- "River_temp"
+
+dat.jsats <- read.csv("travel.time.jsats.FIN_v2.csv")
+head(dat.jsats)
+
+dat.jsats$TagID <- "NA"
+colnames(dat.jsats)[9] <- "FL"
+
+setwd("C:/Users/pgoertler/Documents/YBUS")
+ybus_fl_wt <- read.csv("ds1066_table5.csv")
+ybus_temp_transp <- read.csv("Yolo water temp summary_9 Aug 2021.csv")
+
+ybus <- subset(model_dat, Year == 2016 & TagType == "Vemco")
+Tag.ID <- ybus$TagID
+ybus_fl_wt_subset = ybus_fl_wt[(ybus_fl_wt$Tag.ID %in% Tag.ID), ]
+length(unique(ybus_fl_wt_subset$Tag.ID)) #662
+ybus_fl_wt_subset$check <- duplicated(ybus_fl_wt_subset$Tag.ID) # 39196 is duplicated
+
+subset(ybus_fl_wt, Tag.ID == 39196) # two weights and two lengths, but very close
+
+ybus_fl_wt_subset <- subset(ybus_fl_wt_subset, check == FALSE)
+
+unique(ybus_temp_transp$Release.location)
+unique(ybus_fl_wt_subset$Release.location)
+
+ybus_temp_transp$Release_location <- ifelse(ybus_temp_transp$Release.location == "Tisdale", "TISDALE",
+                                            ifelse(ybus_temp_transp$Release.location == "Tisdale ", "TISDALE",
+                                                   ifelse(ybus_temp_transp$Release.location == "Tule Canal at I-5", "TULE CANAL at I-5",
+                                                          ifelse(ybus_temp_transp$Release.location =="Yolo", "YOLO BYPASS",
+                                                                 ifelse(ybus_temp_transp$Release.location == "Verona", "VERONA", NA)))))
+
+ybus_temp_transp$Tag.date <- as.Date(ybus_temp_transp$rel_date)
+colnames(ybus_fl_wt_subset)[6] <- "Release_location"
+ybus_fl_wt_subset$Tag.date <- as.Date(ybus_fl_wt_subset$Tag.date)
+
+unique(ybus_fl_wt_subset[,c(4,6)])
+unique(ybus_temp_transp[,c(9,10)])
+
+unique(ybus_fl_wt_subset$Release.ID)
+unique(ybus_temp_transp$Subrelease)
+
+ybus_fl_wt_temp_transp <- merge(ybus_fl_wt_subset, ybus_temp_transp, by.x = "Release.ID", by.y = "Subrelease", all.x = TRUE)
+
+colnames(ybus_fl_wt_temp_transp)[2] <- "TagID"
+colnames(ybus_fl_wt_temp_transp)[20] <- "Transport_distance"
+colnames(ybus_fl_wt_temp_transp)[19] <- "River_temp"
+
+ybus_fishID <- unique(ybus[,c(2,11)])
+ybus_fl_wt_temp_transp <- merge(ybus_fl_wt_temp_transp,ybus_fishID, by = "TagID")
+
+missing_meta <- rbind(dat.mj[,c(1,10:12,14,15)], dat.cm[,c(2,13,14,15,18,19)], dat.jsats[,c(2,9:12,16)], ybus_fl_wt_temp_transp[,c(1,9,10,19,20,23)])
+
+#half_done <- merge(model_df_pdo, missing_meta, by = "FishID", all.x = TRUE)
+#half_done$compare <- (half_done$TagID.x == half_done$TagID.y)# check that MJ's fishIDs didnt change across versions
+
+#check_ybus <- subset(half_done, is.na(Weight)==TRUE) #yup, only missing ybus
+#296.16 in MJ data
+# Coleman fish hatchery to release loc (Liedtke and Hurst (2017))
+
+model_dat_complete <- merge(model_dat, missing_meta, by = "FishID", all.x = TRUE)
+model_dat_complete <- model_dat_complete[,-c(2,24)]
+colnames(model_dat_complete)[10] <- "TagID"
+
+write.csv(model_dat_complete, "results/SD/model_dat.csv")
