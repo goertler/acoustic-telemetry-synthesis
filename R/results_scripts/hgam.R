@@ -2,8 +2,28 @@
 
 # library
 library(mgcv)
+library(dplyr)
 
-# data from model_explore.R
+# data
+model_dat_complete<-read.csv("results/SD/model_dat.csv")
+
+model_dat_complete$rel <- as.Date(model_dat_complete$rel)
+model_dat_complete$end <- as.Date(model_dat_complete$end)
+
+data_doy <- model_dat_complete %>%
+  mutate(month_end = lubridate::month(end),
+         year_end  = lubridate::year(end),
+         rdoy_end  = lubridate::yday(end) + 92,
+         week_end  = lubridate::week(end),
+         water_year_end = ifelse(month_end > 9, year_end + 1, year_end),
+         dowy_end = ifelse(rdoy_end > 366, rdoy_end - 366, rdoy_end),
+         month_rel = lubridate::month(rel),
+         year_rel  = lubridate::year(rel),
+         rdoy_rel  = lubridate::yday(rel) + 92,
+         week_rel  = lubridate::week(rel),
+         water_year_rel = ifelse(month_rel > 9, year_rel + 1, year_rel),
+         dowy_rel = ifelse(rdoy_rel > 366, rdoy_rel - 366, rdoy_rel))
+
 data_na <- na.omit(data_doy)
 data_na$Release_Group_SAIL <- as.factor(data_na$Release_Group_SAIL)
 data_na$Year <- as.factor(data_na$Year)
@@ -12,6 +32,8 @@ data_na$origin <- as.factor(data_na$origin)
 data_na$Route <- as.factor(data_na$Route)
 data_na$TagType <- as.factor(data_na$TagType)
 data_na$tt.grp <- as.factor(data_na$tt.grp)
+data_na$FL <- as.numeric(data_na$FL)
+data_na$sum_inun <- as.numeric(data_na$sum_inun)
 
 ### A single common smoother for all observations; only has a Global smoother
 
@@ -123,6 +145,9 @@ AIC(modG, modGI, modGS, modI, modS)
 AIC(modG_cyclic, modGI_cyclic, modGS_cyclic, modI_cyclic, modS_cyclic)
 gam.check(modGI_cyclic)# best for travel_time and SD
 
+# look at covars (n = 37) relationship simply
+cor(data_na[,c(3:10,12,20,23:27,33,39)], use = "complete.obs")
+
 # testing covars one at a time
 modGI_null <- gam(log(travel_time) ~ Release_Group_SAIL,
                     data=data_na, method="REML", family="gaussian")
@@ -181,7 +206,7 @@ modGI_end <- gam(log(travel_time) ~ Release_Group_SAIL +
                             k=12, m=1),
                        data=data_na, method="REML", family="gaussian")
 
-# testing covars one at a time
+# testing covars one at a time (only updated SD models with new covars)
 modGI_null <- gam(log(SD) ~ Release_Group_SAIL,
                   data=data_na, method="REML", family="gaussian")
 
@@ -239,9 +264,62 @@ modGI_end <- gam(log(SD) ~ Release_Group_SAIL +
                       k=12, m=1),
                  data=data_na, method="REML", family="gaussian")
 
+modGI_sac_mean  <- gam(log(SD) ~ Release_Group_SAIL +
+                         te(sac_mean, bs="tp", k=12, m=2) +
+                         te(sac_mean, by=Release_Group_SAIL, bs= "tp",
+                            k=12, m=1),
+                       data=data_na, method="REML", family="gaussian")
+
+modGI_sac_sd  <- gam(log(SD) ~ Release_Group_SAIL +
+                       te(sac_sd, bs="tp", k=12, m=2) +
+                       te(sac_sd, by=Release_Group_SAIL, bs= "tp",
+                          k=12, m=1),
+                     data=data_na, method="REML", family="gaussian")
+
+modGI_max_inun  <- gam(log(SD) ~ Release_Group_SAIL +
+                         te(max_inun, bs="tp", k=12, m=2) +
+                         te(max_inun, by=Release_Group_SAIL, bs= "tp",
+                            k=12, m=1),
+                       data=data_na, method="REML", family="gaussian")
+
+modGI_sum_inun  <- gam(log(SD) ~ Release_Group_SAIL +
+                         te(sum_inun, bs="tp", k=12, m=2) +
+                         te(sum_inun, by=Release_Group_SAIL, bs= "tp",
+                            k=12, m=1),
+                       data=data_na, method="REML", family="gaussian")
+
+modGI_PDO  <- gam(log(SD) ~ Release_Group_SAIL +
+                    te(PDO, bs="tp", k=12, m=2) +
+                    te(PDO, by=Release_Group_SAIL, bs= "tp",
+                       k=12, m=1),
+                  data=data_na, method="REML", family="gaussian")
+
+modGI_Weight  <- gam(log(SD) ~ Release_Group_SAIL +
+                       te(Weight, bs="tp", k=12, m=2) +
+                       te(Weight, by=Release_Group_SAIL, bs= "tp",
+                          k=12, m=1),
+                     data=data_na, method="REML", family="gaussian")
+
+modGI_FL  <- gam(log(SD) ~ Release_Group_SAIL +
+                   te(FL, bs="tp", k=12, m=2) +
+                   te(FL, by=Release_Group_SAIL, bs= "tp",
+                      k=12, m=1),
+                 data=data_na, method="REML", family="gaussian")
+
+modGI_River_temp <- gam(log(SD) ~ Release_Group_SAIL +
+                                    te(River_temp, bs="cc", k=12, m=2) +
+                                    te(River_temp, by=Release_Group_SAIL, bs= "cc",
+                                       k=12, m=1),
+                                  data=data_na, method="REML", family="gaussian")
+
+modGI_Transport_distance <- gam(log(SD) ~ Release_Group_SAIL +
+                                  te(Transport_distance, bs="tp", k=12, m=2) +
+                                  te(Transport_distance, by=Release_Group_SAIL, bs= "tp",
+                                     k=12, m=1),
+                                data=data_na, method="REML", family="gaussian")
 
 AIC(modGI_null, modGI_temp_mean, modGI_temp_sd, modGI_stage_sd, modGI_stage_mean, modGI_yr, modGI_gr, modGI_or, modGI_r, modGI_tag, modGI_tt,
-    modGI_rel, modGI_end) # mean stage for the win for travel time, release date is best for SD
+    modGI_rel, modGI_end, modGI_River_temp, modGI_FL, modGI_Weight, modGI_PDO, modGI_sum_inun, modGI_max_inun, modGI_sac_sd, modGI_sac_mean) # mean stage for the win for travel time, release date is best for SD
 
 # add second term to mean stage model
 
