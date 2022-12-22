@@ -1,5 +1,7 @@
 # library
 library(contentid)
+library(scales)
+library(dplyr)
 
 #data
 stage_daily <- read.csv("results/SD/stage_daily_mean.csv")
@@ -36,11 +38,11 @@ str(temp_daily)
 plot(temp_daily$date, temp_daily$mean)
 
 # plot
-library(scales)
 
 temp_daily_time <- subset(temp_daily, date>=as.Date("2007-01-01") & date<=as.Date("2017-12-29"))
 inun_time <- subset(inun, date>=as.Date("2007-01-01") & date<=as.Date("2017-12-29"))
 
+# color by quantiles
 quantile(temp_daily_time$mean)
 quantile(stage_daily$mean)
 quantile(inun_time$sac)
@@ -59,13 +61,72 @@ inun$color <- ifelse(inun$sac <= 9727.5, "#abeb88",
 
 
 
-png(filename = "covars_2.png", width = 11, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
+# change colors to black and grey based on when fish are in system (12/15/22)
+# data
+model_dat_complete<-read.csv("results/SD/model_dat.csv")
+
+model_dat_complete$rel <- as.Date(model_dat_complete$rel)
+model_dat_complete$end <- as.Date(model_dat_complete$end)
+
+model_dat_complete %>%
+  group_by(Year) %>%
+  summarize(min = min(rel, na.rm = TRUE), max = max(end, na.rm = TRUE))
+
+temp_daily_time$color <- ifelse(temp_daily_time$date >= '2007-01-31' & temp_daily_time$date <= '2007-02-27', "black",
+                                ifelse(temp_daily_time$date >= '2007-12-07' & temp_daily_time$date <= '2008-03-05', "black",
+                                       ifelse(temp_daily_time$date >= '2008-12-13' & temp_daily_time$date <= '2009-03-18', "black",
+                                              ifelse(temp_daily_time$date >= '2009-12-15' & temp_daily_time$date <= '2010-04-12', "black",
+                                                     ifelse(temp_daily_time$date >= '2010-12-17' & temp_daily_time$date <= '2011-03-24', "black",
+                                                            ifelse(temp_daily_time$date >= '2012-03-30' & temp_daily_time$date <= '2012-04-14', "black",
+                                                                   ifelse(temp_daily_time$date >= '2013-02-07' & temp_daily_time$date <= '2013-05-12', "black",
+                                                                          ifelse(temp_daily_time$date >= '2014-02-10' & temp_daily_time$date <= '2014-03-20', "black",
+                                                                                 ifelse(temp_daily_time$date >= '2015-02-04' & temp_daily_time$date <= '2015-04-23', "black",
+                                                                                        ifelse(temp_daily_time$date >= '2016-02-17' & temp_daily_time$date <= '2016-05-19', "black",
+                                                                                               ifelse(temp_daily_time$date >= '2017-02-02' & temp_daily_time$date <= '2017-06-18', "black","gray")))))))))))
+
+temp_daily_time$pch <- ifelse(temp_daily_time$date >= '2007-01-31' & temp_daily_time$date <= '2007-02-27', 16,
+                                ifelse(temp_daily_time$date >= '2007-12-07' & temp_daily_time$date <= '2008-03-05', 16,
+                                       ifelse(temp_daily_time$date >= '2008-12-13' & temp_daily_time$date <= '2009-03-18', 16,
+                                              ifelse(temp_daily_time$date >= '2009-12-15' & temp_daily_time$date <= '2010-04-12', 16,
+                                                     ifelse(temp_daily_time$date >= '2010-12-17' & temp_daily_time$date <= '2011-03-24', 16,
+                                                            ifelse(temp_daily_time$date >= '2012-03-30' & temp_daily_time$date <= '2012-04-14', 16,
+                                                                   ifelse(temp_daily_time$date >= '2013-02-07' & temp_daily_time$date <= '2013-05-12', 16,
+                                                                          ifelse(temp_daily_time$date >= '2014-02-10' & temp_daily_time$date <= '2014-03-20', 16,
+                                                                                 ifelse(temp_daily_time$date >= '2015-02-04' & temp_daily_time$date <= '2015-04-23', 16,
+                                                                                        ifelse(temp_daily_time$date >= '2016-02-17' & temp_daily_time$date <= '2016-05-19', 16,
+                                                                                               ifelse(temp_daily_time$date >= '2017-02-02' & temp_daily_time$date <= '2017-06-18', 16,1)))))))))))
+
+inun_time$color <- ifelse(inun_time$date >= '2007-01-31' & inun_time$date <= '2007-02-27', "black",
+                                ifelse(inun_time$date >= '2007-12-07' & inun_time$date <= '2008-03-05', "black",
+                                       ifelse(inun_time$date >= '2008-12-13' & inun_time$date <= '2009-03-18', "black",
+                                              ifelse(inun_time$date >= '2009-12-15' & inun_time$date <= '2010-04-12', "black",
+                                                     ifelse(inun_time$date >= '2010-12-17' & inun_time$date <= '2011-03-24', "black",
+                                                            ifelse(inun_time$date >= '2012-03-30' & inun_time$date <= '2012-04-14', "black",
+                                                                   ifelse(inun_time$date >= '2013-02-07' & inun_time$date <= '2013-05-12', "black",
+                                                                          ifelse(inun_time$date >= '2014-02-10' & inun_time$date <= '2014-03-20', "black",
+                                                                                 ifelse(inun_time$date >= '2015-02-04' & inun_time$date <= '2015-04-23', "black",
+                                                                                        ifelse(inun_time$date >= '2016-02-17' & inun_time$date <= '2016-05-19', "black",
+                                                                                               ifelse(inun_time$date >= '2017-02-02' & inun_time$date <= '2017-06-18', "black","gray")))))))))))
+
+inun_time$pch <- ifelse(inun_time$date >= '2007-01-31' & inun_time$date <= '2007-02-27', 17,
+                          ifelse(inun_time$date >= '2007-12-07' & inun_time$date <= '2008-03-05', 17,
+                                 ifelse(inun_time$date >= '2008-12-13' & inun_time$date <= '2009-03-18', 17,
+                                        ifelse(inun_time$date >= '2009-12-15' & inun_time$date <= '2010-04-12', 17,
+                                               ifelse(inun_time$date >= '2010-12-17' & inun_time$date <= '2011-03-24', 17,
+                                                      ifelse(inun_time$date >= '2012-03-30' & inun_time$date <= '2012-04-14', 17,
+                                                             ifelse(inun_time$date >= '2013-02-07' & inun_time$date <= '2013-05-12', 17,
+                                                                    ifelse(inun_time$date >= '2014-02-10' & inun_time$date <= '2014-03-20', 17,
+                                                                           ifelse(inun_time$date >= '2015-02-04' & inun_time$date <= '2015-04-23', 17,
+                                                                                  ifelse(inun_time$date >= '2016-02-17' & inun_time$date <= '2016-05-19', 17,
+                                                                                         ifelse(inun_time$date >= '2017-02-02' & inun_time$date <= '2017-06-18', 17, 2)))))))))))
+
+tiff(filename = "covars_3.tiff", width = 11, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
 
 par(mfrow=c(2,1), mar=c(4,4,0.5,0.5))
 
-plot(inun_time$date, inun_time$sac,  pch = 17, col = alpha(inun_time$color, 0.4), ylab = "Daily mean Sacramento River Outflow", xlab = "Time")
+plot(inun_time$date, inun_time$sac,  pch = inun_time$pch, col = inun_time$color, ylab = "Daily mean Sacramento River Outflow", xlab = "Time", cex = 1.25)
 
-plot(temp_daily_time$date, temp_daily_time$mean, ylim = c(2,25), pch = 16, col = alpha(temp_daily_time$color, 0.4), ylab = "Daily mean Water Temperature", xlab = "Time")
+plot(temp_daily_time$date, temp_daily_time$mean, ylim = c(2,25), pch = temp_daily_time$pch, col = temp_daily_time$color, ylab = "Daily mean Water Temperature", xlab = "Time", cex = 1.25)
 
 dev.off()
 

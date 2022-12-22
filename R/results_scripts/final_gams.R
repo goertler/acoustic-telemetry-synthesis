@@ -432,6 +432,11 @@ modGI_rel_temp <- gam(SD ~ Release_Group_SAIL +
                           k=c(10, 10), m=1),
                      data=data_na, method="REML", family="gaussian")
 
+supplemental_tbl <- AIC(modGI_sac_mean_River_temp, modGI_sac_mean_FL, modGI_sac_mean_Weight, modGI_sac_mean_PDO, modGI_sac_mean_sum_inun, modGI_sac_mean_max_inun, modGI_sac_mean_sac_sd, modGI_sac_mean_temp_mean, modGI_sac_mean_temp_sd, modGI_sac_mean_stage_mean, modGI_sac_mean_stage_sd, modGI_sac_mean_tt, modGI_sac_mean_tag, modGI_sac_mean_r, modGI_sac_mean_or, modGI_sac_mean_gr, modGI_sac_mean_yr, modGI_sac_mean_end, modGI_sac_mean_rel, modGI_sac_mean, modGI_rel, modGI_rel_yr, modGI_rel_gr, modGI_rel_or, modGI_rel_r, modGI_rel_tag, modGI_rel_tt, modGI_rel_temp_sd, modGI_rel_end, modGI_rel_stage_sd, modGI_rel_stage_mean, modGI_rel_FL, modGI_rel_Weight, modGI_rel_PDO, modGI_rel_sum_inun, modGI_rel_max_inun, modGI_rel_sac_sd, modGI_rel_temp, modGI_null, modGI_temp_mean, modGI_temp_sd, modGI_stage_sd, modGI_stage_mean, modGI_yr, modGI_gr, modGI_or, modGI_r, modGI_tag, modGI_tt,
+modGI_end, modGI_River_temp, modGI_FL, modGI_Weight, modGI_PDO, modGI_sum_inun, modGI_max_inun, modGI_sac_mean_Transport_distance, modGI_sac_sd)
+
+write.csv(supplemental_tbl, "GAM_model_results.csv")
+
 AIC(modGI_sac_mean_River_temp, modGI_sac_mean_FL, modGI_sac_mean_Weight, modGI_sac_mean_PDO, modGI_sac_mean_sum_inun, modGI_sac_mean_max_inun, modGI_sac_mean_sac_sd, modGI_sac_mean_temp_mean, modGI_sac_mean_temp_sd, modGI_sac_mean_stage_mean, modGI_sac_mean_stage_sd, modGI_sac_mean_tt, modGI_sac_mean_tag, modGI_sac_mean_r, modGI_sac_mean_or, modGI_sac_mean_gr, modGI_sac_mean_yr, modGI_sac_mean_end, modGI_sac_mean_rel, modGI_sac_mean, modGI_rel, modGI_rel_yr, modGI_rel_gr, modGI_rel_or, modGI_rel_r, modGI_rel_tag, modGI_rel_tt, modGI_rel_temp_sd, modGI_rel_end, modGI_rel_stage_sd, modGI_rel_stage_mean, modGI_rel_FL, modGI_rel_Weight, modGI_rel_PDO, modGI_rel_sum_inun, modGI_rel_max_inun, modGI_rel_sac_sd, modGI_rel_temp)
 
 summary (modGI_sac_mean_temp_mean) # Deviance explained = 70.3%
@@ -746,5 +751,29 @@ dev.off()
 png("hgam_results_alternative.png", bg = "transparent", width = 8, height = 8, units = "in", pointsize = 12, res = 350)
 
 draw(modGI_sac_mean_temp_mean)
+
+dev.off()
+
+# general smoother only plot (12/15/22)
+
+eg1$Release_Group_SAIL = factor(eg1$Release_Group_SAIL, c("Upper Sacramento River", "Middle Sacramento River", "Tidal Delta"))
+
+tiff("hgam_common_smoother.tiff", bg = "transparent", width = 10, height = 8, units = "in", pointsize = 12, res = 550)
+
+draw(modGI_sac_mean_temp_mean, select = 1, residuals = TRUE, n_contour = 5,
+     continuous_fill = scale_fill_distiller(palette = "RdYlBu", type = "div")) &
+  theme_bw() &
+  theme(text = element_text(size = 20)) &
+  labs(title = "Single Common Smoother", x = "Temperature (C)", y = "Sacramento River outflow", shape = "Release Location") &
+  geom_point(aes(x = temp_mean, y = sac_mean, shape = Release_Group_SAIL),
+             data = eg1, alpha = 0.5, size = 3)
+
+dev.off()
+
+# for supplemental
+
+tiff("hgam_4supplemental.tiff", bg = "transparent", width = 10, height = 8, units = "in", pointsize = 12, res = 550)
+
+plot_2 + plot_3 + plot_4 + plot_layout(nrow = 3) + theme_bw()
 
 dev.off()
