@@ -1,6 +1,6 @@
 # setup - Analysis steps
 
-#remotes::install_github("fishsciences/telemetry")
+remotes::install_github("fishsciences/telemetry")
 
 if(!dir.exists("data_clean")) {
    dir.create("data_clean")
