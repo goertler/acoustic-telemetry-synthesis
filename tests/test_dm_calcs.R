@@ -46,15 +46,7 @@ chk5 = mapply(div_dist, # applies the div dist function to each row
 head(chk5)
 chk5 = do.call(rbind, chk5)
 
-# check days
-chk6 = mapply(div_dist,
-                   start = chk4.5$DateTime_PST,
-                   end = chk4.5$next_arrival,
-                   distance = chk4.5$Total_Length_m,
-                   time_units = "day",
-                   SIMPLIFY = FALSE)
-
-
+# the proportional sums should be equal to the total length, within 0.001m
 all.equal(sum(chk5$prop_dist), sum(chk4.5$Total_Length_m), tolerance = 0.001) # might want to fix eventually; can end up way off with additive small differences in a different dataset than ours.
 
 
@@ -93,14 +85,5 @@ f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
 ans = lapply(f1, add_lag_col, "DateTime_PST", "DateTime_PST", "new_arrival")
 
-f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
-
-"Tisdale2013-022"
-
-mapply(div_dist, 
-       start = x$DateTime_PST, 
-       end = x$next_arrival, 
-       distance = x$Total_Length_m, 
-       time_units = "hour",
-       SIMPLIFY = FALSE)
+f2 = do.call(rbind, lapply(f1, dpd_allfish, distance_matrix = dm_closed))
 
