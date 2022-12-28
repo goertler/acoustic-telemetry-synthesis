@@ -190,3 +190,51 @@ cm_loc_4shiny$study <- "CM"
 rec4shiny_2023 <- rbind(mj_loc_4shiny, ybus_loc_4shiny, cm_loc_4shiny, JSATS_dataset)
 
 write.csv(rec4shiny_2023, "rec4shiny_2023.csv")
+
+# now release data
+jsat_rel <- unique(check_jsat$GEN)
+
+lat_lon[lat_lon$GEN == "SutterBypass_Weir2_RST_Rel", "GEN"] <- "SutterBypass Weir2 RST"
+lat_lon[lat_lon$GEN == "FR_Gridley_Rel", "GEN"] <-"Gridley_Rel"
+lat_lon[lat_lon$GEN == "FR_Boyds_Rel", "GEN"] <-"FR Boyds Release"
+lat_lon[lat_lon$GEN == "AR_Sunrise_Ramp_Rel", "GEN"] <- "AR_Sunrise_Ramp"
+
+lat_lon_rel <- lat_lon[lat_lon$GEN %in% jsat_rel, ] # multiple lat/lon per GEN, some seem wrong (when put into google earth they are not in water...)
+# manual QC
+rel_check <- subset(rel, Type == "JSAT")
+
+rel4jsats <- rel_check[-c(5,20),]
+rel4jsats[18,4] <- 2013
+Release.Location <- c("BattleCk_CNFH", "FR_Boyds_Rel", "Riverbank_Marina_Rel")
+LAT <- c(40.39814, 39.05733, 38.60350)
+LON <- c(-122.1453, -121.6107, -121.5191)
+Year <- c(2012, 2014, 2012)
+Run <- c("Fall", "Spring", "Fall")
+Type <- "JSAT"
+Source <- "CM"
+Study <- NA
+link <- NA
+
+missing_rel <- data.frame(Release.Location, LAT, LON, Year, Run, Type, Source, Study, link)
+rel4jsats_complete <- rbind(rel4jsats, missing_rel)
+
+# MJ and Ybus releases look good
+rel_vemco <- subset(rel, Type == "Vemco")
+
+# need to investigate BtlCkAbatPnd for CM Vemco data
+BtlCkAbatPnd <- subset(v2, Release_Location == "BtlCkAbatPnd") # 2007 only
+
+Release.Location <- "BtlCkAbatPnd"
+LAT <- 40.39807260049014
+LON <- -122.14565367080051
+Year <- 2007
+Run <- "Late-fall"
+Type <- "Vemco"
+Source <- "CM"
+Study <- "Michel, C.J.,  A.J. Ammann, E.D. Chapman, P.T. Sandstrom, H.E. Fish, M.J. Thomas, G.P. Singer, S.T. Lindley, A.P. Klimley, R.B. MacFarlane. 2013. The effects of environmental factors on the migratory movement patterns of Sacramento River yearling late-fall run Chinook salmon (Oncorhynchus tshawytscha). Environmental Biology of Fishes."
+link <- "https://www.nrcresearchpress.com/doi/abs/10.1139/cjfas-2014-0528#.XrnsjahKi71"
+
+missing_cm <- data.frame(Release.Location, LAT, LON, Year, Run, Type, Source, Study, link)
+
+rel4shiny_2023 <- rbind(rel4jsats_complete, rel_vemco, missing_cm)
+write.csv(rel4shiny_2023, "re14shiny_2023.csv")
