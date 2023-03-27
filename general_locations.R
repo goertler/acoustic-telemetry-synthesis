@@ -128,6 +128,7 @@ JSATS_dataset$Type <- "JSATS"
 JSATS_dataset <- JSATS_dataset[,-c(1:2)]
 check_jsat <- JSATS_dataset[rowSums(is.na(JSATS_dataset)) > 0,] # all release sites
 JSATS_dataset$study <- "JSATS"
+JSATS_loc_4shiny <- na.omit(JSATS_dataset)
 
 # ybus la/lon by name instead of receiver number
 ybus_loc <- read.csv("R/shiny_app/data/Lat_lon_YBUS.csv")
@@ -187,7 +188,7 @@ cm_loc_4shiny <- na.omit(cm_dataset)
 cm_loc_4shiny <- cm_loc_4shiny[,-c(1:2)]
 cm_loc_4shiny$study <- "CM"
 
-rec4shiny_2023 <- rbind(mj_loc_4shiny, ybus_loc_4shiny, cm_loc_4shiny, JSATS_dataset)
+rec4shiny_2023 <- rbind(mj_loc_4shiny, ybus_loc_4shiny, cm_loc_4shiny, JSATS_loc_4shiny)
 
 write.csv(rec4shiny_2023, "rec4shiny_2023.csv")
 

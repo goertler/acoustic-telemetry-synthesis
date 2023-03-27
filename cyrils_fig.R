@@ -12,6 +12,11 @@ route_summary <- model_dat_complete %>%
   summarize(num_route = length(unique(Route)), sd = sd(travel_time),
             mean = mean(travel_time))
 
+route_summary <- data_na %>%
+  group_by(Year, Release_Group_SAIL) %>%
+  summarize(num_route = length(unique(Route)), sd = sd(dowy_end),
+            mean = mean(dowy_end))
+
 # define colors
 colors <- c("#f58231", "#911eb4", "#42d4f4")
 Release_Group_SAIL<- unique(route_summary$Release_Group_SAIL)

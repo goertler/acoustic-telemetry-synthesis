@@ -130,3 +130,18 @@ plot(temp_daily_time$date, temp_daily_time$mean, ylim = c(2,25), pch = temp_dail
 
 dev.off()
 
+# for discussion
+
+timing <- subset(temp_daily_time, mean >11 & mean <14)
+
+summary_time <- timing %>%
+  group_by(year) %>%
+  summarize(min = min(date, na.rm = TRUE), max = max(date, na.rm = TRUE))
+
+tt <- model_dat_complete %>%
+  group_by(Year, Route, Release_Group_SAIL, Group) %>%
+  summarize(min = min(travel_time, na.rm = TRUE), max = max(travel_time, na.rm = TRUE), mean = mean(travel_time, na.rm = TRUE))
+
+trans <- model_dat_complete %>%
+  group_by(Year, Route, Release_Group_SAIL, Group) %>%
+  summarize(min = min(Transport_distance, na.rm = TRUE), max = max(Transport_distance, na.rm = TRUE), mean = mean(Transport_distance, na.rm = TRUE))
