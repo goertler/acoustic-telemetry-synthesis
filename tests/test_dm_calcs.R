@@ -15,20 +15,27 @@ colnames(dm_ybus) = c("Name", "Total_Length_m")
 dm_ybus$Name = gsub("-", " - ", dm_ybus$Name)
 
 
+head(x[order(x$DateTime_PST), ]) # Tisdale Weir -> BF.1
+
 # test on one
 chk2 = add_lag_col(x, 
                    order_by = 'DateTime_PST', 
                    col_to_lag = 'DateTime_PST' ,  
-                   lagged_col_name = 'next_arrival')
+                   lagged_col_name = 'next_arrival') # adds a lagged arrival column
 
 head(chk2)
-chk3 = make_movements(chk2, 'GEN', 'movement')
+chk3 = make_movements(chk2, 'GEN', 'movement') # adds a movement column
 head(chk3)
-chk4 = rm_nas_and_merge(chk3, dist_mat = dm_ybus)
-head(chk4)
-chk4.5 = chk4[chk4$Total_Length_m != 0, ]
 
-chk5 = mapply(div_dist,
+chk4 = rm_nas_and_merge(chk3, dist_mat = dm_ybus) # removes the last row (w/ the NA), as the last rec. is on n-1th row, merges w/ the distance matrix to bring in the distance for that movement, and adds the date of the movement
+head(chk4)
+
+chk4.5 = chk4[chk4$Total_Length_m != 0, ] # removes the within-receiver mvmts
+head(chk4.5)
+
+# next: for each movement (row), calculate the time difference between the departure and arrival. Then sequence that interval by hours.  Then create a data frame with a column for that time sequence, and a column for the proportion of distance that gets attributed to each hour, i.e. total distance / total number of hours
+
+chk5 = mapply(div_dist, # applies the div dist function to each row
               start = chk4.5$DateTime_PST,
               end = chk4.5$next_arrival,
               distance = chk4.5$Total_Length_m,
@@ -37,17 +44,10 @@ chk5 = mapply(div_dist,
 
 
 head(chk5)
+chk5 = do.call(rbind, chk5)
 
-# check days
-chk6 = mapply(div_dist,
-                   start = chk4.5$DateTime_PST,
-                   end = chk4.5$next_arrival,
-                   distance = chk4.5$Total_Length_m,
-                   time_units = "day",
-                   SIMPLIFY = FALSE)
-
-
-all.equal(sum(chk5$prop_dist), sum(chk4.5$Total_Length_m), tolerance = 0.001) # might want to fix eventually; can end up way off with additive small differences.
+# the proportional sums should be equal to the total length, within 0.001m
+all.equal(sum(chk5$prop_dist), sum(chk4.5$Total_Length_m), tolerance = 0.001) # might want to fix eventually; can end up way off with additive small differences in a different dataset than ours.
 
 
 # all fish
@@ -85,14 +85,5 @@ f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
 ans = lapply(f1, add_lag_col, "DateTime_PST", "DateTime_PST", "new_arrival")
 
-f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
-
-"Tisdale2013-022"
-
-mapply(div_dist, 
-       start = x$DateTime_PST, 
-       end = x$next_arrival, 
-       distance = x$Total_Length_m, 
-       time_units = "hour",
-       SIMPLIFY = FALSE)
+f2 = do.call(rbind, lapply(f1, dpd_allfish, distance_matrix = dm_closed))
 
