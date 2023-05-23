@@ -1,0 +1,85 @@
+,LOC,GEN.x,RKM.x,GenRKM.x,LAT,LON,Type,GEN.y,RKM.y,GenRKM.y,Route,Entrance_Exit,color,check,Route_v2
+9,AntiochBr09,AntiochBridge,86.941,86.948,38.02095,-121.751611,JSATS,AntiochBridge,86.941,86.948,Estuary,exit,blue,#000000,Estuary Exit
+10,AntiochBr13,AntiochBridge,86.943,86.948,38.023165,-121.751621,JSATS,AntiochBridge,86.943,86.948,Estuary,exit,blue,#000000,Estuary Exit
+11,AntiochBr15,AntiochBridge,86.944,86.948,38.024255,-121.751629,JSATS,AntiochBridge,86.944,86.948,Estuary,exit,blue,#000000,Estuary Exit
+12,AntiochBr17,AntiochBridge,86.945,86.948,38.025371,-121.751626,JSATS,AntiochBridge,86.945,86.948,Estuary,exit,blue,#000000,Estuary Exit
+13,AntiochBr20,AntiochBridge,86.948,86.948,38.028459,-121.75183,JSATS,AntiochBridge,86.948,86.948,Estuary,exit,blue,#000000,Estuary Exit
+162,AntiochBr19,AntiochBridge,86.947,86.948,38.027212,-121.751816,JSATS,AntiochBridge,86.947,86.948,Estuary,exit,blue,#000000,Estuary Exit
+177,AntiochBr11,AntiochBridge,86.942,86.948,38.02205,-121.751612,JSATS,AntiochBridge,86.942,86.948,Estuary,exit,blue,#000000,Estuary Exit
+178,AntiochBr18,AntiochBridge,86.946,86.948,38.026202,-121.751644,JSATS,AntiochBridge,86.946,86.948,Estuary,exit,blue,#000000,Estuary Exit
+19,Benicia01,BeniciaW,52.041,52.048,38.04494,-122.12695,JSATS,BeniciaW,52.041,52.048,Estuary,NA,NA,#000000,Estuary Exit
+20,Benicia02,BeniciaW,52.042,52.048,38.04376667,-122.12595,JSATS,BeniciaW,52.042,52.048,Estuary,NA,NA,#000000,Estuary Exit
+21,Benicia04,BeniciaW,52.044,52.048,38.04123333,-122.1238167,JSATS,BeniciaW,52.044,52.048,Estuary,NA,NA,#000000,Estuary Exit
+22,Benicia05,BeniciaW,52.045,52.048,38.03994,-122.12301,JSATS,BeniciaW,52.045,52.048,Estuary,NA,NA,#000000,Estuary Exit
+23,Benicia06,BeniciaW,52.046,52.048,38.03896,-122.12192,JSATS,BeniciaW,52.046,52.048,Estuary,NA,NA,#000000,Estuary Exit
+24,Benicia07,BeniciaW,52.047,52.048,38.03761667,-122.1210833,JSATS,BeniciaW,52.047,52.048,Estuary,NA,NA,#000000,Estuary Exit
+25,Benicia08,BeniciaW,52.048,52.048,38.03645,-122.1201,JSATS,BeniciaW,52.048,52.048,Estuary,NA,NA,#000000,Estuary Exit
+127,Benicia03,BeniciaW,52.043,52.048,38.04243333,-122.1250167,JSATS,BeniciaW,52.043,52.048,Estuary,NA,NA,#000000,Estuary Exit
+50,Chipps1.1,ChippsE,71.728,71.728,38.049248,-121.909298,JSATS,ChippsE,71.728,71.728,Estuary,Mainstem,orange,#000000,Estuary Exit
+51,Chipps1.2,ChippsE,71.729,71.728,38.047522,-121.909527,JSATS,ChippsE,71.729,71.728,Estuary,Mainstem,orange,#000000,Estuary Exit
+52,Chipps1.3,ChippsE,71.73,71.728,38.045992,-121.909692,JSATS,ChippsE,71.73,71.728,Estuary,Mainstem,orange,#000000,Estuary Exit
+53,Chipps1.4,ChippsE,71.731,71.728,38.044284,-121.909977,JSATS,ChippsE,71.731,71.728,Estuary,Mainstem,orange,#000000,Estuary Exit
+54,Chipps1.5,ChippsE,71.732,71.728,38.042682,-121.910271,JSATS,ChippsE,71.732,71.728,Estuary,Mainstem,orange,#000000,Estuary Exit
+55,Chipps2.1,ChippsW,71.242,71.244,38.049103,-121.915108,JSATS,ChippsW,71.242,71.244,Estuary,NA,NA,#000000,Estuary Exit
+56,Chipps2.2,ChippsW,71.243,71.244,38.047743,-121.915287,JSATS,ChippsW,71.243,71.244,Estuary,NA,NA,#000000,Estuary Exit
+57,Chipps2.3,ChippsW,71.244,71.244,38.046298,-121.915567,JSATS,ChippsW,71.244,71.244,Estuary,NA,NA,#000000,Estuary Exit
+58,Chipps2.4,ChippsW,71.245,71.244,38.044822,-121.915819,JSATS,ChippsW,71.245,71.244,Estuary,NA,NA,#000000,Estuary Exit
+59,Chipps2.5,ChippsW,71.246,71.244,38.043436,-121.916078,JSATS,ChippsW,71.246,71.244,Estuary,NA,NA,#000000,Estuary Exit
+66,DeckrIs1,DeckerIsland,86.075,86.078,38.081273,-121.759482,JSATS,DeckerIsland,86.075,86.078,Estuary,Mainstem,orange,#000000,Estuary Exit
+67,DeckrIs4,DeckerIsland,86.078,86.078,38.07568,-121.75524,JSATS,DeckerIsland,86.078,86.078,Estuary,Mainstem,orange,#000000,Estuary Exit
+147,DeckrIs2,DeckerIsland,86.076,86.078,38.07916,-121.75954,JSATS,DeckerIsland,86.076,86.078,Estuary,Mainstem,orange,#000000,Estuary Exit
+148,DeckrIs3,DeckerIsland,86.077,86.078,38.07781,-121.75797,JSATS,DeckerIsland,86.077,86.078,Estuary,Mainstem,orange,#000000,Estuary Exit
+1,Abv_Fremont1,Abv_FremontWeir,215.18,215.18,38.76009,-121.67145,JSATS,Abv_FremontWeir,215.18,215.18,Yolo,enter,,#000075,Yolo Bypass
+2,Abv_Fremont2,Abv_FremontWeir,215.179,215.18,38.7594,-121.67165,JSATS,Abv_FremontWeir,215.179,215.18,Yolo,enter,,#000075,Yolo Bypass
+28,Blw_Fremont1,Blw_FremontWeir,210.36,210.36,38.77015,-121.6322,JSATS,Blw_FremontWeir,210.36,210.36,Yolo,enter,,#000075,Yolo Bypass
+29,Blw_Fremont2,Blw_FremontWeir,210.359,210.36,38.77268,-121.63204,JSATS,Blw_FremontWeir,210.359,210.36,Yolo,enter,,#000075,Yolo Bypass
+118,ToeDrainBase1,ToeDrainBase,120.167,120.167,38.29076,-121.6608,JSATS,ToeDrainBase,120.167,120.167,Yolo,exit,darkolivegreen,#000075,Yolo Bypass
+119,ToeDrainBase2,ToeDrainBase,120.166,120.167,38.2911,-121.66113,JSATS,ToeDrainBase,120.166,120.167,Yolo,exit,darkolivegreen,#000075,Yolo Bypass
+120,ToeDrainRST,ToeDrainRST,127.211,127.211,38.3525,-121.64337,JSATS,ToeDrainRST,127.211,127.211,Yolo,slough,darkolivegreen,#000075,Yolo Bypass
+121,ToeDrainRST2,ToeDrainRST,127.21,127.211,38.3523,-121.64395,JSATS,ToeDrainRST,127.21,127.211,Yolo,slough,darkolivegreen,#000075,Yolo Bypass
+125,YB_BCE2,YB_LibertyIsBase,111.731,111.73,38.2243,-121.67281,JSATS,YB_LibertyIsBase,111.731,111.73,Yolo,exit,darkolivegreen,#000075,Yolo Bypass
+126,YB_BCW2,YB_LibertyIsBase,111.73,111.73,38.22411,-121.67524,JSATS,YB_LibertyIsBase,111.73,111.73,Yolo,exit,darkolivegreen,#000075,Yolo Bypass
+141,AntiochS,Antioch,83.298,83.298,38.02076,-121.82018,JSATS,Antioch,83.298,83.298,Georgiana/DCC,exit,blue,#800000,Central Delta
+73,GeorgMk1,GeorgeMok,100.489,100.489,38.12946,-121.58521,JSATS,GeorgeMok,100.489,100.489,Georgiana/DCC,slough,blue,#800000,Central Delta
+74,GeorgMk2,GeorgeMok,100.488,100.489,38.12955,-121.58652,JSATS,GeorgeMok,100.488,100.489,Georgiana/DCC,slough,blue,#800000,Central Delta
+191,Mok_NF_end,Mok_NF_end,119.453,119.453,38.14326,-121.56091,JSATS,Mok_NF_end,119.453,119.453,Georgiana/DCC,slough,blue,#800000,Central Delta
+192,Mok_SF_Blw_Hwy12,Mok_SF_Blw_Hwy12,126.23,126.23,38.10911,-121.50105,JSATS,Mok_SF_Blw_Hwy12,126.23,126.23,Georgiana/DCC,slough,blue,#800000,Central Delta
+229,Jersey1,SJ_JerseyPt,95.568,95.569,38.04856,-121.69155,JSATS,SJ_JerseyPt,95.568,95.569,Georgiana/DCC,slough,blue,#800000,Central Delta
+230,Jersey2,SJ_JerseyPt,95.569,95.569,38.05002,-121.6907,JSATS,SJ_JerseyPt,95.569,95.569,Georgiana/DCC,slough,blue,#800000,Central Delta
+231,Jersey3,SJ_JerseyPt,95.57,95.569,38.05212,-121.69429,JSATS,SJ_JerseyPt,95.57,95.569,Georgiana/DCC,slough,blue,#800000,Central Delta
+116,ThreeMile1,ThreeMile,94.449,94.449,38.11595,-121.68571,JSATS,ThreeMile,94.449,94.449,Threemile,enter,green,#800000,Central Delta
+117,ThreeMile2,ThreeMile,94.448,94.449,38.113547,-121.687289,JSATS,ThreeMile,94.448,94.449,Threemile,enter,green,#800000,Central Delta
+175,Above_Hood_2,Above_Hood,138.869,138.868,38.36794,-121.5223,JSATS,Above_Hood,138.869,138.868,Mainstem,Mainstem,orange,#f58231,Mainstem
+220,RT_Hood,Above_Hood,138.868,138.868,38.36805,-121.52071,JSATS,Above_Hood,138.868,138.868,Mainstem,Mainstem,orange,#f58231,Mainstem
+219,BlwHood_2,Blw_Hood,134.421,134.42,38.34518,-121.55553,JSATS,Blw_Hood,134.421,134.42,Mainstem,Mainstem,orange,#f58231,Mainstem
+26,BlSteam1,Blw_Steamboat,128.608,128.608,38.3,-121.56998,JSATS,Blw_Steamboat,128.608,128.608,Mainstem,Mainstem,orange,#f58231,Mainstem
+27,BlSteam2,Blw_Steamboat,128.609,128.608,38.30004,-121.56871,JSATS,Blw_Steamboat,128.609,128.608,Mainstem,Mainstem,orange,#f58231,Mainstem
+30,Blw_Sutter_1,Blw_Sutter,131.508,131.508,38.32402,-121.57584,JSATS,Blw_Sutter,131.508,131.508,Mainstem,Mainstem,orange,#f58231,Mainstem
+31,Blw_Sutter_2,Blw_Sutter,131.509,131.508,38.32445,-121.57745,JSATS,Blw_Sutter,131.509,131.508,Mainstem,Mainstem,orange,#f58231,Mainstem
+70,Freeport2,Freeport,152.439,152.438,38.46594,-121.50357,JSATS,Freeport,152.439,152.438,Mainstem,Mainstem,orange,#f58231,Mainstem
+180,Freeport1,Freeport,152.438,152.438,38.46467,-121.50501,JSATS,Freeport,152.438,152.438,Mainstem,Mainstem,orange,#f58231,Mainstem
+168,FreeportBr1,FreeportBr,151.101,151.1,38.455486,-121.502344,JSATS,FreeportBr,151.101,151.1,Mainstem,Mainstem,orange,#f58231,Mainstem
+169,FreeportBr2,FreeportBr,151.102,151.1,38.45561,-121.501556,JSATS,FreeportBr,151.102,151.1,Mainstem,Mainstem,orange,#f58231,Mainstem
+82,Hood_1,Hood,138.228,138.228,38.3617,-121.52033,JSATS,Hood,138.228,138.228,Mainstem,Mainstem,orange,#f58231,Mainstem
+83,Hood_2,Hood,138.229,138.228,38.36219,-121.52247,JSATS,Hood,138.229,138.228,Mainstem,Mainstem,orange,#f58231,Mainstem
+188,Hood_RR,Hood_RT,139,139,38.37464,-121.52444,JSATS,Hood_RT,139,139,Mainstem,Mainstem,orange,#f58231,Mainstem
+195,RT_Hood_East,Hood_RT,139.001,139,38.3741,-121.523,JSATS,Hood_RT,139.001,139,Mainstem,Mainstem,orange,#f58231,Mainstem
+99,RioVistaBr2,RioVistaBr,97.911,97.91,38.158563,-121.683758,JSATS,RioVistaBr,97.911,97.91,Mainstem,Mainstem,orange,#f58231,Mainstem
+100,RioVistaBr3,RioVistaBr,97.912,97.91,38.158994,-121.684739,JSATS,RioVistaBr,97.912,97.91,Mainstem,Mainstem,orange,#f58231,Mainstem
+159,RioVistaBr1,RioVistaBr,97.91,97.91,38.156733,-121.67955,JSATS,RioVistaBr,97.91,97.91,Mainstem,Mainstem,orange,#f58231,Mainstem
+109,SR_Mouth1,SR_Mouth,101.468,101.468,38.17303,-121.65331,JSATS,SR_Mouth,101.468,101.468,Mainstem,Mainstem,orange,#f58231,Mainstem
+110,SR_Mouth2,SR_Mouth,101.467,101.468,38.17236,-121.65096,JSATS,SR_Mouth,101.467,101.468,Mainstem,Mainstem,orange,#f58231,Mainstem
+14,BaseSutSteam1,BaseSutterSteam,111.834,111.833,38.18312,-121.65181,JSATS,BaseSutterSteam,111.834,111.833,Steamboat,exit,magenta,#ffe119,Sac. R. Sloughs
+15,BaseSutSteam2,BaseSutterSteam,111.833,111.833,38.18331,-121.65601,JSATS,BaseSutterSteam,111.833,111.833,Steamboat,exit,magenta,#ffe119,Sac. R. Sloughs
+84,Hwy84Ferry1,Hwy84Ferry,107.513,107.512,38.1901,-121.65765,JSATS,Hwy84Ferry,107.513,107.512,Miner,exit,orange,#ffe119,Sac. R. Sloughs
+85,Hwy84Ferry2,Hwy84Ferry,107.512,107.512,38.19062,-121.66009,JSATS,Hwy84Ferry,107.512,107.512,Miner,exit,orange,#ffe119,Sac. R. Sloughs
+96,MinerNorth1,MinerNorth,124.532,124.532,38.2873,-121.60845,JSATS,MinerNorth,124.532,124.532,Miner,enter,red,#ffe119,Sac. R. Sloughs
+190,MinerNorth2,MinerNorth,124.533,124.532,38.28863,-121.60892,JSATS,MinerNorth,124.533,124.532,Miner,enter,red,#ffe119,Sac. R. Sloughs
+97,MinorBlwSutter1,MinorBlwSutter,124.613,124.612,38.28386,-121.60406,JSATS,MinorBlwSutter,124.613,124.612,Sutter,exit,blueviolet,#ffe119,Sac. R. Sloughs
+98,MinorBlwSutter2,MinorBlwSutter,124.612,124.612,38.28379,-121.60348,JSATS,MinorBlwSutter,124.612,124.612,Sutter,exit,blueviolet,#ffe119,Sac. R. Sloughs
+111,Steam1,SteamboatSlough,128.393,128.394,38.30026,-121.58067,JSATS,SteamboatSlough,128.393,128.394,Steamboat,enter,magenta,#ffe119,Sac. R. Sloughs
+112,Steam2,SteamboatSlough,128.394,128.394,38.29958,-121.58037,JSATS,SteamboatSlough,128.394,128.394,Steamboat,enter,magenta,#ffe119,Sac. R. Sloughs
+113,SutterSl,SutterSlough,131.017,131.018,38.33225,-121.58294,JSATS,SutterSlough,131.017,131.018,Sutter,enter,blueviolet,#ffe119,Sac. R. Sloughs
+114,SutterSl2,SutterSlough,131.018,131.018,38.33178,-121.58308,JSATS,SutterSlough,131.018,131.018,Sutter,enter,blueviolet,#ffe119,Sac. R. Sloughs
+115,SutterSteamJ1,SutterSteamJunc,121.877,121.877,38.25163,-121.60279,JSATS,SutterSteamJunc,121.877,121.877,Steamboat,slough,magenta,#ffe119,Sac. R. Sloughs
+185,SutterSteamJ2,SutterSteamJunc,121.876,121.877,38.25286,-121.60237,JSATS,SutterSteamJunc,121.876,121.877,Steamboat,slough,magenta,#ffe119,Sac. R. Sloughs

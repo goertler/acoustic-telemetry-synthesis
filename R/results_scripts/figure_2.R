@@ -120,13 +120,32 @@ inun_time$pch <- ifelse(inun_time$date >= '2007-01-31' & inun_time$date <= '2007
                                                                                   ifelse(inun_time$date >= '2016-02-17' & inun_time$date <= '2016-05-19', 17,
                                                                                          ifelse(inun_time$date >= '2017-02-02' & inun_time$date <= '2017-06-18', 17, 2)))))))))))
 
-tiff(filename = "covars_3.tiff", width = 11, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
+tiff(filename = "covars_3_revised.tiff", width = 11, height = 8, units = "in", pointsize = 12, bg = "white", res = 350)
 
 par(mfrow=c(2,1), mar=c(4,4,0.5,0.5))
 
 plot(inun_time$date, inun_time$sac,  pch = inun_time$pch, col = inun_time$color, ylab = "Daily mean Sacramento River Outflow", xlab = "Time", cex = 1.25)
 
+legend("topright", "A", bty="n")
+
 plot(temp_daily_time$date, temp_daily_time$mean, ylim = c(2,25), pch = temp_daily_time$pch, col = temp_daily_time$color, ylab = "Daily mean Water Temperature", xlab = "Time", cex = 1.25)
+
+legend("topright", "B", bty="n")
 
 dev.off()
 
+# for discussion
+
+timing <- subset(temp_daily_time, mean >11 & mean <14)
+
+summary_time <- timing %>%
+  group_by(year) %>%
+  summarize(min = min(date, na.rm = TRUE), max = max(date, na.rm = TRUE))
+
+tt <- model_dat_complete %>%
+  group_by(Year, Route, Release_Group_SAIL, Group) %>%
+  summarize(min = min(travel_time, na.rm = TRUE), max = max(travel_time, na.rm = TRUE), mean = mean(travel_time, na.rm = TRUE))
+
+trans <- model_dat_complete %>%
+  group_by(Year, Route, Release_Group_SAIL, Group) %>%
+  summarize(min = min(Transport_distance, na.rm = TRUE), max = max(Transport_distance, na.rm = TRUE), mean = mean(Transport_distance, na.rm = TRUE))
