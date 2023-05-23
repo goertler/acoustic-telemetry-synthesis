@@ -27,12 +27,11 @@ d$DateTime_PST = lubridate::with_tz(d$DateTimeUTC,
                                        tz = "Etc/GMT+8")
 
 d$GEN = d$Station
-d$GEN[d$GEN %in% c("BCE", "BCW")] <- "BC_joint"
+d$GEN[d$GEN %in% c("BCE", "BCW", "BC2_joint", "BC_joint2", "BC_joint3", "MS16")] <- "BC_joint"
 d$GEN[d$GEN %in% c("RM88_R", "RM88_L")] <- "RM88"
 d$GEN[d$GEN %in% c("RM71_L", "RM71_R")] <- "RM71"
 d[d$GEN == "I80_1", "GEN"] <- "I_80_1"
 d[d$GEN == "BaseSac", "GEN"] <- "SacMouth"
-d[d$GEN %in% c("BC2_joint", "BC_joint2", "BC_joint3"), "GEN"] <- "MS16"
 d[d$GEN == "TopofSutter", "GEN"] <- "Sutter"
 d[d$GEN == "BlwGeorg", "GEN"] <- "MS14"
 

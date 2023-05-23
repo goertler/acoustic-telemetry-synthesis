@@ -2,43 +2,7 @@
 # Distance Matrix calcs for JSATs data
 # refactored, M. Johnston
 # Mon Feb 15 11:52:30 2021 ------------------------------
-
-## In the clean_all_detects.R script:
- # - only need fish (JSATS) from: 2013-2017
- # - only need fish (all groups) that reach either Ben or Chipps recs
- # - End Recs: "BeniciaW"  "ChippsW"
- # - Rename some receiver locations to agree with the names in the distance matrices
-
-#-------------------------------------------------------#
-# Objective:  using the detections and the distance matrices appropriate to a fish's route, calculate the distance traveled by each fish on each day.  
-
-# If detections are separated by many days, spread the distance evenly across the interval.
-
-# Input needed: cleaned detections data frame with FishID, DateTime_PST, GEN, Year, and RKM; Distance matrix dataframe with columns "Name" (movement name) and "Distance_m"
-
-# Final Final Output needed: tabular form, column for each FishID, row for each day, distance (abs(distance_traveled_in_meters))) in each cell. Different files for each year - 3 years (2013, 2016, 2017) - water year is fine.
-
-#-------------------------------------------------------#
-# Re-factored approach to creating distance traveled matrix: dbd_allfish function
-#-------------------------------------------------------#
-
-# 1. order detections by FishID and date; filter down to the first detection at each receiver
-
-# 2. create lagged detection columns; create movement column by pasting
-
-# 3. join with distance matrix data to get distance each movement represents
-
-# group by fishID & date; the total distance traveled column = the distance traveled from the previous recorded movement to that date
-
-# 4. Create column of lagged difftime = number of days elapsed since recorded previous movement
-
-# 5. create vector of full dates in between recorded detections for a given movement
-
-# 6. create vector of corresponding distances per day by dividing total distance by difftime
-
-# 7. join to a final data frame
-#-------------------------------------------------------#
-
+library(telemetry)
 source("R/utils.R")
 
 # load distance matrix (using DCC closed only)
@@ -47,6 +11,9 @@ dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdal
 ## Load clean JSATs detections of interest
 jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #
 jsats$DetectDate = as.Date(jsats$DateTime_PST)
+csn(jsats)
+key = read.csv("data/common_data/FishID_key.csv")
+jsats = jsats[jsats$FishID %in% key$FishID, ]
 
 #-------------------------------------------------------#
 
@@ -54,21 +21,31 @@ jsats$DetectDate = as.Date(jsats$DateTime_PST)
 f1 = split(jsats, jsats$FishID)
 f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
+#f2 = lapply(f1, movement_col, distance_matrix = dm_closed) # for checking movements w/ distance matrix
 f2 = lapply(f1, dpd_allfish, distance_matrix = dm_closed)
 
-f2 = do.call(rbind, f2)
+ans4 = lapply(f2, hs)
 
-# subset the dataset to only the years we need
-years = 2013:2017
+ans5 = data.table::rbindlist(ans4, idcol = TRUE)
 
-f3 = subset(f2, lubridate::year(f2$Date) %in% years)
+colnames(ans5) <- c("FishID", "date_time", "prop_dist")
 
-f3_split = split(f3, lubridate::year(f3$Date)) 
+head(ans5)
 
-ans = lapply(f3_split, make_matrix)
+write.csv(ans5, "results/JSATS/jsats_dpd_refactor.csv")
 
-mapply(write.csv, 
-       x = ans, 
-       file = paste0("results/JSATS/", names(ans), "_jsats_dpd.csv"), 
-       row.names = FALSE)
-
+if(FALSE){
+  # debugging
+  ans4 = lapply(f1, function(x) try(dpd_allfish(x, dm_closed)))
+  idx = sapply(ans4, is, "try-error")
+  lapply(f2[idx], hs) # only calling it with the ones that tripped an error
+  chk_f1 = f1[idx] # list of data frames that throw error
+  
+  # see if there are NAs
+  lapply(chk_f1, function(x) csn(x)) # no NAS; they're being introduced by dpd_allfish
+  
+  dpd_allfish(chk_f1[[9]], dm_closed) # this movement isn't in the matrix
+  
+  chk = f2[idx]
+  lapply(chk, function(x) all(is.na(x[1, ]))) # do all of these have NAs in their first row? Y
+}

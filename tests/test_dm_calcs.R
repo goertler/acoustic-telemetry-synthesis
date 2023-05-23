@@ -1,130 +1,89 @@
 # Tests
+library(telemetry)
+source("R/utils.R")
 
-source("R/make_DFA_matrix_MEJ.R") # fin$distance_m and sum(ff$total_dist) need to be closer
-library(ggplot2)
+d = readRDS("data_clean/YBUS/ybus_clean.rds")
+x = subset(d, FishID == "10.YBUS")
 
-ggplot(test, aes(x = Date, y=Distance_m)) +
-  geom_point(aes(group = FishID, color = FishID)) +
-  geom_path(aes(group = FishID, color = FishID)) +
-  theme_minimal()
+#saveRDS(x, "~/NonDropboxRepos/telemetry/inst/10.ybus_test_data.rds")
+
+y = tag_tales(x, "FishID", "GEN", Datetime_col = "DateTime_PST")
+
+dm_ybus = read.csv("data/distance_matrices/Distance_Matrix_YBUS_corr_07_21.csv")
+dm_ybus = dm_ybus[ , c("Name_corr", "Total_Length")]
+colnames(dm_ybus) = c("Name", "Total_Length_m")
+dm_ybus$Name = gsub("-", " - ", dm_ybus$Name)
 
 
-ggplot(jsats[jsats$FishID == test$FishID[1], ],
-       aes(x = DateTime_PST, y = RKM)) +
-  geom_point() +
-  geom_path(aes(group = FishID))
+head(x[order(x$DateTime_PST), ]) # Tisdale Weir -> BF.1
 
+# test on one
+chk2 = add_lag_col(x, 
+                   order_by = 'DateTime_PST', 
+                   col_to_lag = 'DateTime_PST' ,  
+                   lagged_col_name = 'next_arrival') # adds a lagged arrival column
+
+head(chk2)
+chk3 = make_movements(chk2, 'GEN', 'movement') # adds a movement column
+head(chk3)
+
+chk4 = rm_nas_and_merge(chk3, dist_mat = dm_ybus) # removes the last row (w/ the NA), as the last rec. is on n-1th row, merges w/ the distance matrix to bring in the distance for that movement, and adds the date of the movement
+head(chk4)
+
+chk4.5 = chk4[chk4$Total_Length_m != 0, ] # removes the within-receiver mvmts
+head(chk4.5)
+
+# next: for each movement (row), calculate the time difference between the departure and arrival. Then sequence that interval by hours.  Then create a data frame with a column for that time sequence, and a column for the proportion of distance that gets attributed to each hour, i.e. total distance / total number of hours
+
+chk5 = mapply(div_dist, # applies the div dist function to each row
+              start = chk4.5$DateTime_PST,
+              end = chk4.5$next_arrival,
+              distance = chk4.5$Total_Length_m,
+              time_units = "hour",
+              SIMPLIFY = FALSE)
+
+
+head(chk5)
+chk5 = do.call(rbind, chk5)
+
+# the proportional sums should be equal to the total length, within 0.001m
+all.equal(sum(chk5$prop_dist), sum(chk4.5$Total_Length_m), tolerance = 0.001) # might want to fix eventually; can end up way off with additive small differences in a different dataset than ours.
+
+
+# all fish
+f1 = d
+
+f1 = split(f1, f1$FishID)
+
+f2 = lapply(f1, add_lag_col, order_by = 'DateTime_PST', 
+            col_to_lag = 'DateTime_PST', 
+             lagged_col_name = 'next_arrival')
+
+f3 = lapply(f2, make_movements, col_to_lead = 'GEN', lagged_col_name = 'movement')
+
+tt3 = lapply(f3, rm_nas_and_merge, dist_mat = dm_ybus, na_col = "next_arrival")
+
+tt4 = lapply(tt3, function(x) x[x$Total_Length_m != 0, ])
+
+ans3 = lapply(tt4, function(x) try(hs(x)))
+
+lapply(ans3, tail)
+
+##-----------------------------------------
+
+# load distance matrix (using DCC closed only)
+dm_closed  <- read.csv("data/distance_matrices/JSATs_dist_matrix_DCC-Yolo-Tisdale_closed_new.csv", stringsAsFactors = FALSE)
+
+## Load clean JSATs detections of interest
+jsats = readRDS("data_clean/JSATS/jsats_detects2013-2017.rds") #
+jsats$DetectDate = as.Date(jsats$DateTime_PST)
 #-------------------------------------------------------#
-# Check 1 fish line by line
-#-------------------------------------------------------#
 
-tt = jsats[jsats$FishID == "CFC2017-127", 
-           c("FishID", "DateTime_PST", "GEN", "Rel_rkm")]
+# big test: all fish
+f1 = split(jsats, jsats$FishID)
+f1 = f1[sapply(f1, nrow) > 0] # only keep obs with > 1 det
 
-tt = tt[order(tt$DateTime_PST), ]
+ans = lapply(f1, add_lag_col, "DateTime_PST", "DateTime_PST", "new_arrival")
 
-tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
+f2 = do.call(rbind, lapply(f1, dpd_allfish, distance_matrix = dm_closed))
 
-tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
-
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
-
-# make movements
-tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
-
-# pull movements from the matrix
-tt3 =
-  merge(
-    tt3,
-    dm_closed[, c("Name", "Total_Length_m")],
-    by.x  = "movement",
-    by.y = "Name",
-    all.x = TRUE
-  )
-
-tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST)
-
-# I can get it to a data frame-like structure with this, but it strips the column names:
-ff =  tapply(tt3[ , "Total_Length_m"], 
-                       tt3[ , c("FishID", "Date")], 
-                       sum, 
-                       na.rm = TRUE,
-                       simplify = TRUE)
-
-ff = as.data.frame(cbind(t(ff), dimnames(ff)[[1]]))
-ff$Date = as.Date(row.names(ff))
-colnames(ff) = c("tot_distance", "FishID", "Date")
-
-# calculate vector of time differences & add as column
-ff$timediff = abs(as.numeric(difftime(dplyr::lag(ff$Date), # time 1
-                                     ff$Date, # time 2
-                                     units = "days")))
-
-# create vector of dates for the total time period
-dates = seq.Date(from = ff$Date[1], # from 1st date
-                 to = ff$Date[length(ff$Date)], # to final date
-                by = "days"
-                  ) 
-
-ff$timediff[is.na(ff$timediff)] <- 1 # replace lag NA with 1
-
-ff$tot_distance = round(as.numeric(ff$tot_distance), 2)
-
-ff$dist_day = ff$tot_distance/ff$timediff
-
-dists = rep(ff$dist_day, ff$timediff)
-
-stopifnot(length(dists) == length(dates))
-
-fin = data.frame(FishID = unique(ff$FishID),
-           Date = dates, 
-           Distance_m = dists)
-
-stopifnot(all.equal(sum(fin$Distance_m, na.rm = TRUE) , sum(ff$tot_distance, na.rm = TRUE)))
-
-
-
-
-
-
-
-
-#-------------------------------------------------------#
-# know it works within itself - now need to check a fish "by hand" and test
-#-------------------------------------------------------#
-if(FALSE){
-  
-source("R/make_DFA_matrix_MEJ.R")
-
-f1 = jsats[jsats$FishID == "WR2017-484", ] # fish with the fewest movements
- 
-tt = f1[order(f1$DateTime_PST), ]
-
-tt$visitID = data.table::rleidv(tt, "GEN") # add rle for station visits
-
-tt2 = do.call(rbind, by(tt, tt$visitID, test_fl_onefish)) # split by station visits, apply test_fl_onefish 
-
-tt3 = tt2[!duplicated(tt2$visitID, fromLast = TRUE), ] # keeps departure at each station; not sure about this step yet; but I *think* it might make sure that movements denote the day on which they arrive at the second location
-
-# make movements
-tt3$movement = paste(dplyr::lag(tt3$GEN), tt3$GEN, sep = " - ")
-
-# pull movements from the matrix
-tt3 =
-  merge(
-    tt3,
-    dm_closed[, c("Name", "Total_Length_m")],
-    by.x  = "movement",
-    by.y = "Name",
-    all.x = TRUE
-  )
-
-tt3 = tt3[order(tt3$FishID, tt3$DateTime_PST), ]
-tt3$Date = as.Date(tt3$DateTime_PST)
-
-write.csv(tt3, "tests/movements_WR2017-484.csv")
-
-f2 = bigtest[bigtest$FishID == unique(tt3$FishID), ]
-all.equal(sum(f2$Distance_m, na.rm = TRUE), sum(tt3$Total_Length_m, na.rm = TRUE))
-}
