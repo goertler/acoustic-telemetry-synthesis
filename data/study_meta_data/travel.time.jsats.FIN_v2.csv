@@ -1,0 +1,794 @@
+,FishID,StudyID,travel.time,tt.grp,RKM,Release_Group_SAIL,Year,Length,Weight,River_temp,Transport_distance,origin,Group,Route
+1,ARF2016-009,Nimbus_Fall_2016,5.00821919,Chips,206.041,Tidal Delta,2016,98,10.2,13.41094771,3,hatchery,Fall,SacR
+2,ARF2016-076,Nimbus_Fall_2016,6.038989572,Chips,206.041,Tidal Delta,2016,93,9.4,13.41094771,3,hatchery,Fall,SacR
+3,ARF2016-106,Nimbus_Fall_2016,5.546001447,Chips,206.041,Tidal Delta,2016,93,9.5,13.41094771,3,hatchery,Fall,SacR
+4,ARF2016-114,Nimbus_Fall_2016,3.421472361,Chips,206.041,Tidal Delta,2016,96,10.1,13.41094771,3,hatchery,Fall,SacR
+5,ARF2016-173,Nimbus_Fall_2016,6.12675515,Chips,206.041,Tidal Delta,2016,85,7.3,13.41094771,3,hatchery,Fall,SacRSlough
+6,ARF2017-005,Nimbus_Fall_2017,5.938021516,Chips,206.041,Tidal Delta,2017,85,6.8,13.5,3,hatchery,Fall,SacR
+7,ARF2017-007,Nimbus_Fall_2017,2.857594329,Chips,206.041,Tidal Delta,2017,86,6.9,13.5,3,hatchery,Fall,SacRSlough
+8,ARF2017-012,Nimbus_Fall_2017,3.426394931,Chips,206.041,Tidal Delta,2017,85,7.1,13.5,3,hatchery,Fall,SacR
+9,ARF2017-016,Nimbus_Fall_2017,3.809855984,Chips,206.041,Tidal Delta,2017,89,8,13.5,3,hatchery,Fall,SacR
+10,ARF2017-022,Nimbus_Fall_2017,3.917853171,Chips,206.041,Tidal Delta,2017,85,6.4,13.5,3,hatchery,Fall,SacR
+11,ARF2017-024,Nimbus_Fall_2017,5.89481265,Chips,206.041,Tidal Delta,2017,86,7.1,13.5,3,hatchery,Fall,SacR
+12,ARF2017-026,Nimbus_Fall_2017,3.826625648,Chips,206.041,Tidal Delta,2017,88,7.4,13.5,3,hatchery,Fall,SacR
+13,ARF2017-030,Nimbus_Fall_2017,3.952027882,Chips,206.041,Tidal Delta,2017,82,6.3,13.5,3,hatchery,Fall,SacR
+14,ARF2017-045,Nimbus_Fall_2017,6.46674963,Chips,206.041,Tidal Delta,2017,84,6.6,13.5,3,hatchery,Fall,SacR
+15,ARF2017-047,Nimbus_Fall_2017,2.865607118,Chips,206.041,Tidal Delta,2017,95,9.2,13.5,3,hatchery,Fall,SacR
+16,ARF2017-049,Nimbus_Fall_2017,2.92198081,Chips,206.041,Tidal Delta,2017,86,6.8,13.5,3,hatchery,Fall,SacR
+17,ARF2017-050,Nimbus_Fall_2017,5.137700845,Chips,206.041,Tidal Delta,2017,88,7.4,13.5,3,hatchery,Fall,SacR
+18,ARF2017-051,Nimbus_Fall_2017,3.934202407,Chips,206.041,Tidal Delta,2017,85,6.5,13.5,3,hatchery,Fall,SacR
+19,ARF2017-054,Nimbus_Fall_2017,3.900497616,Chips,206.041,Tidal Delta,2017,80,6,13.5,3,hatchery,Fall,SacRSlough
+20,ARF2017-058,Nimbus_Fall_2017,2.862026725,Chips,206.041,Tidal Delta,2017,83,6,13.5,3,hatchery,Fall,SacR
+21,ARF2017-064,Nimbus_Fall_2017,3.804435451,Chips,206.041,Tidal Delta,2017,83,6.7,13.5,3,hatchery,Fall,SacR
+22,ARF2017-075,Nimbus_Fall_2017,6.008985463,Chips,206.041,Tidal Delta,2017,89,8,13.5,3,hatchery,Fall,SacR
+23,ARF2017-079,Nimbus_Fall_2017,3.807415139,Chips,206.041,Tidal Delta,2017,88,7.3,13.5,3,hatchery,Fall,SacRSlough
+24,ARF2017-081,Nimbus_Fall_2017,5.960663924,Chips,206.041,Tidal Delta,2017,84,6.5,13.5,3,hatchery,Fall,SacR
+25,ARF2017-101,Nimbus_Fall_2017,3.992796748,Chips,206.041,Tidal Delta,2017,83,6.4,13.5,3,hatchery,Fall,SacR
+26,ARF2017-105,Nimbus_Fall_2017,4.841694317,Chips,206.041,Tidal Delta,2017,83,7.1,13.5,3,hatchery,Fall,SacRSlough
+27,ARF2017-108,Nimbus_Fall_2017,6.023383889,Chips,206.041,Tidal Delta,2017,85,7.3,13.5,3,hatchery,Fall,SacR
+28,ARF2017-114,Nimbus_Fall_2017,2.849910081,Chips,206.041,Tidal Delta,2017,82,6.5,13.5,3,hatchery,Fall,SacR
+29,ARF2017-115,Nimbus_Fall_2017,3.937599178,Chips,206.041,Tidal Delta,2017,85,6.3,13.5,3,hatchery,Fall,SacR
+30,ARF2017-117,Nimbus_Fall_2017,3.841000856,Chips,206.041,Tidal Delta,2017,90,8,13.5,3,hatchery,Fall,SacRSlough
+31,ARF2017-118,Nimbus_Fall_2017,5.005969664,Chips,206.041,Tidal Delta,2017,83,7.5,13.5,3,hatchery,Fall,SacR
+32,ARF2017-121,Nimbus_Fall_2017,3.83485772,Chips,206.041,Tidal Delta,2017,90,7.8,13.5,3,hatchery,Fall,SacR
+33,ARF2017-130,Nimbus_Fall_2017,4.894428958,Chips,206.041,Tidal Delta,2017,85,6.5,13.5,3,hatchery,Fall,SacR
+34,ARF2017-135,Nimbus_Fall_2017,5.987220926,Chips,206.041,Tidal Delta,2017,83,6.2,13.5,3,hatchery,Fall,SacR
+35,ARF2017-136,Nimbus_Fall_2017,3.411964491,Chips,206.041,Tidal Delta,2017,84,6.6,13.5,3,hatchery,Fall,SacR
+36,ARF2017-139,Nimbus_Fall_2017,4.399790486,Chips,206.041,Tidal Delta,2017,83,6.8,13.5,3,hatchery,Fall,SacR
+37,ARF2017-152,Nimbus_Fall_2017,3.741574097,Chips,206.041,Tidal Delta,2017,84,7,13.99346405,3,hatchery,Fall,SacR
+38,ARF2017-157,Nimbus_Fall_2017,3.137971806,Chips,206.041,Tidal Delta,2017,83,6.4,13.99346405,3,hatchery,Fall,SacR
+39,ARF2017-159,Nimbus_Fall_2017,4.702446644,Chips,206.041,Tidal Delta,2017,85,6.8,13.99346405,3,hatchery,Fall,SacRSlough
+40,ARF2017-170,Nimbus_Fall_2017,3.690511956,Chips,206.041,Tidal Delta,2017,84,7.3,13.99346405,3,hatchery,Fall,SacR
+41,ARF2017-173,Nimbus_Fall_2017,3.118376042,Chips,206.041,Tidal Delta,2017,87,7.5,13.99346405,3,hatchery,Fall,SacR
+42,ARF2017-177,Nimbus_Fall_2017,3.124274699,Chips,206.041,Tidal Delta,2017,86,7.3,13.99346405,3,hatchery,Fall,SacR
+43,ARF2017-184,Nimbus_Fall_2017,3.648416285,Chips,206.041,Tidal Delta,2017,85,7.2,13.99346405,3,hatchery,Fall,SacR
+44,ARF2017-194,Nimbus_Fall_2017,3.100334769,Chips,206.041,Tidal Delta,2017,90,8.8,13.99346405,3,hatchery,Fall,SacR
+45,ARF2017-200,Nimbus_Fall_2017,4.777066563,Chips,206.041,Tidal Delta,2017,79,6,13.99346405,3,hatchery,Fall,SacR
+46,ARF2017-205,Nimbus_Fall_2017,3.110091343,Chips,206.041,Tidal Delta,2017,93,10,13.99346405,3,hatchery,Fall,SacR
+47,ARF2017-206,Nimbus_Fall_2017,3.087120428,Chips,206.041,Tidal Delta,2017,88,8.1,13.99346405,3,hatchery,Fall,SacR
+48,ARF2017-211,Nimbus_Fall_2017,5.717364583,Chips,206.041,Tidal Delta,2017,95,10.3,13.99346405,3,hatchery,Fall,SacR
+49,ARF2017-213,Nimbus_Fall_2017,3.177554757,Chips,206.041,Tidal Delta,2017,84,7,13.99346405,3,hatchery,Fall,SacRSlough
+50,ARF2017-214,Nimbus_Fall_2017,3.205827639,Chips,206.041,Tidal Delta,2017,86,7,13.99346405,3,hatchery,Fall,SacR
+51,ARF2017-219,Nimbus_Fall_2017,3.027352106,Chips,206.041,Tidal Delta,2017,83,6.6,13.99346405,3,hatchery,Fall,SacRSlough
+52,ARF2017-248,Nimbus_Fall_2017,3.121043079,Chips,206.041,Tidal Delta,2017,89,8.3,13.99346405,3,hatchery,Fall,SacR
+53,ARF2017-258,Nimbus_Fall_2017,3.142732141,Chips,206.041,Tidal Delta,2017,89,8.4,13.99346405,3,hatchery,Fall,SacR
+54,ARF2017-266,Nimbus_Fall_2017,2.721326053,Chips,206.041,Tidal Delta,2017,86,7.8,13.99346405,3,hatchery,Fall,SacR
+55,ARF2017-269,Nimbus_Fall_2017,4.673446227,Chips,206.041,Tidal Delta,2017,80,6.1,13.99346405,3,hatchery,Fall,SacR
+56,ARF2017-270,Nimbus_Fall_2017,4.151575521,Chips,206.041,Tidal Delta,2017,84,7.1,13.99346405,3,hatchery,Fall,SacRSlough
+57,ARF2017-271,Nimbus_Fall_2017,3.49068,Chips,206.041,Tidal Delta,2017,82,6.5,13.99346405,3,hatchery,Fall,SacR
+58,ARF2017-286,Nimbus_Fall_2017,3.13153485,Chips,206.041,Tidal Delta,2017,86,7.6,13.99346405,3,hatchery,Fall,SacR
+59,ARF2017-290,Nimbus_Fall_2017,3.140726273,Chips,206.041,Tidal Delta,2017,83,6.9,13.99346405,3,hatchery,Fall,SacR
+60,ARF2017-292,Nimbus_Fall_2017,3.142396956,Chips,206.041,Tidal Delta,2017,89,8.6,13.99346405,3,hatchery,Fall,SacR
+61,CFC2013-023,ColemanFall_2013,12.45548365,Ben.Dec,517.344,Upper Sacramento River,2013,84,6.86,10.72036603,0,hatchery,Fall,SacR
+62,CFC2013-030,ColemanFall_2013,11.27306791,Ben.Dec,517.344,Upper Sacramento River,2013,85,6.31,10.72036603,0,hatchery,Fall,SacR
+63,CFC2013-044,ColemanFall_2013,10.24550455,Ben.Dec,517.344,Upper Sacramento River,2013,87,6.81,10.72036603,0,hatchery,Fall,SacRSlough
+64,CFC2013-111,ColemanFall_2013,12.54126792,Ben.Dec,517.344,Upper Sacramento River,2013,83,6.1,10.72036603,0,hatchery,Fall,SacRSlough
+65,CFC2013-162,ColemanFall_2013,10.8975816,Ben.Ant,517.344,Upper Sacramento River,2013,88,8.2,11.36017182,0,hatchery,Fall,CenDel
+66,CFC2013-163,ColemanFall_2013,11.61194883,Ben.Dec,517.344,Upper Sacramento River,2013,82,8,11.36017182,0,hatchery,Fall,SacRSlough
+67,CFC2013-177,ColemanFall_2013,12.60793144,Ben.Dec,517.344,Upper Sacramento River,2013,82,6.7,11.36017182,0,hatchery,Fall,SacRSlough
+68,CFC2013-179,ColemanFall_2013,10.05872496,Ben.Dec,517.344,Upper Sacramento River,2013,82,7.3,11.36017182,0,hatchery,Fall,SacR
+69,CFC2013-193,ColemanFall_2013,17.53432635,Ben.Dec,517.344,Upper Sacramento River,2013,85,7.2,11.36017182,0,hatchery,Fall,SacR
+70,CFC2013-208,ColemanFall_2013,11.3892986,Ben.Dec,517.344,Upper Sacramento River,2013,81,6.2,11.36017182,0,hatchery,Fall,SacRSlough
+71,CFC2013-216,ColemanFall_2013,12.06878504,Ben.Dec,517.344,Upper Sacramento River,2013,83,6.3,11.36017182,0,hatchery,Fall,SacRSlough
+72,CFC2013-251,ColemanFall_2013,13.91490208,Ben.Ant,517.344,Upper Sacramento River,2013,82,6.4,11.36017182,0,hatchery,Fall,CenDel
+73,CFC2017-011,ColemanFall_2017,13.5712865,Chips,517.344,Upper Sacramento River,2017,84,6.7,10.776093,0,hatchery,Fall,SacR
+74,CFC2017-012,ColemanFall_2017,15.87432249,Chips,517.344,Upper Sacramento River,2017,85,7.6,10.776093,0,hatchery,Fall,SacR
+75,CFC2017-015,ColemanFall_2017,12.77421516,Chips,517.344,Upper Sacramento River,2017,82,6.2,10.776093,0,hatchery,Fall,SacR
+76,CFC2017-024,ColemanFall_2017,12.87776597,Chips,517.344,Upper Sacramento River,2017,84,6.4,10.776093,0,hatchery,Fall,SacR
+77,CFC2017-026,ColemanFall_2017,7.236919537,Chips,517.344,Upper Sacramento River,2017,80,6,10.776093,0,hatchery,Fall,Yolo
+78,CFC2017-029,ColemanFall_2017,6.752079734,Chips,517.344,Upper Sacramento River,2017,83,6.6,10.776093,0,hatchery,Fall,SacR
+79,CFC2017-031,ColemanFall_2017,5.688922292,Chips,517.344,Upper Sacramento River,2017,85,6.7,10.776093,0,hatchery,Fall,SacR
+80,CFC2017-032,ColemanFall_2017,7.324769583,Chips,517.344,Upper Sacramento River,2017,87,7.3,10.776093,0,hatchery,Fall,SacR
+81,CFC2017-034,ColemanFall_2017,9.911923924,Ben.Dec,517.344,Upper Sacramento River,2017,84,6.8,10.776093,0,hatchery,Fall,SacR
+82,CFC2017-035,ColemanFall_2017,10.39416799,Chips,517.344,Upper Sacramento River,2017,83,6.6,10.776093,0,hatchery,Fall,SacR
+83,CFC2017-037,ColemanFall_2017,6.255985162,Chips,517.344,Upper Sacramento River,2017,85,6.6,10.776093,0,hatchery,Fall,SacR
+84,CFC2017-038,ColemanFall_2017,8.23614537,Chips,517.344,Upper Sacramento River,2017,84,7.1,10.776093,0,hatchery,Fall,SacR
+85,CFC2017-039,ColemanFall_2017,7.471021412,Ben.Dec,517.344,Upper Sacramento River,2017,84,6.8,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+86,CFC2017-041,ColemanFall_2017,12.88263708,Chips,517.344,Upper Sacramento River,2017,83,6.7,10.776093,0,hatchery,Fall,SacR
+87,CFC2017-042,ColemanFall_2017,5.772794734,Chips,517.344,Upper Sacramento River,2017,84,7.1,10.776093,0,hatchery,Fall,SacR
+88,CFC2017-047,ColemanFall_2017,6.817461366,Chips,517.344,Upper Sacramento River,2017,85,7.2,10.776093,0,hatchery,Fall,SacR
+89,CFC2017-048,ColemanFall_2017,11.73331821,Chips,517.344,Upper Sacramento River,2017,81,6,10.776093,0,hatchery,Fall,SacR
+90,CFC2017-052,ColemanFall_2017,6.817824479,Chips,517.344,Upper Sacramento River,2017,82,6,10.776093,0,hatchery,Fall,SacRSlough
+91,CFC2017-060,ColemanFall_2017,7.334616007,Chips,517.344,Upper Sacramento River,2017,84,6.5,10.776093,0,hatchery,Fall,SacR
+92,CFC2017-062,ColemanFall_2017,9.876642569,Chips,517.344,Upper Sacramento River,2017,87,7.6,10.776093,0,hatchery,Fall,SacR
+93,CFC2017-066,ColemanFall_2017,7.715509907,Chips,517.344,Upper Sacramento River,2017,87,7.9,10.776093,0,hatchery,Fall,SacR
+94,CFC2017-068,ColemanFall_2017,14.60640397,Chips,517.344,Upper Sacramento River,2017,83,6.9,10.776093,0,hatchery,Fall,SacR
+95,CFC2017-070,ColemanFall_2017,10.79349716,Chips,517.344,Upper Sacramento River,2017,85,7.3,10.776093,0,hatchery,Fall,SacR
+96,CFC2017-073,ColemanFall_2017,8.673140231,Chips,517.344,Upper Sacramento River,2017,86,7.4,10.776093,0,hatchery,Fall,"Yolo, SacRSlough, CenDel"
+97,CFC2017-079,ColemanFall_2017,6.271401088,Chips,517.344,Upper Sacramento River,2017,83,6.7,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+98,CFC2017-080,ColemanFall_2017,6.707004653,Chips,517.344,Upper Sacramento River,2017,88,7.5,10.776093,0,hatchery,Fall,SacRSlough
+99,CFC2017-082,ColemanFall_2017,5.789734225,Chips,517.344,Upper Sacramento River,2017,86,7.2,10.776093,0,hatchery,Fall,SacR
+100,CFC2017-085,ColemanFall_2017,5.76441,Chips,517.344,Upper Sacramento River,2017,88,7.7,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+101,CFC2017-086,ColemanFall_2017,24.9116816,Chips,517.344,Upper Sacramento River,2017,83,6.5,10.776093,0,hatchery,Fall,SacR
+102,CFC2017-088,ColemanFall_2017,9.364797234,Chips,517.344,Upper Sacramento River,2017,81,6.1,10.776093,0,hatchery,Fall,SacR
+103,CFC2017-097,ColemanFall_2017,5.752073252,Chips,517.344,Upper Sacramento River,2017,83,6.4,10.776093,0,hatchery,Fall,SacR
+104,CFC2017-105,ColemanFall_2017,5.288241748,Chips,517.344,Upper Sacramento River,2017,84,6.4,10.776093,0,hatchery,Fall,SacR
+105,CFC2017-108,ColemanFall_2017,7.246038044,Chips,517.344,Upper Sacramento River,2017,85,7.1,10.776093,0,hatchery,Fall,SacR
+106,CFC2017-118,ColemanFall_2017,25.75331505,Chips,517.344,Upper Sacramento River,2017,84,6.7,10.776093,0,hatchery,Fall,SacRSlough
+107,CFC2017-119,ColemanFall_2017,10.92091997,Chips,517.344,Upper Sacramento River,2017,82,6.2,10.776093,0,hatchery,Fall,SacR
+108,CFC2017-122,ColemanFall_2017,27.04780435,Chips,517.344,Upper Sacramento River,2017,82,6.3,10.776093,0,hatchery,Fall,Yolo
+109,CFC2017-124,ColemanFall_2017,7.768030498,Chips,517.344,Upper Sacramento River,2017,89,7.6,10.776093,0,hatchery,Fall,SacR
+110,CFC2017-127,ColemanFall_2017,17.67880105,Chips,517.344,Upper Sacramento River,2017,83,6.6,10.776093,0,hatchery,Fall,Yolo
+111,CFC2017-131,ColemanFall_2017,11.77952895,Chips,517.344,Upper Sacramento River,2017,80,6,10.776093,0,hatchery,Fall,CenDel
+112,CFC2017-132,ColemanFall_2017,6.687672257,Chips,517.344,Upper Sacramento River,2017,82,6.4,10.776093,0,hatchery,Fall,SacR
+113,CFC2017-142,ColemanFall_2017,9.931566701,Chips,517.344,Upper Sacramento River,2017,82,6.3,10.776093,0,hatchery,Fall,SacR
+114,CFC2017-145,ColemanFall_2017,11.7629691,Chips,517.344,Upper Sacramento River,2017,86,7,10.776093,0,hatchery,Fall,SacR
+115,CFC2017-149,ColemanFall_2017,7.270376343,Chips,517.344,Upper Sacramento River,2017,85,6.9,10.776093,0,hatchery,Fall,SacR
+116,CFC2017-155,ColemanFall_2017,8.797260613,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.776093,0,hatchery,Fall,SacR
+117,CFC2017-158,ColemanFall_2017,8.757140694,Chips,517.344,Upper Sacramento River,2017,85,7.6,10.776093,0,hatchery,Fall,CenDel
+118,CFC2017-166,ColemanFall_2017,31.15342098,Chips,517.344,Upper Sacramento River,2017,81,6.2,10.776093,0,hatchery,Fall,SacR
+119,CFC2017-168,ColemanFall_2017,6.798975775,Chips,517.344,Upper Sacramento River,2017,85,7.2,10.776093,0,hatchery,Fall,SacR
+120,CFC2017-174,ColemanFall_2017,12.84750247,Chips,517.344,Upper Sacramento River,2017,82,6.5,10.776093,0,hatchery,Fall,SacR
+121,CFC2017-176,ColemanFall_2017,9.813325266,Chips,517.344,Upper Sacramento River,2017,83,6.7,10.776093,0,hatchery,Fall,SacR
+122,CFC2017-178,ColemanFall_2017,5.722885544,Chips,517.344,Upper Sacramento River,2017,82,6.4,10.776093,0,hatchery,Fall,SacR
+123,CFC2017-179,ColemanFall_2017,12.04008806,Chips,517.344,Upper Sacramento River,2017,81,6.3,10.776093,0,hatchery,Fall,CenDel
+124,CFC2017-180,ColemanFall_2017,6.774201192,Chips,517.344,Upper Sacramento River,2017,86,7.1,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+125,CFC2017-185,ColemanFall_2017,7.37140081,Chips,517.344,Upper Sacramento River,2017,85,7.1,10.776093,0,hatchery,Fall,SacR
+126,CFC2017-187,ColemanFall_2017,12.00790314,Chips,517.344,Upper Sacramento River,2017,86,6.8,10.776093,0,hatchery,Fall,SacR
+127,CFC2017-199,ColemanFall_2017,6.779831019,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+128,CFC2017-210,ColemanFall_2017,12.7317678,Chips,517.344,Upper Sacramento River,2017,85,7.4,10.776093,0,hatchery,Fall,SacR
+129,CFC2017-212,ColemanFall_2017,6.886426192,Chips,517.344,Upper Sacramento River,2017,82,6.2,10.776093,0,hatchery,Fall,SacR
+130,CFC2017-213,ColemanFall_2017,6.818213356,Chips,517.344,Upper Sacramento River,2017,83,6.3,10.776093,0,hatchery,Fall,Yolo
+131,CFC2017-218,ColemanFall_2017,7.952025498,Chips,517.344,Upper Sacramento River,2017,88,7.5,10.776093,0,hatchery,Fall,CenDel
+132,CFC2017-219,ColemanFall_2017,6.284143843,Chips,517.344,Upper Sacramento River,2017,83,6.6,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+133,CFC2017-221,ColemanFall_2017,5.773489213,Chips,517.344,Upper Sacramento River,2017,83,6.5,10.776093,0,hatchery,Fall,SacR
+134,CFC2017-224,ColemanFall_2017,8.308200822,Chips,517.344,Upper Sacramento River,2017,82,6.8,10.776093,0,hatchery,Fall,SacRSlough
+135,CFC2017-226,ColemanFall_2017,8.827274606,Chips,517.344,Upper Sacramento River,2017,83,6.6,10.776093,0,hatchery,Fall,SacR
+136,CFC2017-227,ColemanFall_2017,8.294500579,Chips,517.344,Upper Sacramento River,2017,81,6.4,10.776093,0,hatchery,Fall,SacR
+137,CFC2017-230,ColemanFall_2017,8.353355486,Chips,517.344,Upper Sacramento River,2017,85,7,10.776093,0,hatchery,Fall,SacR
+138,CFC2017-232,ColemanFall_2017,6.72082522,Chips,517.344,Upper Sacramento River,2017,81,6.3,10.776093,0,hatchery,Fall,SacR
+139,CFC2017-237,ColemanFall_2017,9.322610382,Chips,517.344,Upper Sacramento River,2017,82,6.5,10.776093,0,hatchery,Fall,CenDel
+140,CFC2017-238,ColemanFall_2017,10.92557964,Chips,517.344,Upper Sacramento River,2017,84,7,10.776093,0,hatchery,Fall,CenDel
+141,CFC2017-239,ColemanFall_2017,11.02946744,Chips,517.344,Upper Sacramento River,2017,79,6,10.776093,0,hatchery,Fall,CenDel
+142,CFC2017-240,ColemanFall_2017,7.827545544,Chips,517.344,Upper Sacramento River,2017,84,6.8,10.776093,0,hatchery,Fall,"Yolo, SacRSlough"
+143,CFC2017-242,ColemanFall_2017,11.99561833,Chips,517.344,Upper Sacramento River,2017,79,6.1,10.776093,0,hatchery,Fall,SacR
+144,CFC2017-244,ColemanFall_2017,14.66216368,Chips,517.344,Upper Sacramento River,2017,83,6.2,10.776093,0,hatchery,Fall,SacR
+145,CFC2017-248,ColemanFall_2017,9.948722951,Chips,517.344,Upper Sacramento River,2017,83,7.2,10.776093,0,hatchery,Fall,SacR
+146,CFC2017-249,ColemanFall_2017,9.80248228,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.776093,0,hatchery,Fall,SacR
+147,CFC2017-263,ColemanFall_2017,12.77402962,Chips,517.344,Upper Sacramento River,2017,85,7.1,10.776093,0,hatchery,Fall,SacR
+148,CFC2017-265,ColemanFall_2017,6.748844896,Chips,517.344,Upper Sacramento River,2017,83,6.4,10.776093,0,hatchery,Fall,SacR
+149,CFC2017-266,ColemanFall_2017,8.773868785,Chips,517.344,Upper Sacramento River,2017,84,6.6,10.776093,0,hatchery,Fall,CenDel
+150,CFC2017-277,ColemanFall_2017,9.973481736,Chips,517.344,Upper Sacramento River,2017,79,6,10.776093,0,hatchery,Fall,SacR
+151,CFC2017-297,ColemanFall_2017,15.47975771,Chips,517.344,Upper Sacramento River,2017,79,6.2,10.95940913,0,hatchery,Fall,"Yolo, SacRSlough"
+152,CFC2017-320,ColemanFall_2017,14.93661845,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.95940913,0,hatchery,Fall,Yolo
+153,CFC2017-325,ColemanFall_2017,13.21387508,Chips,517.344,Upper Sacramento River,2017,84,7.5,10.95940913,0,hatchery,Fall,Yolo
+154,CFC2017-330,ColemanFall_2017,7.156032593,Chips,517.344,Upper Sacramento River,2017,80,6.7,10.95940913,0,hatchery,Fall,SacR
+155,CFC2017-331,ColemanFall_2017,14.47898855,Chips,517.344,Upper Sacramento River,2017,79,6.1,10.95940913,0,hatchery,Fall,Yolo
+156,CFC2017-335,ColemanFall_2017,15.35904602,Chips,517.344,Upper Sacramento River,2017,80,6.3,10.95940913,0,hatchery,Fall,SacR
+157,CFC2017-347,ColemanFall_2017,14.42864935,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.95940913,0,hatchery,Fall,SacR
+158,CFC2017-352,ColemanFall_2017,14.97372897,Chips,517.344,Upper Sacramento River,2017,80,6.3,10.95940913,0,hatchery,Fall,Yolo
+159,CFC2017-355,ColemanFall_2017,16.35681794,Chips,517.344,Upper Sacramento River,2017,79,6,10.95940913,0,hatchery,Fall,Yolo
+160,CFC2017-359,ColemanFall_2017,6.630907558,Chips,517.344,Upper Sacramento River,2017,82,6.9,10.95940913,0,hatchery,Fall,SacR
+161,CFC2017-381,ColemanFall_2017,14.94536089,Chips,517.344,Upper Sacramento River,2017,80,6.5,10.95940913,0,hatchery,Fall,SacR
+162,CFC2017-382,ColemanFall_2017,15.0036077,Chips,517.344,Upper Sacramento River,2017,82,6.5,10.95940913,0,hatchery,Fall,Yolo
+163,CFC2017-386,ColemanFall_2017,12.19558294,Chips,517.344,Upper Sacramento River,2017,82,6.3,10.95940913,0,hatchery,Fall,Yolo
+164,CFC2017-392,ColemanFall_2017,12.23267167,Chips,517.344,Upper Sacramento River,2017,80,6.8,10.95940913,0,hatchery,Fall,SacR
+165,CFC2017-395,ColemanFall_2017,14.42952803,Chips,517.344,Upper Sacramento River,2017,80,6.4,10.95940913,0,hatchery,Fall,Yolo
+166,CFC2017-397,ColemanFall_2017,12.32033193,Chips,517.344,Upper Sacramento River,2017,80,6.5,10.95940913,0,hatchery,Fall,SacR
+167,CFC2017-398,ColemanFall_2017,14.91203066,Chips,517.344,Upper Sacramento River,2017,82,6.9,10.95940913,0,hatchery,Fall,SacR
+168,CFC2017-401,ColemanFall_2017,14.99603075,Chips,517.344,Upper Sacramento River,2017,82,7,10.95940913,0,hatchery,Fall,Yolo
+169,CFC2017-408,ColemanFall_2017,14.36127188,Chips,517.344,Upper Sacramento River,2017,80,6.2,10.95940913,0,hatchery,Fall,Yolo
+170,CFC2017-413,ColemanFall_2017,14.98300514,Chips,517.344,Upper Sacramento River,2017,81,6.7,10.95940913,0,hatchery,Fall,Yolo
+171,CFC2017-415,ColemanFall_2017,13.29318696,Chips,517.344,Upper Sacramento River,2017,79,6.4,10.95940913,0,hatchery,Fall,Yolo
+172,CFC2017-428,ColemanFall_2017,15.46786506,Chips,517.344,Upper Sacramento River,2017,82,7.1,10.95940913,0,hatchery,Fall,Yolo
+173,CFC2017-430,ColemanFall_2017,19.6291201,Chips,517.344,Upper Sacramento River,2017,80,6.3,10.95940913,0,hatchery,Fall,SacR
+174,CFC2017-452,ColemanFall_2017,13.34871854,Chips,517.344,Upper Sacramento River,2017,79,6.2,10.95940913,0,hatchery,Fall,SacR
+175,CFC2017-454,ColemanFall_2017,16.49567334,Chips,517.344,Upper Sacramento River,2017,80,6.8,10.95940913,0,hatchery,Fall,SacR
+176,CFC2017-455,ColemanFall_2017,14.46938728,Chips,517.344,Upper Sacramento River,2017,82,7.3,10.95940913,0,hatchery,Fall,Yolo
+177,CFC2017-458,ColemanFall_2017,12.15946925,Chips,517.344,Upper Sacramento River,2017,80,7,10.95940913,0,hatchery,Fall,SacRSlough
+178,CFC2017-468,ColemanFall_2017,14.97349608,Chips,517.344,Upper Sacramento River,2017,82,6.4,10.95940913,0,hatchery,Fall,Yolo
+179,CFC2017-472,ColemanFall_2017,13.86079998,Chips,517.344,Upper Sacramento River,2017,85,6.8,10.95940913,0,hatchery,Fall,Yolo
+180,CFC2017-480,ColemanFall_2017,11.28934525,Chips,517.344,Upper Sacramento River,2017,85,7.5,10.95940913,0,hatchery,Fall,SacR
+181,CFC2017-483,ColemanFall_2017,8.157994063,Chips,517.344,Upper Sacramento River,2017,82,6.7,10.95940913,0,hatchery,Fall,Yolo
+182,CFC2017-488,ColemanFall_2017,10.2681961,Chips,517.344,Upper Sacramento River,2017,82,6.8,10.95940913,0,hatchery,Fall,Yolo
+183,CFC2017-492,ColemanFall_2017,15.49228259,Chips,517.344,Upper Sacramento River,2017,80,6.5,10.95940913,0,hatchery,Fall,SacR
+184,CFC2017-499,ColemanFall_2017,14.24949279,Chips,517.344,Upper Sacramento River,2017,85,7,10.95940913,0,hatchery,Fall,Yolo
+185,CFC2017-503,ColemanFall_2017,11.81941106,Chips,517.344,Upper Sacramento River,2017,80,6.2,10.95940913,0,hatchery,Fall,SacR
+186,CFC2017-506,ColemanFall_2017,14.40632741,Chips,517.344,Upper Sacramento River,2017,81,6.6,10.95940913,0,hatchery,Fall,Yolo
+187,CFC2017-515,ColemanFall_2017,14.61987194,Chips,517.344,Upper Sacramento River,2017,79,6.1,10.95940913,0,hatchery,Fall,SacR
+188,CFC2017-524,ColemanFall_2017,14.30588352,Chips,517.344,Upper Sacramento River,2017,81,6.3,10.95940913,0,hatchery,Fall,Yolo
+189,CFC2017-527,ColemanFall_2017,13.2531599,Chips,517.344,Upper Sacramento River,2017,82,6.5,10.95940913,0,hatchery,Fall,SacR
+190,CFC2017-529,ColemanFall_2017,15.03008088,Chips,517.344,Upper Sacramento River,2017,80,6.4,10.95940913,0,hatchery,Fall,Yolo
+191,CFC2017-538,ColemanFall_2017,12.2860748,Chips,517.344,Upper Sacramento River,2017,81,6.7,10.95940913,0,hatchery,Fall,SacR
+192,CFC2017-540,ColemanFall_2017,13.20576491,Chips,517.344,Upper Sacramento River,2017,79,6,10.95940913,0,hatchery,Fall,SacR
+193,CFC2017-553,ColemanFall_2017,16.38236907,Chips,517.344,Upper Sacramento River,2017,83,6.9,10.95940913,0,hatchery,Fall,SacR
+194,CFC2017-554,ColemanFall_2017,14.93252771,Chips,517.344,Upper Sacramento River,2017,80,6.1,10.95940913,0,hatchery,Fall,Yolo
+195,CFC2017-557,ColemanFall_2017,15.97500448,Chips,517.344,Upper Sacramento River,2017,80,6,10.95940913,0,hatchery,Fall,Yolo
+196,CFR2016-007,ColemanFall_2016,9.210265694,Chips,517.344,Upper Sacramento River,2016,87,9.4,13.38056222,0,hatchery,Fall,SacRSlough
+197,CFR2016-026,ColemanFall_2016,13.99006709,Chips,517.344,Upper Sacramento River,2016,92,6.7,13.38056222,0,hatchery,Fall,CenDel
+198,CFR2016-027,ColemanFall_2016,10.89675713,Chips,517.344,Upper Sacramento River,2016,79,6,13.38056222,0,hatchery,Fall,SacR
+199,CFR2016-036,ColemanFall_2016,10.32810395,Chips,517.344,Upper Sacramento River,2016,84,6.6,13.38056222,0,hatchery,Fall,SacR
+200,CFR2016-055,ColemanFall_2016,7.160400301,Ben.Dec,517.344,Upper Sacramento River,2016,90,7.5,13.38056222,0,hatchery,Fall,SacR
+201,CFR2016-056,ColemanFall_2016,10.397142,Chips,517.344,Upper Sacramento River,2016,85,6.1,13.38056222,0,hatchery,Fall,"SacRSlough, CenDel"
+202,CFR2016-090,ColemanFall_2016,12.36858045,Chips,517.344,Upper Sacramento River,2016,82,6,13.38056222,0,hatchery,Fall,SacR
+203,CFR2016-110,ColemanFall_2016,10.92070475,Chips,517.344,Upper Sacramento River,2016,87,7.5,13.38056222,0,hatchery,Fall,SacR
+204,CFR2016-111,ColemanFall_2016,8.339057419,Chips,517.344,Upper Sacramento River,2016,86,6.3,13.38056222,0,hatchery,Fall,SacR
+205,CFR2016-174,ColemanFall_2016,8.214720023,Chips,517.344,Upper Sacramento River,2016,85,7.5,13.38056222,0,hatchery,Fall,SacR
+206,CFR2016-199,ColemanFall_2016,10.3331408,Chips,517.344,Upper Sacramento River,2016,85,6.9,13.38056222,0,hatchery,Fall,SacR
+207,CFR2016-215,ColemanFall_2016,7.511185671,Chips,517.344,Upper Sacramento River,2016,81,6.2,13.38056222,0,hatchery,Fall,SacRSlough
+208,CFR2016-232,ColemanFall_2016,10.9599138,Chips,517.344,Upper Sacramento River,2016,80,6,13.38056222,0,hatchery,Fall,SacR
+209,CFR2016-242,ColemanFall_2016,7.408067465,Chips,517.344,Upper Sacramento River,2016,86,7.5,13.38056222,0,hatchery,Fall,SacR
+210,CFR2016-244,ColemanFall_2016,8.946827384,Chips,517.344,Upper Sacramento River,2016,87,6.4,13.38056222,0,hatchery,Fall,SacRSlough
+211,CFR2016-302,ColemanFall_2016,8.98358294,Chips,517.344,Upper Sacramento River,2016,82,6.3,13.38056222,0,hatchery,Fall,SacR
+212,Delta2013-004,Fall_Delta_2013,8.074132193,Ben.Ant,172.57,Tidal Delta,2013,88,7.3,17.395906,345,hatchery,Fall,CenDel
+213,Delta2013-012,Fall_Delta_2013,6.764034728,Ben.Dec,172.57,Tidal Delta,2013,87,7.4,17.395906,345,hatchery,Fall,SacRSlough
+214,Delta2013-013,Fall_Delta_2013,7.280385168,Ben.Dec,172.57,Tidal Delta,2013,86,6,17.395906,345,hatchery,Fall,SacRSlough
+215,Delta2013-016,Fall_Delta_2013,7.974488559,Ben.Dec,172.57,Tidal Delta,2013,88,6.9,17.395906,345,hatchery,Fall,SacRSlough
+216,Delta2013-021,Fall_Delta_2013,10.35550813,Ben.Dec,172.57,Tidal Delta,2013,80,6,17.395906,345,hatchery,Fall,SacR
+217,Delta2013-027,Fall_Delta_2013,12.14682349,Ben.Ant,172.57,Tidal Delta,2013,84,6.3,17.395906,345,hatchery,Fall,"SacRSlough, CenDel"
+218,Delta2013-033,Fall_Delta_2013,5.574410781,Ben.Dec,172.57,Tidal Delta,2013,84,6.1,17.395906,345,hatchery,Fall,SacR
+219,Delta2013-034,Fall_Delta_2013,9.050652546,Ben.Ant,172.57,Tidal Delta,2013,86,6.8,17.395906,345,hatchery,Fall,CenDel
+220,Delta2013-043,Fall_Delta_2013,12.90417132,Ben.Ant,172.57,Tidal Delta,2013,85,7.3,17.395906,345,hatchery,Fall,CenDel
+221,Delta2013-047,Fall_Delta_2013,5.838420191,Ben.Dec,172.57,Tidal Delta,2013,90,8,17.395906,345,hatchery,Fall,SacR
+222,Delta2013-069,Fall_Delta_2013,4.597998362,Ben.Dec,172.57,Tidal Delta,2013,91,8.1,17.395906,345,hatchery,Fall,SacRSlough
+223,Delta2013-071,Fall_Delta_2013,13.588264,Ben.Dec,172.57,Tidal Delta,2013,88,6.9,17.395906,345,hatchery,Fall,SacRSlough
+224,Delta2013-075,Fall_Delta_2013,7.647467685,Ben.Dec,172.57,Tidal Delta,2013,83,6.1,17.395906,345,hatchery,Fall,SacR
+225,Delta2013-084,Fall_Delta_2013,6.44911125,Ben.Dec,172.57,Tidal Delta,2013,88,7.2,17.395906,345,hatchery,Fall,SacRSlough
+226,Delta2013-088,Fall_Delta_2013,5.726424763,Ben.Dec,172.57,Tidal Delta,2013,83,6.2,17.395906,345,hatchery,Fall,SacRSlough
+227,Delta2013-104,Fall_Delta_2013,4.035253385,Ben.Dec,172.57,Tidal Delta,2013,87,7.2,17.395906,345,hatchery,Fall,SacRSlough
+228,Delta2013-106,Fall_Delta_2013,5.070442147,Ben.Dec,172.57,Tidal Delta,2013,85,6.4,17.395906,345,hatchery,Fall,SacR
+229,Delta2013-114,Fall_Delta_2013,3.175560451,Ben.Dec,172.57,Tidal Delta,2013,90,7.5,17.395906,345,hatchery,Fall,SacRSlough
+230,Delta2013-115,Fall_Delta_2013,8.549270579,Ben.Dec,172.57,Tidal Delta,2013,84,6.2,17.395906,345,hatchery,Fall,SacRSlough
+231,Delta2013-117,Fall_Delta_2013,5.23046923,Ben.Dec,172.57,Tidal Delta,2013,86,6.7,17.395906,345,hatchery,Fall,SacR
+232,Delta2013-136,Fall_Delta_2013,7.2920307,Ben.Dec,172.57,Tidal Delta,2013,84,7.5,17.395906,345,hatchery,Fall,SacR
+233,Delta2013-144,Fall_Delta_2013,8.463732575,Ben.Dec,172.57,Tidal Delta,2013,86,7,17.395906,345,hatchery,Fall,SacR
+234,FR2013-022,FR_Spring_2013,13.8713502,Ben.Dec,287.387,Middle Sacramento River,2013,92,8,12.53457746,26,hatchery,Spring,SacR
+235,FR2013-116,FR_Spring_2013,8.810451736,Ben.Dec,287.387,Middle Sacramento River,2013,93,8.8,12.53457746,26,hatchery,Spring,SacRSlough
+236,FR2013-155,FR_Spring_2013,8.384113056,Ben.Ant,240.755,Middle Sacramento River,2013,90,8.5,12.91367725,73,hatchery,Spring,CenDel
+237,FR2013-156,FR_Spring_2013,11.99513597,Ben.Ant,240.755,Middle Sacramento River,2013,89,8,12.91367725,73,hatchery,Spring,CenDel
+238,FR2013-172,FR_Spring_2013,9.212610463,Ben.Dec,240.755,Middle Sacramento River,2013,84,6.6,12.91367725,73,hatchery,Spring,SacRSlough
+239,FR2013-175,FR_Spring_2013,9.450674751,Ben.Dec,240.755,Middle Sacramento River,2013,88,7.3,12.91367725,73,hatchery,Spring,SacRSlough
+240,FR2013-193,FR_Spring_2013,15.78117726,Ben.Ant,240.755,Middle Sacramento River,2013,94,9.1,12.91367725,73,hatchery,Spring,"SacRSlough, CenDel"
+241,FR2013-197,FR_Spring_2013,8.170610845,Ben.Dec,283.871,Middle Sacramento River,2013,94,8.8,12.91367725,73,hatchery,Spring,SacR
+242,FR2013-217,FR_Spring_2013,6.393905619,Ben.Dec,240.755,Middle Sacramento River,2013,97,9.5,12.91367725,73,hatchery,Spring,SacRSlough
+243,FR2013-261,FR_Spring_2013,9.971165029,Ben.Dec,240.755,Middle Sacramento River,2013,98,10.7,12.91367725,73,hatchery,Spring,SacRSlough
+244,FR2013-279,FR_Spring_2013,7.686389745,Ben.Dec,240.755,Middle Sacramento River,2013,98,9.9,12.91367725,73,hatchery,Spring,SacR
+245,FR2013-280,FR_Spring_2013,8.948006898,Ben.Dec,240.755,Middle Sacramento River,2013,95,9.5,12.91367725,73,hatchery,Spring,SacR
+246,MC2017-001,MillCk_Wild_2017,10.44050558,Chips,450.703,Middle Sacramento River,2017,87,7.3,12.8,0,wild,Late/Late,SacRSlough
+247,MC2017-004,MillCk_Wild_2017,10.47165585,Ben.Ant,450.703,Middle Sacramento River,2017,86,7.2,12.8,0,wild,Late/Late,CenDel
+248,MC2017-005,MillCk_Wild_2017,8.426175625,Chips,450.703,Middle Sacramento River,2017,85,6.5,12.8,0,wild,Late/Late,SacR
+249,MC2017-009,MillCk_Wild_2017,20.49031211,Chips,450.703,Middle Sacramento River,2017,80,6,11.49594907,0,wild,Early/Late,SacR
+250,MC2017-011,MillCk_Wild_2017,6.515906817,Chips,450.703,Middle Sacramento River,2017,85,7.1,16,0,wild,Late/Late,SacRSlough
+251,MC2017-012,MillCk_Wild_2017,9.786038692,Chips,450.703,Middle Sacramento River,2017,85,6.9,16,0,wild,Late/Late,SacR
+252,MC2017-013,MillCk_Wild_2017,20.505733,Chips,450.703,Middle Sacramento River,2017,94,9.8,14.89583333,0,wild,Late/Late,SacR
+253,MC2017-015,MillCk_Wild_2017,6.608142222,Chips,450.703,Middle Sacramento River,2017,92,8.4,14.89583333,0,wild,Late/Late,SacR
+254,MC2017-019,MillCk_Wild_2017,16.57011975,Chips,450.703,Middle Sacramento River,2017,90,8.8,14.89583333,0,wild,Late/Late,SacR
+255,MC2017-027,MillCk_Wild_2017,6.810992465,Chips,450.703,Middle Sacramento River,2017,87,8.4,15.2,0,wild,Late/Late,SacR
+256,RBDD2017-001,RBDD_2017,11.71584856,Chips,461.579,Middle Sacramento River,2017,111,16.6,14.518211,0,wild,Late/Late,SacR
+257,RBDD2017-021,RBDD_2017,6.557042095,Chips,461.579,Middle Sacramento River,2017,115,19.7,14.518211,0,wild,Late/Late,SacR
+258,RBDD2017-022,RBDD_2017,7.524332454,Chips,461.579,Middle Sacramento River,2017,120,19.3,14.518211,0,wild,Late/Late,SacR
+259,RBDD2017-024,RBDD_2017,8.579396169,Chips,461.579,Middle Sacramento River,2017,108,14.8,14.518211,0,wild,Late/Late,SacR
+260,RBDD2017-027,RBDD_2017,7.112247326,Chips,461.579,Middle Sacramento River,2017,98,10.4,14.518211,0,wild,Late/Late,SacR
+261,RBDD2017-034,RBDD_2017,9.599517025,Chips,461.579,Middle Sacramento River,2017,84,6.8,14.518211,0,wild,Late/Late,SacR
+262,SB2015-115,SB_Spring_2015,8.548032714,Ben.Dec,249.541,Middle Sacramento River,2015,105,13,13.70067786,0,wild,CV_Spring,SacRSlough
+263,SB2016-010,SB_Spring_2016,5.495889005,Chips,249.541,Middle Sacramento River,2016,117,19.4,16.44902141,0,wild,CV_Fall,SacRSlough
+264,SB2016-045,SB_Spring_2016,4.443147639,Chips,249.541,Middle Sacramento River,2016,123,22.3,15.75864129,0,wild,CV_Fall,SacRSlough
+265,SB2016-048,SB_Spring_2016,5.494374549,Chips,249.541,Middle Sacramento River,2016,104,13.2,15.75864129,0,wild,CV_Spring,SacRSlough
+266,SB2016-055,SB_Spring_2016,5.424878854,Chips,249.541,Middle Sacramento River,2016,112,19.5,15.75864129,0,wild,CV_Fall,SacR
+267,SB2016-059,SB_Spring_2016,13.74823795,Chips,249.541,Middle Sacramento River,2016,114,18.4,15.75864129,0,wild,CV_Fall,SacR
+268,SB2016-061,SB_Spring_2016,5.485438137,Chips,249.541,Middle Sacramento River,2016,117,19.9,15.75864129,0,wild,CV_Fall,SacR
+269,SB2016-063,SB_Spring_2016,7.619477222,Chips,249.541,Middle Sacramento River,2016,118,20.8,15.75864129,0,wild,CV_Spring,SacRSlough
+270,SB2016-094,SB_Spring_2016,4.495602963,Chips,249.541,Middle Sacramento River,2016,98,11.5,15.75864129,0,wild,CV_Spring,SacRSlough
+271,SB2016-138,SB_Spring_2016,5.50791625,Chips,249.541,Middle Sacramento River,2016,106,14,15.94102349,0,wild,CV_Spring,SacR
+272,SB2016-196,SB_Spring_2016,5.639379479,Chips,249.541,Middle Sacramento River,2016,108,13.2,17.08906996,0,wild,CV_Fall,SacRSlough
+273,SB2017-012,SB_Spring_2017,4.552404051,Chips,249.541,Middle Sacramento River,2017,95,8.8,23.561019,0,wild,Late/Late,SacR
+274,SB2017-017,SB_Spring_2017,4.602793449,Chips,249.541,Middle Sacramento River,2017,92,8.3,23.561019,0,wild,Late/Late,SacR
+275,SB2017-022,SB_Spring_2017,4.522494178,Chips,249.541,Middle Sacramento River,2017,107,13.1,22.53433645,0,wild,Late/Late,SacR
+276,SB2017-024,SB_Spring_2017,7.504639433,Chips,249.541,Middle Sacramento River,2017,103,12,22.53433645,0,wild,Late/Late,SacR
+277,SB2017-027,SB_Spring_2017,4.429735243,Chips,249.541,Middle Sacramento River,2017,91,7.8,22.53433645,0,wild,Late/Late,SacR
+278,SB2017-032,SB_Spring_2017,4.47455559,Chips,249.541,Middle Sacramento River,2017,85,6.2,22.53433645,0,wild,Late/Late,SacR
+279,SB2017-033,SB_Spring_2017,5.463758345,Chips,249.541,Middle Sacramento River,2017,93,8.3,22.53433645,0,wild,Late/Late,SacR
+280,SB2017-087,SB_Spring_2017,5.267570475,Chips,249.541,Middle Sacramento River,2017,97,9.1,21.96584543,0,wild,Early/Late,SacR
+281,SB2017-097,SB_Spring_2017,5.230718634,Chips,249.541,Middle Sacramento River,2017,99,10.7,21.96584543,0,wild,Late/Late,SacR
+282,SB2017-098,SB_Spring_2017,6.175984769,Chips,249.541,Middle Sacramento River,2017,101,10.9,21.96584543,0,wild,Early/Early,SacR
+283,SB2017-099,SB_Spring_2017,5.198184282,Chips,249.541,Middle Sacramento River,2017,91,8.3,21.96584543,0,wild,Late/Late,SacR
+284,SB2017-103,SB_Spring_2017,6.29864934,Chips,249.541,Middle Sacramento River,2017,94,8.2,21.96584543,0,wild,Early/Late,SacRSlough
+285,SB2017-114,SB_Spring_2017,4.585049097,Chips,249.541,Middle Sacramento River,2017,92,7.8,21.96584543,0,wild,Late/Late,SacR
+286,SB2017-119,SB_Spring_2017,5.944555741,Chips,249.541,Middle Sacramento River,2017,81,6.2,21.96584543,0,wild,Late/Late,SacR
+287,SB2017-124,SB_Spring_2017,3.682541713,Chips,249.541,Middle Sacramento River,2017,127,21.6,21.96584543,0,wild,Early/Early,SacR
+288,SB2017-128,SB_Spring_2017,4.443524028,Chips,249.541,Middle Sacramento River,2017,101,10.6,21.96584543,0,wild,Early/Early,SacR
+289,SB2017-130,SB_Spring_2017,6.601881586,Chips,249.541,Middle Sacramento River,2017,93,8.6,21.96584543,0,wild,Late/Late,SacRSlough
+290,SB2017-132,SB_Spring_2017,5.723689977,Chips,249.541,Middle Sacramento River,2017,97,10.3,21.96584543,0,wild,Late/Late,SacR
+291,SB2017-138,SB_Spring_2017,7.563271065,Chips,249.541,Middle Sacramento River,2017,90,7.7,21.96584543,0,wild,Early/Late,SacR
+292,SB2017-141,SB_Spring_2017,5.529680914,Chips,249.541,Middle Sacramento River,2017,90,8.2,21.96584543,0,wild,Early/Late,SacR
+293,SB2017-142,SB_Spring_2017,6.492250266,Chips,249.541,Middle Sacramento River,2017,86,6.6,21.96584543,0,wild,Late/Late,SacR
+294,SB2017-146,SB_Spring_2017,4.728995498,Chips,249.541,Middle Sacramento River,2017,89,7.6,21.96584543,0,wild,Late/Late,SacR
+295,SB2017-147,SB_Spring_2017,6.778972188,Chips,249.541,Middle Sacramento River,2017,82,6.1,21.96584543,0,wild,Early/Late,SacR
+296,SB2017-154,SB_Spring_2017,4.493182801,Chips,249.541,Middle Sacramento River,2017,103,11.8,21.96584543,0,wild,Early/Late,SacR
+297,SB2017-155,SB_Spring_2017,4.562100995,Chips,249.541,Middle Sacramento River,2017,95,9.3,21.96584543,0,wild,Early/Early,SacR
+298,SB2017-157,SB_Spring_2017,5.711528275,Chips,249.541,Middle Sacramento River,2017,90,7.9,21.96584543,0,wild,Late/Late,SacR
+299,SB2017-158,SB_Spring_2017,6.738808275,Chips,249.541,Middle Sacramento River,2017,86,6.8,21.96584543,0,wild,Late/Late,SacR
+300,SB2017-163,SB_Spring_2017,5.575064572,Chips,249.541,Middle Sacramento River,2017,90,7.7,21.96584543,0,wild,Late/Late,SacRSlough
+301,SB2017-167,SB_Spring_2017,4.537221238,Chips,249.541,Middle Sacramento River,2017,97,8.8,21.96584543,0,wild,Early/Early,SacR
+302,SB2017-168,SB_Spring_2017,4.401089745,Chips,249.541,Middle Sacramento River,2017,93,8.6,21.96584543,0,wild,Late/Late,SacR
+303,SB2017-170,SB_Spring_2017,5.670707083,Chips,249.541,Middle Sacramento River,2017,97,10.4,21.96584543,0,wild,Early/Early,SacR
+304,SB2017-171,SB_Spring_2017,4.656075706,Chips,249.541,Middle Sacramento River,2017,125,23.4,21.96584543,0,wild,Early/Early,SacR
+305,SB2017-181,SB_Spring_2017,4.565712176,Chips,249.541,Middle Sacramento River,2017,90,7.7,22.31827885,0,wild,Late/Late,SacR
+306,SB2017-182,SB_Spring_2017,10.49706547,Chips,249.541,Middle Sacramento River,2017,92,8.6,22.31827885,0,wild,Early/Early,SacR
+307,WR2013-034,Winter_H_2013,48.03982366,Ben.Dec,551.288,Upper Sacramento River,2013,89,7.9,8.870255,9,hatchery,Winter,SacR
+308,WR2013-050,Winter_H_2013,45.88465509,Ben.Dec,551.288,Upper Sacramento River,2013,96,9.3,8.870255,9,hatchery,Winter,SacR
+309,WR2013-066,Winter_H_2013,42.93959832,Ben.Dec,551.288,Upper Sacramento River,2013,106,12.5,8.870255,9,hatchery,Winter,SacR
+310,WR2013-093,Winter_H_2013,49.95445392,Ben.Dec,551.288,Upper Sacramento River,2013,96,9.8,8.870255,9,hatchery,Winter,SacR
+311,WR2013-147,Winter_H_2013,45.50636614,Ben.Dec,551.288,Upper Sacramento River,2013,95,9.8,8.870255,9,hatchery,Winter,SacR
+312,WR2013-148,Winter_H_2013,49.95033402,Ben.Dec,551.288,Upper Sacramento River,2013,105,12.9,8.870255,9,hatchery,Winter,SacR
+313,WR2014-010,Winter_H_2014,24.56435801,Ben.Dec,551.288,Upper Sacramento River,2014,112,16.2,9.0200615,9,hatchery,Winter,SacR
+314,WR2014-030,Winter_H_2014,25.93314842,Ben.Dec,551.288,Upper Sacramento River,2014,100,11.4,9.0200615,9,hatchery,Winter,SacR
+315,WR2014-042,Winter_H_2014,28.35491618,Ben.Dec,551.288,Upper Sacramento River,2014,105,12.4,9.0200615,9,hatchery,Winter,SacR
+316,WR2014-052,Winter_H_2014,23.03321799,Ben.Dec,551.288,Upper Sacramento River,2014,106,13.3,9.0200615,9,hatchery,Winter,SacR
+317,WR2014-058,Winter_H_2014,18.75196935,Ben.Dec,551.288,Upper Sacramento River,2014,105,11.9,9.0200615,9,hatchery,Winter,SacR
+318,WR2014-066,Winter_H_2014,22.53691984,Ben.Dec,551.288,Upper Sacramento River,2014,113,16.2,9.0200615,9,hatchery,Winter,SacR
+319,WR2014-075,Winter_H_2014,24.25483727,Ben.Ant,551.288,Upper Sacramento River,2014,103,12,9.0200615,9,hatchery,Winter,SacR
+320,WR2014-085,Winter_H_2014,24.77245828,Ben.Dec,551.288,Upper Sacramento River,2014,91,8.1,9.0200615,9,hatchery,Winter,SacR
+321,WR2014-105,Winter_H_2014,24.60995455,Ben.Ant,551.288,Upper Sacramento River,2014,90,7.9,9.0200615,9,hatchery,Winter,SacR
+322,WR2014-109,Winter_H_2014,24.81045928,Ben.Dec,551.288,Upper Sacramento River,2014,95,9.7,9.0200615,9,hatchery,Winter,SacRSlough
+323,WR2014-155,Winter_H_2014,24.81673125,Ben.Dec,551.288,Upper Sacramento River,2014,92,9.4,9.0200615,9,hatchery,Winter,SacRSlough
+324,WR2014-176,Winter_H_2014,23.54107261,Ben.Dec,551.288,Upper Sacramento River,2014,105,12.6,9.0200615,9,hatchery,Winter,SacRSlough
+325,WR2014-185,Winter_H_2014,24.60699268,Ben.Dec,551.288,Upper Sacramento River,2014,93,8.6,9.0200615,9,hatchery,Winter,SacR
+326,WR2014-186,Winter_H_2014,25.57515045,Ben.Dec,551.288,Upper Sacramento River,2014,100,11.6,9.0200615,9,hatchery,Winter,SacR
+327,WR2014-193,Winter_H_2014,25.52407838,Ben.Dec,551.288,Upper Sacramento River,2014,92,8.6,9.0200615,9,hatchery,Winter,SacR
+328,WR2014-213,Winter_H_2014,22.64045523,Ben.Ant,551.288,Upper Sacramento River,2014,111,14.7,9.0200615,9,hatchery,Winter,SacR
+329,WR2014-214,Winter_H_2014,15.52069723,Ben.Dec,551.288,Upper Sacramento River,2014,110,13.8,9.0200615,9,hatchery,Winter,SacR
+330,WR2014-219,Winter_H_2014,26.94971988,Ben.Ant,551.288,Upper Sacramento River,2014,92,7.8,9.0200615,9,hatchery,Winter,CenDel
+331,WR2014-225,Winter_H_2014,22.80449401,Ben.Dec,551.288,Upper Sacramento River,2014,108,13.1,9.0200615,9,hatchery,Winter,SacR
+332,WR2014-241,Winter_H_2014,23.22809745,Ben.Dec,551.288,Upper Sacramento River,2014,101,10.1,9.0200615,9,hatchery,Winter,SacR
+333,WR2014-253,Winter_H_2014,27.76647963,Ben.Ant,551.288,Upper Sacramento River,2014,89,7.6,9.0200615,9,hatchery,Winter,CenDel
+334,WR2014-263,Winter_H_2014,28.0994585,Ben.Dec,551.288,Upper Sacramento River,2014,84,6.6,9.0200615,9,hatchery,Winter,SacR
+335,WR2014-271,Winter_H_2014,36.68659495,Ben.Dec,551.288,Upper Sacramento River,2014,86,6.7,9.0200615,9,hatchery,Winter,SacR
+336,WR2014-273,Winter_H_2014,25.34401654,Ben.Dec,551.288,Upper Sacramento River,2014,94,8.3,9.0200615,9,hatchery,Winter,SacR
+337,WR2014-274,Winter_H_2014,23.73929903,Ben.Dec,551.288,Upper Sacramento River,2014,97,10,9.0200615,9,hatchery,Winter,SacR
+338,WR2014-277,Winter_H_2014,25.89610852,Ben.Dec,551.288,Upper Sacramento River,2014,90,7.8,9.0200615,9,hatchery,Winter,SacR
+339,WR2014-293,Winter_H_2014,33.8679281,Ben.Dec,551.288,Upper Sacramento River,2014,84,6.1,9.0200615,9,hatchery,Winter,SacRSlough
+340,WR2014-297,Winter_H_2014,27.99752547,Ben.Dec,551.288,Upper Sacramento River,2014,98,8,9.0200615,9,hatchery,Winter,SacR
+341,WR2014-330,Winter_H_2014,28.4876674,Ben.Dec,551.288,Upper Sacramento River,2014,94,9.6,9.0200615,9,hatchery,Winter,SacR
+342,WR2014-337,Winter_H_2014,30.42258776,Ben.Dec,551.288,Upper Sacramento River,2014,85,7,9.0200615,9,hatchery,Winter,SacR
+343,WR2014-338,Winter_H_2014,25.05917665,Ben.Dec,551.288,Upper Sacramento River,2014,95,9.1,9.0200615,9,hatchery,Winter,SacRSlough
+344,WR2014-340,Winter_H_2014,27.3282322,Ben.Dec,551.288,Upper Sacramento River,2014,90,8.1,9.0200615,9,hatchery,Winter,SacR
+345,WR2014-344,Winter_H_2014,25.26911247,Ben.Dec,551.288,Upper Sacramento River,2014,95,9.5,9.0200615,9,hatchery,Winter,SacRSlough
+346,WR2014-353,Winter_H_2014,24.31099988,Ben.Dec,551.288,Upper Sacramento River,2014,91,8.1,9.0200615,9,hatchery,Winter,SacRSlough
+347,WR2015-006,Winter_H_2015,24.53904499,Ben.Dec,551.288,Upper Sacramento River,2015,98,10,10.45266,9,hatchery,Winter,SacRSlough
+348,WR2015-011,Winter_H_2015,9.961741672,Ben.Dec,551.288,Upper Sacramento River,2015,99,10.3,10.45266,9,hatchery,Winter,SacR
+349,WR2015-014,Winter_H_2015,9.943083623,Ben.Dec,551.288,Upper Sacramento River,2015,97,10,10.45266,9,hatchery,Winter,SacRSlough
+350,WR2015-034,Winter_H_2015,11.47529064,Ben.Dec,551.288,Upper Sacramento River,2015,102,10.5,10.45266,9,hatchery,Winter,SacR
+351,WR2015-035,Winter_H_2015,8.796311076,Ben.Dec,551.288,Upper Sacramento River,2015,102,11.2,10.45266,9,hatchery,Winter,SacR
+352,WR2015-043,Winter_H_2015,10.99075986,Ben.Dec,551.288,Upper Sacramento River,2015,97,9.9,10.45266,9,hatchery,Winter,SacR
+353,WR2015-053,Winter_H_2015,18.27185395,Ben.Dec,551.288,Upper Sacramento River,2015,101,11.1,10.45266,9,hatchery,Winter,CenDel
+354,WR2015-064,Winter_H_2015,12.59863677,Ben.Dec,551.288,Upper Sacramento River,2015,103,11.3,10.45266,9,hatchery,Winter,SacRSlough
+355,WR2015-065,Winter_H_2015,22.35232024,Ben.Dec,551.288,Upper Sacramento River,2015,96,8.8,10.45266,9,hatchery,Winter,SacRSlough
+356,WR2015-072,Winter_H_2015,9.368876985,Ben.Dec,551.288,Upper Sacramento River,2015,103,11.5,10.45266,9,hatchery,Winter,SacR
+357,WR2015-078,Winter_H_2015,12.37713271,Ben.Ant,551.288,Upper Sacramento River,2015,97,9.7,10.45266,9,hatchery,Winter,CenDel
+358,WR2015-084,Winter_H_2015,33.58702672,Ben.Dec,551.288,Upper Sacramento River,2015,91,8.5,10.45266,9,hatchery,Winter,CenDel
+359,WR2015-105,Winter_H_2015,16.75263777,Ben.Dec,551.288,Upper Sacramento River,2015,97,9.5,10.45266,9,hatchery,Winter,SacR
+360,WR2015-116,Winter_H_2015,34.23625352,Ben.Dec,551.288,Upper Sacramento River,2015,92,8.1,10.45266,9,hatchery,Winter,SacRSlough
+361,WR2015-128,Winter_H_2015,8.858917865,Ben.Dec,551.288,Upper Sacramento River,2015,104,11.6,10.45266,9,hatchery,Winter,SacRSlough
+362,WR2015-138,Winter_H_2015,18.01018707,Ben.Dec,551.288,Upper Sacramento River,2015,96,9.2,10.45266,9,hatchery,Winter,SacR
+363,WR2015-160,Winter_H_2015,12.06936024,Ben.Ant,551.288,Upper Sacramento River,2015,106,12.2,10.45266,9,hatchery,Winter,SacR
+364,WR2015-164,Winter_H_2015,9.491509537,Ben.Dec,551.288,Upper Sacramento River,2015,102,10.3,10.45266,9,hatchery,Winter,SacR
+365,WR2015-166,Winter_H_2015,11.03212255,Ben.Ant,551.288,Upper Sacramento River,2015,97,9.5,10.45266,9,hatchery,Winter,SacR
+366,WR2015-176,Winter_H_2015,18.23089021,Ben.Dec,551.288,Upper Sacramento River,2015,95,9.2,10.45266,9,hatchery,Winter,SacR
+367,WR2015-177,Winter_H_2015,16.71246753,Ben.Dec,551.288,Upper Sacramento River,2015,100,10,10.45266,9,hatchery,Winter,SacR
+368,WR2015-189,Winter_H_2015,16.71835042,Ben.Dec,551.288,Upper Sacramento River,2015,101,12.2,10.45266,9,hatchery,Winter,SacRSlough
+369,WR2015-197,Winter_H_2015,32.40689443,Ben.Ant,551.288,Upper Sacramento River,2015,96,8.6,10.45266,9,hatchery,Winter,CenDel
+370,WR2015-217,Winter_H_2015,15.3359773,Ben.Dec,551.288,Upper Sacramento River,2015,105,11.9,10.45266,9,hatchery,Winter,SacR
+371,WR2015-240,Winter_H_2015,9.307481534,Ben.Dec,551.288,Upper Sacramento River,2015,103,10.5,10.45266,9,hatchery,Winter,SacRSlough
+372,WR2015-247,Winter_H_2015,17.39904079,Ben.Dec,551.288,Upper Sacramento River,2015,98,9.5,10.45266,9,hatchery,Winter,SacRSlough
+373,WR2015-253,Winter_H_2015,12.62054699,Ben.Ant,551.288,Upper Sacramento River,2015,101,10.6,10.458633,9,hatchery,Winter,CenDel
+374,WR2015-254,Winter_H_2015,7.404812645,Ben.Dec,551.288,Upper Sacramento River,2015,108,12.9,10.458633,9,hatchery,Winter,SacRSlough
+375,WR2015-255,Winter_H_2015,19.95364365,Ben.Dec,551.288,Upper Sacramento River,2015,108,14,10.458633,9,hatchery,Winter,SacRSlough
+376,WR2015-270,Winter_H_2015,11.03871003,Ben.Dec,551.288,Upper Sacramento River,2015,104,10.9,10.458633,9,hatchery,Winter,SacR
+377,WR2015-275,Winter_H_2015,20.38097476,Ben.Dec,551.288,Upper Sacramento River,2015,99,10.2,10.458633,9,hatchery,Winter,SacR
+378,WR2015-281,Winter_H_2015,9.469506047,Ben.Dec,551.288,Upper Sacramento River,2015,108,12.5,10.458633,9,hatchery,Winter,SacRSlough
+379,WR2015-283,Winter_H_2015,12.21482334,Ben.Dec,551.288,Upper Sacramento River,2015,105,11.9,10.458633,9,hatchery,Winter,SacRSlough
+380,WR2015-287,Winter_H_2015,12.10071212,Ben.Dec,551.288,Upper Sacramento River,2015,107,12.8,10.458633,9,hatchery,Winter,SacR
+381,WR2015-289,Winter_H_2015,6.84325614,Ben.Dec,551.288,Upper Sacramento River,2015,109,12.3,10.458633,9,hatchery,Winter,SacR
+382,WR2015-292,Winter_H_2015,30.99971922,Ben.Dec,551.288,Upper Sacramento River,2015,101,10.7,10.458633,9,hatchery,Winter,SacRSlough
+383,WR2015-303,Winter_H_2015,10.30010657,Ben.Dec,551.288,Upper Sacramento River,2015,103,10.7,10.458633,9,hatchery,Winter,SacRSlough
+384,WR2015-306,Winter_H_2015,21.42469094,Ben.Dec,551.288,Upper Sacramento River,2015,102,11.9,10.458633,9,hatchery,Winter,SacRSlough
+385,WR2015-313,Winter_H_2015,7.979953148,Ben.Dec,551.288,Upper Sacramento River,2015,110,13.1,10.458633,9,hatchery,Winter,SacR
+386,WR2015-315,Winter_H_2015,11.02748673,Ben.Ant,551.288,Upper Sacramento River,2015,110,13.7,10.458633,9,hatchery,Winter,CenDel
+387,WR2015-316,Winter_H_2015,18.37309439,Ben.Dec,551.288,Upper Sacramento River,2015,93,8.1,10.458633,9,hatchery,Winter,SacR
+388,WR2015-325,Winter_H_2015,24.61007905,Ben.Dec,551.288,Upper Sacramento River,2015,107,13.8,10.458633,9,hatchery,Winter,SacR
+389,WR2015-327,Winter_H_2015,9.038431933,Ben.Dec,551.288,Upper Sacramento River,2015,101,10.5,10.458633,9,hatchery,Winter,SacR
+390,WR2015-335,Winter_H_2015,25.92441942,Ben.Dec,551.288,Upper Sacramento River,2015,90,7.1,10.458633,9,hatchery,Winter,SacR
+391,WR2015-336,Winter_H_2015,8.725203964,Ben.Dec,551.288,Upper Sacramento River,2015,108,13.1,10.458633,9,hatchery,Winter,SacRSlough
+392,WR2015-341,Winter_H_2015,23.9436703,Ben.Dec,551.288,Upper Sacramento River,2015,97,9.7,10.458633,9,hatchery,Winter,SacR
+393,WR2015-344,Winter_H_2015,17.32441499,Ben.Dec,551.288,Upper Sacramento River,2015,100,10,10.458633,9,hatchery,Winter,SacR
+394,WR2015-345,Winter_H_2015,10.09250107,Ben.Dec,551.288,Upper Sacramento River,2015,106,11.9,10.458633,9,hatchery,Winter,SacRSlough
+395,WR2015-349,Winter_H_2015,9.209130104,Ben.Dec,551.288,Upper Sacramento River,2015,102,10.3,10.458633,9,hatchery,Winter,SacR
+396,WR2015-356,Winter_H_2015,9.506010411,Ben.Dec,551.288,Upper Sacramento River,2015,103,10.8,10.458633,9,hatchery,Winter,SacR
+397,WR2015-357,Winter_H_2015,12.55912963,Ben.Dec,551.288,Upper Sacramento River,2015,110,14.6,10.458633,9,hatchery,Winter,SacR
+398,WR2015-362,Winter_H_2015,6.875768854,Ben.Dec,551.288,Upper Sacramento River,2015,99,9.7,10.458633,9,hatchery,Winter,SacR
+399,WR2015-375,Winter_H_2015,8.498994884,Ben.Dec,551.288,Upper Sacramento River,2015,105,11.9,10.458633,9,hatchery,Winter,SacRSlough
+400,WR2015-378,Winter_H_2015,20.4158503,Ben.Dec,551.288,Upper Sacramento River,2015,97,9.2,10.458633,9,hatchery,Winter,SacR
+401,WR2015-380,Winter_H_2015,8.991927824,Ben.Dec,551.288,Upper Sacramento River,2015,110,14,10.458633,9,hatchery,Winter,SacR
+402,WR2015-382,Winter_H_2015,10.00655123,Ben.Dec,551.288,Upper Sacramento River,2015,106,12.7,10.458633,9,hatchery,Winter,SacR
+403,WR2015-383,Winter_H_2015,17.08776278,Ben.Ant,551.288,Upper Sacramento River,2015,92,8.4,10.458633,9,hatchery,Winter,SacR
+404,WR2015-386,Winter_H_2015,22.11792021,Ben.Dec,551.288,Upper Sacramento River,2015,94,8.6,10.458633,9,hatchery,Winter,SacRSlough
+405,WR2015-390,Winter_H_2015,16.27609782,Ben.Dec,551.288,Upper Sacramento River,2015,102,10.2,10.458633,9,hatchery,Winter,SacR
+406,WR2015-394,Winter_H_2015,14.14069006,Ben.Dec,551.288,Upper Sacramento River,2015,96,9,10.458633,9,hatchery,Winter,SacR
+407,WR2015-405,Winter_H_2015,20.37856053,Ben.Dec,551.288,Upper Sacramento River,2015,104,11.4,10.458633,9,hatchery,Winter,SacR
+408,WR2015-427,Winter_H_2015,14.24819658,Ben.Ant,551.288,Upper Sacramento River,2015,105,12,10.458633,9,hatchery,Winter,CenDel
+409,WR2015-429,Winter_H_2015,20.33392913,Ben.Dec,551.288,Upper Sacramento River,2015,103,11.8,10.458633,9,hatchery,Winter,SacR
+410,WR2015-434,Winter_H_2015,16.02900153,Ben.Dec,551.288,Upper Sacramento River,2015,91,7.3,10.458633,9,hatchery,Winter,SacR
+411,WR2015-435,Winter_H_2015,11.04891834,Ben.Ant,551.288,Upper Sacramento River,2015,107,12.5,10.458633,9,hatchery,Winter,SacR
+412,WR2015-440,Winter_H_2015,14.96221609,Ben.Ant,551.288,Upper Sacramento River,2015,109,12.8,10.458633,9,hatchery,Winter,CenDel
+413,WR2015-443,Winter_H_2015,14.42915046,Ben.Dec,551.288,Upper Sacramento River,2015,98,9.3,10.458633,9,hatchery,Winter,SacR
+414,WR2015-447,Winter_H_2015,10.367913,Ben.Dec,551.288,Upper Sacramento River,2015,109,13.1,10.458633,9,hatchery,Winter,SacRSlough
+415,WR2015-456,Winter_H_2015,8.214581076,Ben.Dec,551.288,Upper Sacramento River,2015,106,12.1,10.458633,9,hatchery,Winter,SacRSlough
+416,WR2015-460,Winter_H_2015,32.00801689,Ben.Dec,551.288,Upper Sacramento River,2015,95,8.9,10.458633,9,hatchery,Winter,SacRSlough
+417,WR2015-466,Winter_H_2015,11.57240792,Ben.Dec,551.288,Upper Sacramento River,2015,105,11.9,10.458633,9,hatchery,Winter,SacR
+418,WR2015-467,Winter_H_2015,18.78839504,Ben.Dec,551.288,Upper Sacramento River,2015,103,11.4,10.458633,9,hatchery,Winter,SacR
+419,WR2015-483,Winter_H_2015,9.988933848,Ben.Dec,551.288,Upper Sacramento River,2015,104,9.7,10.458633,9,hatchery,Winter,SacR
+420,WR2015-487,Winter_H_2015,9.523806221,Ben.Dec,551.288,Upper Sacramento River,2015,96,9.1,10.458633,9,hatchery,Winter,SacRSlough
+421,WR2015-491,Winter_H_2015,6.847516661,Ben.Dec,551.288,Upper Sacramento River,2015,110,13.4,10.458633,9,hatchery,Winter,SacR
+422,WR2015-492,Winter_H_2015,6.401188808,Ben.Dec,551.288,Upper Sacramento River,2015,110,13.6,10.458633,9,hatchery,Winter,SacR
+423,WR2015-493,Winter_H_2015,7.366954149,Ben.Dec,551.288,Upper Sacramento River,2015,100,9.6,10.458633,9,hatchery,Winter,SacRSlough
+424,WR2015-496,Winter_H_2015,10.48263529,Ben.Dec,551.288,Upper Sacramento River,2015,103,10.6,10.458633,9,hatchery,Winter,SacR
+425,WR2015-497,Winter_H_2015,9.017005561,Ben.Dec,551.288,Upper Sacramento River,2015,105,11.4,10.458633,9,hatchery,Winter,SacR
+426,WR2015-513,Winter_H_2015,18.31152741,Ben.Ant,551.288,Upper Sacramento River,2015,109,13.3,10.458633,9,hatchery,Winter,SacRSlough
+427,WR2015-518,Winter_H_2015,11.91380785,Ben.Ant,551.288,Upper Sacramento River,2015,109,13.5,10.458633,9,hatchery,Winter,CenDel
+428,WR2015-519,Winter_H_2015,7.331559728,Ben.Dec,551.288,Upper Sacramento River,2015,90,7.1,10.458633,9,hatchery,Winter,SacR
+429,WR2015-523,Winter_H_2015,7.920758252,Ben.Dec,551.288,Upper Sacramento River,2015,96,8.7,10.458633,9,hatchery,Winter,SacR
+430,WR2015-526,Winter_H_2015,7.495464873,Ben.Dec,551.288,Upper Sacramento River,2015,91,7.8,10.458633,9,hatchery,Winter,SacR
+431,WR2015-528,Winter_H_2015,20.44834716,Ben.Dec,551.288,Upper Sacramento River,2015,98,10.3,10.458633,9,hatchery,Winter,SacR
+432,WR2015-538,Winter_H_2015,11.88054305,Ben.Dec,551.288,Upper Sacramento River,2015,106,11.1,10.458633,9,hatchery,Winter,SacR
+433,WR2015-545,Winter_H_2015,8.97861375,Ben.Dec,551.288,Upper Sacramento River,2015,88,7.4,10.458633,9,hatchery,Winter,SacRSlough
+434,WR2015-546,Winter_H_2015,7.417224184,Ben.Dec,551.288,Upper Sacramento River,2015,105,10.9,10.458633,9,hatchery,Winter,SacR
+435,WR2015-568,Winter_H_2015,15.71011278,Ben.Dec,551.288,Upper Sacramento River,2015,106,12.6,10.458633,9,hatchery,Winter,SacR
+436,WR2016-002,Winter_H_2016,12.89385612,Chips,540.258,Upper Sacramento River,2016,92,8.4,8.765708,20,hatchery,Winter,SacR
+437,WR2016-007,Winter_H_2016,17.9525731,Chips,540.258,Upper Sacramento River,2016,93,8.6,8.765708,20,hatchery,Winter,SacRSlough
+438,WR2016-015,Winter_H_2016,20.11609104,Chips,540.258,Upper Sacramento River,2016,97,11,8.765708,20,hatchery,Winter,SacR
+439,WR2016-021,Winter_H_2016,33.57211668,Chips,540.258,Upper Sacramento River,2016,99,10.7,8.765708,20,hatchery,Winter,CenDel
+440,WR2016-033,Winter_H_2016,19.56277359,Chips,540.258,Upper Sacramento River,2016,97,10,8.765708,20,hatchery,Winter,SacR
+441,WR2016-041,Winter_H_2016,11.84772933,Chips,540.258,Upper Sacramento River,2016,100,10.5,8.765708,20,hatchery,Winter,SacR
+442,WR2016-051,Winter_H_2016,23.22471269,Chips,540.258,Upper Sacramento River,2016,100,11.1,8.765708,20,hatchery,Winter,CenDel
+443,WR2016-055,Winter_H_2016,25.8748241,Chips,540.258,Upper Sacramento River,2016,100,10,8.765708,20,hatchery,Winter,CenDel
+444,WR2016-059,Winter_H_2016,18.08858666,Chips,540.258,Upper Sacramento River,2016,95,10.2,8.765708,20,hatchery,Winter,SacR
+445,WR2016-080,Winter_H_2016,12.85001194,Chips,540.258,Upper Sacramento River,2016,93,8.7,8.765708,20,hatchery,Winter,SacRSlough
+446,WR2016-083,Winter_H_2016,19.63044753,Chips,540.258,Upper Sacramento River,2016,98,10.2,8.765708,20,hatchery,Winter,SacRSlough
+447,WR2016-086,Winter_H_2016,20.68817431,Chips,540.258,Upper Sacramento River,2016,92,8.3,8.765708,20,hatchery,Winter,SacR
+448,WR2016-092,Winter_H_2016,21.19483815,Chips,540.258,Upper Sacramento River,2016,88,7.2,8.765708,20,hatchery,Winter,SacR
+449,WR2016-095,Winter_H_2016,27.90489753,Chips,540.258,Upper Sacramento River,2016,90,7.8,8.765708,20,hatchery,Winter,SacR
+450,WR2016-098,Winter_H_2016,33.61101821,Chips,540.258,Upper Sacramento River,2016,97,9.2,8.765708,20,hatchery,Winter,SacR
+451,WR2016-100,Winter_H_2016,20.08087676,Chips,540.258,Upper Sacramento River,2016,94,8.6,8.765708,20,hatchery,Winter,SacR
+452,WR2016-103,Winter_H_2016,12.73486006,Chips,540.258,Upper Sacramento River,2016,102,11.4,8.765708,20,hatchery,Winter,SacR
+453,WR2016-116,Winter_H_2016,26.83018565,Chips,540.258,Upper Sacramento River,2016,86,6.5,8.765708,20,hatchery,Winter,SacR
+454,WR2016-119,Winter_H_2016,11.80985123,Chips,540.258,Upper Sacramento River,2016,103,10.9,8.765708,20,hatchery,Winter,SacR
+455,WR2016-122,Winter_H_2016,12.7982814,Chips,540.258,Upper Sacramento River,2016,96,9.6,8.765708,20,hatchery,Winter,SacRSlough
+456,WR2016-126,Winter_H_2016,20.06843272,Chips,540.258,Upper Sacramento River,2016,90,7.8,8.765708,20,hatchery,Winter,SacRSlough
+457,WR2016-131,Winter_H_2016,11.82448123,Chips,540.258,Upper Sacramento River,2016,96,9.1,8.765708,20,hatchery,Winter,SacRSlough
+458,WR2016-134,Winter_H_2016,23.18392491,Chips,540.258,Upper Sacramento River,2016,89,6.8,8.765708,20,hatchery,Winter,SacR
+459,WR2016-136,Winter_H_2016,11.77996427,Chips,540.258,Upper Sacramento River,2016,106,13.1,8.765708,20,hatchery,Winter,SacR
+460,WR2016-139,Winter_H_2016,26.34224897,Chips,540.258,Upper Sacramento River,2016,94,8.6,8.765708,20,hatchery,Winter,SacR
+461,WR2016-157,Winter_H_2016,19.14472218,Chips,540.258,Upper Sacramento River,2016,84,6.4,8.765708,20,hatchery,Winter,"SacRSlough, CenDel"
+462,WR2016-166,Winter_H_2016,19.09265506,Chips,540.258,Upper Sacramento River,2016,89,7.6,8.765708,20,hatchery,Winter,SacRSlough
+463,WR2016-173,Winter_H_2016,12.8531306,Chips,540.258,Upper Sacramento River,2016,92,8.4,8.765708,20,hatchery,Winter,SacR
+464,WR2016-175,Winter_H_2016,17.01782012,Chips,540.258,Upper Sacramento River,2016,103,11.8,8.765708,20,hatchery,Winter,SacR
+465,WR2016-183,Winter_H_2016,10.77107984,Chips,540.258,Upper Sacramento River,2016,105,12.4,8.765708,20,hatchery,Winter,SacR
+466,WR2016-185,Winter_H_2016,21.14391411,Chips,540.258,Upper Sacramento River,2016,98,10,8.765708,20,hatchery,Winter,SacR
+467,WR2016-186,Winter_H_2016,19.05991965,Chips,540.258,Upper Sacramento River,2016,93,8.6,8.765708,20,hatchery,Winter,SacR
+468,WR2016-191,Winter_H_2016,12.91354986,Chips,540.258,Upper Sacramento River,2016,94,8.8,8.765708,20,hatchery,Winter,SacR
+469,WR2016-194,Winter_H_2016,9.769161991,Chips,540.258,Upper Sacramento River,2016,95,8.3,8.765708,20,hatchery,Winter,SacR
+470,WR2016-205,Winter_H_2016,18.00267161,Chips,540.258,Upper Sacramento River,2016,97,10.6,8.765708,20,hatchery,Winter,SacR
+471,WR2016-212,Winter_H_2016,10.848666,Chips,540.258,Upper Sacramento River,2016,97,9.7,8.765708,20,hatchery,Winter,SacR
+472,WR2016-214,Winter_H_2016,10.79282775,Chips,540.258,Upper Sacramento River,2016,100,11.3,8.765708,20,hatchery,Winter,SacR
+473,WR2016-222,Winter_H_2016,13.79423287,Chips,540.258,Upper Sacramento River,2016,100,11,8.765708,20,hatchery,Winter,SacR
+474,WR2016-225,Winter_H_2016,21.18545734,Chips,540.258,Upper Sacramento River,2016,103,12.6,8.765708,20,hatchery,Winter,SacR
+475,WR2016-233,Winter_H_2016,13.79832912,Chips,540.258,Upper Sacramento River,2016,90,8.6,8.765708,20,hatchery,Winter,SacR
+476,WR2016-234,Winter_H_2016,26.86456501,Chips,540.258,Upper Sacramento River,2016,102,12.4,8.765708,20,hatchery,Winter,SacRSlough
+477,WR2016-239,Winter_H_2016,10.69706225,Chips,540.258,Upper Sacramento River,2016,103,12.2,8.765708,20,hatchery,Winter,SacR
+478,WR2016-244,Winter_H_2016,11.86833451,Chips,540.258,Upper Sacramento River,2016,105,12.9,8.765708,20,hatchery,Winter,SacR
+479,WR2016-249,Winter_H_2016,11.74587103,Chips,540.258,Upper Sacramento River,2016,97,10.6,8.765708,20,hatchery,Winter,SacR
+480,WR2016-252,Winter_H_2016,18.10535235,Chips,540.258,Upper Sacramento River,2016,92,8.1,8.765708,20,hatchery,Winter,SacRSlough
+481,WR2016-258,Winter_H_2016,21.08977731,Chips,540.258,Upper Sacramento River,2016,95,9.5,8.765708,20,hatchery,Winter,SacR
+482,WR2016-261,Winter_H_2016,12.88076078,Chips,540.258,Upper Sacramento River,2016,90,7.9,8.765708,20,hatchery,Winter,SacR
+483,WR2016-265,Winter_H_2016,14.92021932,Chips,540.258,Upper Sacramento River,2016,92,8.6,8.765708,20,hatchery,Winter,SacR
+484,WR2016-267,Winter_H_2016,13.77964728,Chips,540.258,Upper Sacramento River,2016,104,12.9,8.765708,20,hatchery,Winter,SacR
+485,WR2016-271,Winter_H_2016,11.9090415,Chips,540.258,Upper Sacramento River,2016,100,11.8,8.765708,20,hatchery,Winter,SacR
+486,WR2016-275,Winter_H_2016,12.9205165,Chips,540.258,Upper Sacramento River,2016,95,9.8,8.765708,20,hatchery,Winter,SacR
+487,WR2016-277,Winter_H_2016,20.09115815,Chips,540.258,Upper Sacramento River,2016,90,7.5,8.765708,20,hatchery,Winter,SacRSlough
+488,WR2016-288,Winter_H_2016,11.80422017,Chips,540.258,Upper Sacramento River,2016,101,10.9,8.838381,20,hatchery,Winter,SacR
+489,WR2016-294,Winter_H_2016,19.14262753,Chips,540.258,Upper Sacramento River,2016,88,6.8,8.838381,20,hatchery,Winter,SacR
+490,WR2016-297,Winter_H_2016,18.05806547,Chips,540.258,Upper Sacramento River,2016,91,7.8,8.838381,20,hatchery,Winter,SacR
+491,WR2016-301,Winter_H_2016,11.77458549,Chips,540.258,Upper Sacramento River,2016,96,9,8.838381,20,hatchery,Winter,SacR
+492,WR2016-304,Winter_H_2016,17.56743891,Chips,540.258,Upper Sacramento River,2016,97,9.4,8.838381,20,hatchery,Winter,CenDel
+493,WR2016-305,Winter_H_2016,10.30310778,Chips,540.258,Upper Sacramento River,2016,89,7.1,8.838381,20,hatchery,Winter,SacR
+494,WR2016-306,Winter_H_2016,30.02194729,Chips,540.258,Upper Sacramento River,2016,86,7,8.838381,20,hatchery,Winter,SacR
+495,WR2016-310,Winter_H_2016,17.00252347,Chips,540.258,Upper Sacramento River,2016,96,9,8.838381,20,hatchery,Winter,SacR
+496,WR2016-315,Winter_H_2016,11.90030618,Chips,540.258,Upper Sacramento River,2016,91,8,8.838381,20,hatchery,Winter,SacR
+497,WR2016-322,Winter_H_2016,11.79603368,Chips,540.258,Upper Sacramento River,2016,102,11.2,8.838381,20,hatchery,Winter,SacRSlough
+498,WR2016-324,Winter_H_2016,33.13521272,Chips,540.258,Upper Sacramento River,2016,95,8.9,8.838381,20,hatchery,Winter,SacR
+499,WR2016-325,Winter_H_2016,11.92197057,Chips,540.258,Upper Sacramento River,2016,92,8.3,8.838381,20,hatchery,Winter,SacRSlough
+500,WR2016-330,Winter_H_2016,22.21380051,Chips,540.258,Upper Sacramento River,2016,102,10.5,8.838381,20,hatchery,Winter,SacR
+501,WR2016-332,Winter_H_2016,19.61705203,Chips,540.258,Upper Sacramento River,2016,85,6.5,8.838381,20,hatchery,Winter,SacR
+502,WR2016-334,Winter_H_2016,18.02841566,Chips,540.258,Upper Sacramento River,2016,101,11.2,8.838381,20,hatchery,Winter,SacR
+503,WR2016-336,Winter_H_2016,9.726179606,Chips,540.258,Upper Sacramento River,2016,100,10.6,8.838381,20,hatchery,Winter,SacR
+504,WR2016-337,Winter_H_2016,24.2565081,Chips,540.258,Upper Sacramento River,2016,87,6.4,8.838381,20,hatchery,Winter,CenDel
+505,WR2016-339,Winter_H_2016,23.30944281,Chips,540.258,Upper Sacramento River,2016,90,7.5,8.838381,20,hatchery,Winter,SacR
+506,WR2016-343,Winter_H_2016,12.88721741,Chips,540.258,Upper Sacramento River,2016,91,7.7,8.838381,20,hatchery,Winter,SacR
+507,WR2016-346,Winter_H_2016,19.62218459,Chips,540.258,Upper Sacramento River,2016,94,8.2,8.838381,20,hatchery,Winter,SacRSlough
+508,WR2016-356,Winter_H_2016,18.55371414,Chips,540.258,Upper Sacramento River,2016,95,8.9,8.838381,20,hatchery,Winter,SacR
+509,WR2016-357,Winter_H_2016,9.712650104,Chips,540.258,Upper Sacramento River,2016,107,12.7,8.838381,20,hatchery,Winter,SacR
+510,WR2016-366,Winter_H_2016,11.89450449,Chips,540.258,Upper Sacramento River,2016,96,8.8,8.838381,20,hatchery,Winter,SacR
+511,WR2016-373,Winter_H_2016,29.98911641,Chips,540.258,Upper Sacramento River,2016,96,9.3,8.838381,20,hatchery,Winter,SacR
+512,WR2016-374,Winter_H_2016,11.90266966,Chips,540.258,Upper Sacramento River,2016,94,8.2,8.838381,20,hatchery,Winter,SacRSlough
+513,WR2016-383,Winter_H_2016,32.68104584,Chips,540.258,Upper Sacramento River,2016,96,9.9,8.838381,20,hatchery,Winter,SacR
+514,WR2016-399,Winter_H_2016,21.15210183,Chips,540.258,Upper Sacramento River,2016,99,9.9,8.838381,20,hatchery,Winter,SacR
+515,WR2016-403,Winter_H_2016,10.82162693,Chips,540.258,Upper Sacramento River,2016,106,12.2,8.838381,20,hatchery,Winter,SacR
+516,WR2016-405,Winter_H_2016,11.9087074,Chips,540.258,Upper Sacramento River,2016,104,11.4,8.838381,20,hatchery,Winter,SacR
+517,WR2016-407,Winter_H_2016,11.98000774,Chips,540.258,Upper Sacramento River,2016,102,11.3,8.838381,20,hatchery,Winter,SacRSlough
+518,WR2016-409,Winter_H_2016,10.82386836,Chips,540.258,Upper Sacramento River,2016,94,8.3,8.838381,20,hatchery,Winter,SacRSlough
+519,WR2016-412,Winter_H_2016,12.95818207,Chips,540.258,Upper Sacramento River,2016,93,8.1,8.838381,20,hatchery,Winter,SacRSlough
+520,WR2016-419,Winter_H_2016,12.98554602,Chips,540.258,Upper Sacramento River,2016,108,13.4,8.838381,20,hatchery,Winter,SacR
+521,WR2016-426,Winter_H_2016,12.89946041,Chips,540.258,Upper Sacramento River,2016,90,8.1,8.838381,20,hatchery,Winter,SacRSlough
+522,WR2016-433,Winter_H_2016,9.826973796,Chips,540.258,Upper Sacramento River,2016,101,10.9,8.838381,20,hatchery,Winter,SacR
+523,WR2016-438,Winter_H_2016,11.89645715,Chips,540.258,Upper Sacramento River,2016,96,9.7,8.838381,20,hatchery,Winter,SacRSlough
+524,WR2016-440,Winter_H_2016,10.90497931,Chips,540.258,Upper Sacramento River,2016,103,11,8.838381,20,hatchery,Winter,SacR
+525,WR2016-444,Winter_H_2016,37.74289464,Chips,540.258,Upper Sacramento River,2016,84,6.2,8.838381,20,hatchery,Winter,SacRSlough
+526,WR2016-449,Winter_H_2016,14.98885331,Chips,540.258,Upper Sacramento River,2016,97,9.7,8.838381,20,hatchery,Winter,SacR
+527,WR2016-451,Winter_H_2016,12.83708659,Chips,540.258,Upper Sacramento River,2016,103,11.5,8.838381,20,hatchery,Winter,SacR
+528,WR2016-457,Winter_H_2016,19.7017248,Chips,540.258,Upper Sacramento River,2016,96,9.5,8.838381,20,hatchery,Winter,SacR
+529,WR2016-459,Winter_H_2016,12.93083991,Chips,540.258,Upper Sacramento River,2016,105,13.3,8.838381,20,hatchery,Winter,SacR
+530,WR2016-473,Winter_H_2016,12.80158718,Chips,540.258,Upper Sacramento River,2016,92,8.1,8.838381,20,hatchery,Winter,SacRSlough
+531,WR2016-474,Winter_H_2016,12.88425733,Chips,540.258,Upper Sacramento River,2016,101,11.1,8.838381,20,hatchery,Winter,SacR
+532,WR2016-475,Winter_H_2016,9.272276759,Chips,540.258,Upper Sacramento River,2016,105,12.2,8.838381,20,hatchery,Winter,SacRSlough
+533,WR2016-480,Winter_H_2016,21.73912534,Chips,540.258,Upper Sacramento River,2016,100,10.7,8.838381,20,hatchery,Winter,SacR
+534,WR2016-485,Winter_H_2016,10.88220659,Chips,540.258,Upper Sacramento River,2016,100,10.5,8.838381,20,hatchery,Winter,SacR
+535,WR2016-490,Winter_H_2016,10.88516981,Chips,540.258,Upper Sacramento River,2016,94,8.5,8.838381,20,hatchery,Winter,SacR
+536,WR2016-491,Winter_H_2016,24.29060355,Chips,540.258,Upper Sacramento River,2016,90,7.8,8.838381,20,hatchery,Winter,SacRSlough
+537,WR2016-497,Winter_H_2016,25.84909799,Chips,540.258,Upper Sacramento River,2016,89,7.5,8.838381,20,hatchery,Winter,SacR
+538,WR2016-506,Winter_H_2016,25.88403757,Chips,540.258,Upper Sacramento River,2016,90,7.4,8.838381,20,hatchery,Winter,"SacRSlough, CenDel"
+539,WR2016-508,Winter_H_2016,14.95353104,Chips,540.258,Upper Sacramento River,2016,97,10,8.838381,20,hatchery,Winter,SacR
+540,WR2016-510,Winter_H_2016,20.68266227,Chips,540.258,Upper Sacramento River,2016,93,8.9,8.838381,20,hatchery,Winter,SacR
+541,WR2016-516,Winter_H_2016,24.8016306,Chips,540.258,Upper Sacramento River,2016,95,9.5,8.838381,20,hatchery,Winter,SacRSlough
+542,WR2016-517,Winter_H_2016,19.17539113,Chips,540.258,Upper Sacramento River,2016,98,10.1,8.838381,20,hatchery,Winter,SacR
+543,WR2016-524,Winter_H_2016,11.78678861,Chips,540.258,Upper Sacramento River,2016,102,11,8.838381,20,hatchery,Winter,SacR
+544,WR2016-530,Winter_H_2016,26.44360184,Chips,540.258,Upper Sacramento River,2016,87,6.9,8.838381,20,hatchery,Winter,SacR
+545,WR2016-543,Winter_H_2016,21.24043734,Chips,540.258,Upper Sacramento River,2016,96,9.4,8.838381,20,hatchery,Winter,SacR
+546,WR2016-544,Winter_H_2016,12.8894163,Chips,540.258,Upper Sacramento River,2016,90,7.7,8.838381,20,hatchery,Winter,SacR
+547,WR2016-546,Winter_H_2016,10.78701413,Chips,540.258,Upper Sacramento River,2016,97,10.3,8.838381,20,hatchery,Winter,SacR
+548,WR2016-550,Winter_H_2016,37.16771332,Chips,540.258,Upper Sacramento River,2016,97,10,8.838381,20,hatchery,Winter,SacR
+549,WR2016-552,Winter_H_2016,23.76544105,Chips,540.258,Upper Sacramento River,2016,94,8.9,8.838381,20,hatchery,Winter,SacR
+550,WR2016-555,Winter_H_2016,9.704999456,Chips,540.258,Upper Sacramento River,2016,102,10.7,8.838381,20,hatchery,Winter,SacR
+551,WR2016-559,Winter_H_2016,18.56236902,Chips,540.258,Upper Sacramento River,2016,99,10.5,8.838381,20,hatchery,Winter,SacR
+552,WR2016-560,Winter_H_2016,20.05973929,Chips,540.258,Upper Sacramento River,2016,93,8.4,8.838381,20,hatchery,Winter,SacR
+553,WR2016-566,Winter_H_2016,10.30236792,Chips,540.258,Upper Sacramento River,2016,102,11,8.838381,20,hatchery,Winter,SacR
+554,WR2017-001,Winter_H_2017,45.36959049,Chips,551.288,Upper Sacramento River,2017,95,8,8.388186,9,hatchery,Winter,SacR
+555,WR2017-003,Winter_H_2017,44.73733769,Chips,551.288,Upper Sacramento River,2017,91,8.9,8.388186,9,hatchery,Winter,SacR
+556,WR2017-004,Winter_H_2017,44.3349666,Chips,551.288,Upper Sacramento River,2017,85,6.9,8.388186,9,hatchery,Winter,"SacRSlough, CenDel"
+557,WR2017-006,Winter_H_2017,45.71120042,Ben.Dec,551.288,Upper Sacramento River,2017,88,6,8.388186,9,hatchery,Winter,SacR
+558,WR2017-007,Winter_H_2017,47.95890036,Chips,551.288,Upper Sacramento River,2017,88,7.7,8.388186,9,hatchery,Winter,SacR
+559,WR2017-008,Winter_H_2017,57.30007813,Chips,551.288,Upper Sacramento River,2017,85,6.6,8.388186,9,hatchery,Winter,Yolo
+560,WR2017-009,Winter_H_2017,49.90848578,Chips,551.288,Upper Sacramento River,2017,91,6.7,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+561,WR2017-020,Winter_H_2017,43.80756369,Chips,551.288,Upper Sacramento River,2017,85,6.8,8.388186,9,hatchery,Winter,SacR
+562,WR2017-021,Winter_H_2017,46.08138693,Chips,551.288,Upper Sacramento River,2017,83,6.1,8.388186,9,hatchery,Winter,SacR
+563,WR2017-030,Winter_H_2017,47.15949273,Chips,551.288,Upper Sacramento River,2017,84,6.3,8.388186,9,hatchery,Winter,SacR
+564,WR2017-031,Winter_H_2017,39.19271516,Chips,551.288,Upper Sacramento River,2017,86,7.1,8.388186,9,hatchery,Winter,SacRSlough
+565,WR2017-033,Winter_H_2017,42.83395144,Chips,551.288,Upper Sacramento River,2017,84,6.8,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+566,WR2017-034,Winter_H_2017,49.00796221,Chips,551.288,Upper Sacramento River,2017,99,10.9,8.388186,9,hatchery,Winter,CenDel
+567,WR2017-035,Winter_H_2017,44.37654587,Chips,551.288,Upper Sacramento River,2017,100,10.3,8.388186,9,hatchery,Winter,SacR
+568,WR2017-039,Winter_H_2017,39.64072922,Chips,551.288,Upper Sacramento River,2017,98,9.8,8.388186,9,hatchery,Winter,Yolo
+569,WR2017-043,Winter_H_2017,43.84351897,Chips,551.288,Upper Sacramento River,2017,96,9.8,8.388186,9,hatchery,Winter,SacR
+570,WR2017-044,Winter_H_2017,37.69794142,Chips,551.288,Upper Sacramento River,2017,105,12.7,8.388186,9,hatchery,Winter,SacR
+571,WR2017-046,Winter_H_2017,39.1643092,Chips,551.288,Upper Sacramento River,2017,103,11.9,8.388186,9,hatchery,Winter,Yolo
+572,WR2017-048,Winter_H_2017,48.83671096,Chips,551.288,Upper Sacramento River,2017,101,11.9,8.388186,9,hatchery,Winter,SacR
+573,WR2017-049,Winter_H_2017,45.38804616,Chips,551.288,Upper Sacramento River,2017,102,12.2,8.388186,9,hatchery,Winter,Yolo
+574,WR2017-051,Winter_H_2017,50.81583649,Ben.Dec,551.288,Upper Sacramento River,2017,100,11.5,8.388186,9,hatchery,Winter,SacR
+575,WR2017-052,Winter_H_2017,45.79684506,Chips,551.288,Upper Sacramento River,2017,98,10.8,8.388186,9,hatchery,Winter,SacRSlough
+576,WR2017-054,Winter_H_2017,36.42365325,Chips,551.288,Upper Sacramento River,2017,109,14.3,8.388186,9,hatchery,Winter,SacR
+577,WR2017-057,Winter_H_2017,44.96083252,Chips,551.288,Upper Sacramento River,2017,102,12.5,8.388186,9,hatchery,Winter,Yolo
+578,WR2017-062,Winter_H_2017,20.06118808,Chips,551.288,Upper Sacramento River,2017,106,13.2,8.388186,9,hatchery,Winter,SacR
+579,WR2017-064,Winter_H_2017,40.29756869,Chips,551.288,Upper Sacramento River,2017,100,11.1,8.388186,9,hatchery,Winter,SacR
+580,WR2017-065,Winter_H_2017,37.67036403,Chips,551.288,Upper Sacramento River,2017,103,11.8,8.388186,9,hatchery,Winter,SacR
+581,WR2017-067,Winter_H_2017,58.87531441,Chips,551.288,Upper Sacramento River,2017,100,11,8.388186,9,hatchery,Winter,Yolo
+582,WR2017-069,Winter_H_2017,44.84049363,Chips,551.288,Upper Sacramento River,2017,97,9.8,8.388186,9,hatchery,Winter,SacR
+583,WR2017-072,Winter_H_2017,53.66643331,Chips,551.288,Upper Sacramento River,2017,95,9.5,8.388186,9,hatchery,Winter,SacR
+584,WR2017-077,Winter_H_2017,40.73015313,Chips,551.288,Upper Sacramento River,2017,101,11.3,8.388186,9,hatchery,Winter,SacR
+585,WR2017-078,Winter_H_2017,44.97207006,Chips,551.288,Upper Sacramento River,2017,93,8.3,8.388186,9,hatchery,Winter,SacRSlough
+586,WR2017-079,Winter_H_2017,29.81923454,Chips,551.288,Upper Sacramento River,2017,107,12.8,8.388186,9,hatchery,Winter,SacR
+587,WR2017-080,Winter_H_2017,43.30906347,Chips,551.288,Upper Sacramento River,2017,103,13.1,8.388186,9,hatchery,Winter,SacR
+588,WR2017-082,Winter_H_2017,40.14183909,Chips,551.288,Upper Sacramento River,2017,94,9.3,8.388186,9,hatchery,Winter,SacR
+589,WR2017-085,Winter_H_2017,46.93119037,Chips,551.288,Upper Sacramento River,2017,90,7.8,8.388186,9,hatchery,Winter,SacR
+590,WR2017-087,Winter_H_2017,37.19175272,Chips,551.288,Upper Sacramento River,2017,104,12.5,8.388186,9,hatchery,Winter,SacR
+591,WR2017-090,Winter_H_2017,47.01753438,Chips,551.288,Upper Sacramento River,2017,109,14.2,8.388186,9,hatchery,Winter,SacR
+592,WR2017-091,Winter_H_2017,42.29234024,Chips,551.288,Upper Sacramento River,2017,105,12.9,8.388186,9,hatchery,Winter,SacR
+593,WR2017-092,Winter_H_2017,39.28005516,Chips,551.288,Upper Sacramento River,2017,100,11.7,8.388186,9,hatchery,Winter,Yolo
+594,WR2017-095,Winter_H_2017,39.14205301,Chips,551.288,Upper Sacramento River,2017,105,13.3,8.388186,9,hatchery,Winter,SacR
+595,WR2017-096,Winter_H_2017,15.81497681,Chips,551.288,Upper Sacramento River,2017,106,12.5,8.388186,9,hatchery,Winter,SacR
+596,WR2017-097,Winter_H_2017,46.79845453,Chips,551.288,Upper Sacramento River,2017,98,9.7,8.388186,9,hatchery,Winter,SacR
+597,WR2017-098,Winter_H_2017,51.00028229,Chips,551.288,Upper Sacramento River,2017,95,9.4,8.388186,9,hatchery,Winter,CenDel
+598,WR2017-100,Winter_H_2017,37.6819662,Chips,551.288,Upper Sacramento River,2017,105,12.6,8.388186,9,hatchery,Winter,SacR
+599,WR2017-101,Winter_H_2017,13.03594337,Chips,551.288,Upper Sacramento River,2017,100,11.5,8.388186,9,hatchery,Winter,Yolo
+600,WR2017-102,Winter_H_2017,48.44009074,Chips,551.288,Upper Sacramento River,2017,90,8.5,8.388186,9,hatchery,Winter,SacR
+601,WR2017-103,Winter_H_2017,45.84917066,Chips,551.288,Upper Sacramento River,2017,97,10.7,8.388186,9,hatchery,Winter,SacR
+602,WR2017-106,Winter_H_2017,53.65559233,Chips,551.288,Upper Sacramento River,2017,102,12.9,8.388186,9,hatchery,Winter,SacR
+603,WR2017-109,Winter_H_2017,38.70561501,Chips,551.288,Upper Sacramento River,2017,101,12.3,8.388186,9,hatchery,Winter,SacR
+604,WR2017-111,Winter_H_2017,47.80660802,Chips,551.288,Upper Sacramento River,2017,99,10.5,8.388186,9,hatchery,Winter,CenDel
+605,WR2017-112,Winter_H_2017,41.71342714,Chips,551.288,Upper Sacramento River,2017,97,10.2,8.388186,9,hatchery,Winter,Yolo
+606,WR2017-113,Winter_H_2017,41.69757874,Chips,551.288,Upper Sacramento River,2017,96,9.7,8.388186,9,hatchery,Winter,SacRSlough
+607,WR2017-117,Winter_H_2017,46.87961669,Chips,551.288,Upper Sacramento River,2017,94,9.3,8.388186,9,hatchery,Winter,SacRSlough
+608,WR2017-118,Winter_H_2017,53.59592171,Chips,551.288,Upper Sacramento River,2017,97,9.8,8.388186,9,hatchery,Winter,Yolo
+609,WR2017-119,Winter_H_2017,53.36117617,Chips,551.288,Upper Sacramento River,2017,90,8.2,8.388186,9,hatchery,Winter,Yolo
+610,WR2017-121,Winter_H_2017,48.90256108,Chips,551.288,Upper Sacramento River,2017,95,9.4,8.388186,9,hatchery,Winter,SacRSlough
+611,WR2017-123,Winter_H_2017,46.82401942,Chips,551.288,Upper Sacramento River,2017,96,10.4,8.388186,9,hatchery,Winter,SacRSlough
+612,WR2017-126,Winter_H_2017,41.76067869,Chips,551.288,Upper Sacramento River,2017,101,11.8,8.388186,9,hatchery,Winter,CenDel
+613,WR2017-133,Winter_H_2017,45.83524419,Chips,551.288,Upper Sacramento River,2017,100,11.3,8.388186,9,hatchery,Winter,SacR
+614,WR2017-134,Winter_H_2017,56.10977828,Chips,551.288,Upper Sacramento River,2017,95,9.2,8.388186,9,hatchery,Winter,Yolo
+615,WR2017-137,Winter_H_2017,44.82043087,Chips,551.288,Upper Sacramento River,2017,89,7.5,8.388186,9,hatchery,Winter,SacR
+616,WR2017-142,Winter_H_2017,52.572512,Chips,551.288,Upper Sacramento River,2017,84,6.1,8.388186,9,hatchery,Winter,Yolo
+617,WR2017-150,Winter_H_2017,48.49434745,Chips,551.288,Upper Sacramento River,2017,85,6.5,8.388186,9,hatchery,Winter,SacR
+618,WR2017-152,Winter_H_2017,56.14608225,Chips,551.288,Upper Sacramento River,2017,90,7.7,8.388186,9,hatchery,Winter,Yolo
+619,WR2017-153,Winter_H_2017,48.00529899,Chips,551.288,Upper Sacramento River,2017,93,9.4,8.388186,9,hatchery,Winter,Yolo
+620,WR2017-155,Winter_H_2017,54.67493377,Chips,551.288,Upper Sacramento River,2017,101,12.2,8.388186,9,hatchery,Winter,Yolo
+621,WR2017-158,Winter_H_2017,45.8929845,Chips,551.288,Upper Sacramento River,2017,89,7.2,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+622,WR2017-160,Winter_H_2017,57.19416951,Chips,551.288,Upper Sacramento River,2017,85,6.7,8.388186,9,hatchery,Winter,Yolo
+623,WR2017-168,Winter_H_2017,48.86895601,Chips,551.288,Upper Sacramento River,2017,84,6.2,8.388186,9,hatchery,Winter,SacR
+624,WR2017-175,Winter_H_2017,48.10615185,Chips,551.288,Upper Sacramento River,2017,94,9.2,8.388186,9,hatchery,Winter,SacR
+625,WR2017-178,Winter_H_2017,46.90433456,Chips,551.288,Upper Sacramento River,2017,90,7.5,8.388186,9,hatchery,Winter,SacR
+626,WR2017-180,Winter_H_2017,42.20588206,Chips,551.288,Upper Sacramento River,2017,97,10.2,8.388186,9,hatchery,Winter,SacR
+627,WR2017-187,Winter_H_2017,61.47704205,Chips,551.288,Upper Sacramento River,2017,92,8.8,8.388186,9,hatchery,Winter,Yolo
+628,WR2017-188,Winter_H_2017,44.86196672,Chips,551.288,Upper Sacramento River,2017,89,7.7,8.388186,9,hatchery,Winter,SacR
+629,WR2017-189,Winter_H_2017,60.06333466,Ben.Dec,551.288,Upper Sacramento River,2017,89,7.8,8.388186,9,hatchery,Winter,Yolo
+630,WR2017-201,Winter_H_2017,50.51728657,Chips,551.288,Upper Sacramento River,2017,87,6.9,8.388186,9,hatchery,Winter,CenDel
+631,WR2017-204,Winter_H_2017,65.56940051,Chips,551.288,Upper Sacramento River,2017,94,9.2,8.388186,9,hatchery,Winter,SacR
+632,WR2017-206,Winter_H_2017,45.86667209,Chips,551.288,Upper Sacramento River,2017,88,7,8.388186,9,hatchery,Winter,SacR
+633,WR2017-207,Winter_H_2017,45.33478258,Chips,551.288,Upper Sacramento River,2017,91,8,8.388186,9,hatchery,Winter,CenDel
+634,WR2017-221,Winter_H_2017,57.21497279,Chips,551.288,Upper Sacramento River,2017,89,7.7,8.388186,9,hatchery,Winter,Yolo
+635,WR2017-223,Winter_H_2017,54.74262469,Chips,551.288,Upper Sacramento River,2017,89,7.7,8.388186,9,hatchery,Winter,Yolo
+636,WR2017-226,Winter_H_2017,51.0923423,Chips,551.288,Upper Sacramento River,2017,97,10.3,8.388186,9,hatchery,Winter,Yolo
+637,WR2017-228,Winter_H_2017,47.74498902,Chips,551.288,Upper Sacramento River,2017,85,6.3,8.388186,9,hatchery,Winter,SacR
+638,WR2017-229,Winter_H_2017,61.9149608,Chips,551.288,Upper Sacramento River,2017,88,7.4,8.388186,9,hatchery,Winter,Yolo
+639,WR2017-231,Winter_H_2017,44.90067524,Chips,551.288,Upper Sacramento River,2017,90,7.6,8.388186,9,hatchery,Winter,SacR
+640,WR2017-235,Winter_H_2017,46.83849361,Chips,551.288,Upper Sacramento River,2017,89,7.3,8.388186,9,hatchery,Winter,SacR
+641,WR2017-240,Winter_H_2017,56.77202846,Chips,551.288,Upper Sacramento River,2017,85,7,8.388186,9,hatchery,Winter,Yolo
+642,WR2017-245,Winter_H_2017,51.13232483,Chips,551.288,Upper Sacramento River,2017,83,6,8.388186,9,hatchery,Winter,CenDel
+643,WR2017-249,Winter_H_2017,59.73346977,Chips,551.288,Upper Sacramento River,2017,83,6.3,8.388186,9,hatchery,Winter,Yolo
+644,WR2017-250,Winter_H_2017,59.76822105,Chips,551.288,Upper Sacramento River,2017,80,6,8.388186,9,hatchery,Winter,Yolo
+645,WR2017-257,Winter_H_2017,47.99098912,Chips,551.288,Upper Sacramento River,2017,88,7.6,8.388186,9,hatchery,Winter,SacR
+646,WR2017-259,Winter_H_2017,48.53784104,Chips,551.288,Upper Sacramento River,2017,88,8,8.388186,9,hatchery,Winter,SacR
+647,WR2017-264,Winter_H_2017,41.17198928,Chips,551.288,Upper Sacramento River,2017,90,7.9,8.388186,9,hatchery,Winter,SacR
+648,WR2017-266,Winter_H_2017,46.79373314,Chips,551.288,Upper Sacramento River,2017,88,7.8,8.388186,9,hatchery,Winter,SacR
+649,WR2017-272,Winter_H_2017,48.91876588,Chips,551.288,Upper Sacramento River,2017,85,6.6,8.388186,9,hatchery,Winter,CenDel
+650,WR2017-284,Winter_H_2017,54.04405699,Chips,551.288,Upper Sacramento River,2017,88,8,8.388186,9,hatchery,Winter,SacR
+651,WR2017-287,Winter_H_2017,52.11992809,Chips,551.288,Upper Sacramento River,2017,90,8,8.388186,9,hatchery,Winter,Yolo
+652,WR2017-290,Winter_H_2017,45.9324308,Chips,551.288,Upper Sacramento River,2017,86,7.2,8.388186,9,hatchery,Winter,SacR
+653,WR2017-294,Winter_H_2017,59.73926707,Chips,551.288,Upper Sacramento River,2017,85,7,8.388186,9,hatchery,Winter,Yolo
+654,WR2017-297,Winter_H_2017,44.35621317,Chips,551.288,Upper Sacramento River,2017,86,6.9,8.388186,9,hatchery,Winter,SacRSlough
+655,WR2017-299,Winter_H_2017,45.94352223,Chips,551.288,Upper Sacramento River,2017,88,7.6,8.388186,9,hatchery,Winter,SacR
+656,WR2017-300,Winter_H_2017,39.74123617,Chips,551.288,Upper Sacramento River,2017,90,8.3,8.388186,9,hatchery,Winter,SacR
+657,WR2017-301,Winter_H_2017,47.96147718,Chips,551.288,Upper Sacramento River,2017,88,7.8,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+658,WR2017-303,Winter_H_2017,44.80302919,Chips,551.288,Upper Sacramento River,2017,91,8.2,8.388186,9,hatchery,Winter,SacR
+659,WR2017-312,Winter_H_2017,46.97716155,Chips,551.288,Upper Sacramento River,2017,87,7.8,8.388186,9,hatchery,Winter,CenDel
+660,WR2017-316,Winter_H_2017,60.88426726,Chips,551.288,Upper Sacramento River,2017,82,6,8.388186,9,hatchery,Winter,Yolo
+661,WR2017-324,Winter_H_2017,46.73135354,Chips,551.288,Upper Sacramento River,2017,90,8.2,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+662,WR2017-334,Winter_H_2017,55.21295561,Chips,551.288,Upper Sacramento River,2017,88,7.4,8.388186,9,hatchery,Winter,Yolo
+663,WR2017-335,Winter_H_2017,47.03982566,Chips,551.288,Upper Sacramento River,2017,91,8.2,8.388186,9,hatchery,Winter,SacR
+664,WR2017-336,Winter_H_2017,48.55015649,Chips,551.288,Upper Sacramento River,2017,87,7.1,8.388186,9,hatchery,Winter,SacR
+665,WR2017-338,Winter_H_2017,45.121743,Ben.Dec,551.288,Upper Sacramento River,2017,90,7.9,8.388186,9,hatchery,Winter,SacR
+666,WR2017-342,Winter_H_2017,60.48511392,Chips,551.288,Upper Sacramento River,2017,86,6.7,8.388186,9,hatchery,Winter,SacR
+667,WR2017-343,Winter_H_2017,44.29430652,Chips,551.288,Upper Sacramento River,2017,88,7.3,8.388186,9,hatchery,Winter,CenDel
+668,WR2017-344,Winter_H_2017,47.45467279,Chips,551.288,Upper Sacramento River,2017,82,6.3,8.388186,9,hatchery,Winter,SacR
+669,WR2017-345,Winter_H_2017,47.97421655,Chips,551.288,Upper Sacramento River,2017,83,6.4,8.388186,9,hatchery,Winter,SacR
+670,WR2017-346,Winter_H_2017,45.75506027,Chips,551.288,Upper Sacramento River,2017,82,6,8.388186,9,hatchery,Winter,SacR
+671,WR2017-351,Winter_H_2017,61.04116856,Chips,551.288,Upper Sacramento River,2017,86,7,8.388186,9,hatchery,Winter,SacRSlough
+672,WR2017-356,Winter_H_2017,44.94159056,Chips,551.288,Upper Sacramento River,2017,91,8.5,8.388186,9,hatchery,Winter,SacR
+673,WR2017-360,Winter_H_2017,25.27950433,Chips,551.288,Upper Sacramento River,2017,88,7.6,8.388186,9,hatchery,Winter,SacR
+674,WR2017-362,Winter_H_2017,45.9120205,Chips,551.288,Upper Sacramento River,2017,85,7.1,8.388186,9,hatchery,Winter,SacR
+675,WR2017-365,Winter_H_2017,47.86689602,Chips,551.288,Upper Sacramento River,2017,84,6.4,8.388186,9,hatchery,Winter,CenDel
+676,WR2017-366,Winter_H_2017,49.10286627,Chips,551.288,Upper Sacramento River,2017,92,8.4,8.388186,9,hatchery,Winter,SacR
+677,WR2017-371,Winter_H_2017,47.80059845,Chips,551.288,Upper Sacramento River,2017,89,7.2,8.388186,9,hatchery,Winter,SacRSlough
+678,WR2017-375,Winter_H_2017,43.36230271,Chips,551.288,Upper Sacramento River,2017,90,7.9,8.388186,9,hatchery,Winter,SacRSlough
+679,WR2017-376,Winter_H_2017,47.89487181,Chips,551.288,Upper Sacramento River,2017,92,8.8,8.388186,9,hatchery,Winter,SacR
+680,WR2017-379,Winter_H_2017,55.61567928,Chips,551.288,Upper Sacramento River,2017,85,6.5,8.388186,9,hatchery,Winter,Yolo
+681,WR2017-388,Winter_H_2017,36.57930336,Chips,551.288,Upper Sacramento River,2017,87,7.3,8.388186,9,hatchery,Winter,SacR
+682,WR2017-390,Winter_H_2017,60.02351999,Ben.Dec,551.288,Upper Sacramento River,2017,88,7.8,8.388186,9,hatchery,Winter,Yolo
+683,WR2017-395,Winter_H_2017,56.84968051,Chips,551.288,Upper Sacramento River,2017,84,6.5,8.388186,9,hatchery,Winter,SacR
+684,WR2017-401,Winter_H_2017,43.31921343,Chips,551.288,Upper Sacramento River,2017,87,7.1,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+685,WR2017-403,Winter_H_2017,57.20829317,Chips,551.288,Upper Sacramento River,2017,85,6.5,8.388186,9,hatchery,Winter,Yolo
+686,WR2017-404,Winter_H_2017,51.85558936,Ben.Dec,551.288,Upper Sacramento River,2017,84,6.6,8.388186,9,hatchery,Winter,SacRSlough
+687,WR2017-405,Winter_H_2017,47.81457343,Chips,551.288,Upper Sacramento River,2017,100,10.9,8.388186,9,hatchery,Winter,SacR
+688,WR2017-406,Winter_H_2017,44.27993179,Chips,551.288,Upper Sacramento River,2017,106,13.6,8.388186,9,hatchery,Winter,SacR
+689,WR2017-411,Winter_H_2017,46.00731668,Chips,551.288,Upper Sacramento River,2017,96,10.1,8.388186,9,hatchery,Winter,SacR
+690,WR2017-419,Winter_H_2017,47.84646065,Chips,551.288,Upper Sacramento River,2017,90,8.2,8.388186,9,hatchery,Winter,SacR
+691,WR2017-420,Winter_H_2017,45.87079425,Chips,551.288,Upper Sacramento River,2017,105,12.5,8.388186,9,hatchery,Winter,SacR
+692,WR2017-424,Winter_H_2017,51.15248516,Chips,551.288,Upper Sacramento River,2017,98,10.6,8.388186,9,hatchery,Winter,SacR
+693,WR2017-427,Winter_H_2017,48.88221624,Ben.Dec,551.288,Upper Sacramento River,2017,95,9.1,8.388186,9,hatchery,Winter,Yolo
+694,WR2017-428,Winter_H_2017,45.13473139,Ben.Dec,551.288,Upper Sacramento River,2017,101,11.4,8.388186,9,hatchery,Winter,Yolo
+695,WR2017-430,Winter_H_2017,47.83303639,Chips,551.288,Upper Sacramento River,2017,100,11.4,8.388186,9,hatchery,Winter,CenDel
+696,WR2017-432,Winter_H_2017,31.79067051,Chips,551.288,Upper Sacramento River,2017,98,10.9,8.388186,9,hatchery,Winter,Yolo
+697,WR2017-433,Winter_H_2017,45.72884051,Chips,551.288,Upper Sacramento River,2017,106,13.2,8.388186,9,hatchery,Winter,SacR
+698,WR2017-434,Winter_H_2017,41.66776927,Chips,551.288,Upper Sacramento River,2017,102,12,8.388186,9,hatchery,Winter,SacR
+699,WR2017-439,Winter_H_2017,46.78597042,Chips,551.288,Upper Sacramento River,2017,113,15.5,8.388186,9,hatchery,Winter,SacR
+700,WR2017-440,Winter_H_2017,45.74382781,Chips,551.288,Upper Sacramento River,2017,102,12.1,8.388186,9,hatchery,Winter,SacR
+701,WR2017-441,Winter_H_2017,21.56943589,Chips,551.288,Upper Sacramento River,2017,103,11.6,8.388186,9,hatchery,Winter,SacR
+702,WR2017-442,Winter_H_2017,41.77781947,Chips,551.288,Upper Sacramento River,2017,100,11.5,8.388186,9,hatchery,Winter,SacR
+703,WR2017-445,Winter_H_2017,45.77407771,Chips,551.288,Upper Sacramento River,2017,100,11,8.388186,9,hatchery,Winter,Yolo
+704,WR2017-446,Winter_H_2017,49.10234294,Chips,551.288,Upper Sacramento River,2017,97,10.3,8.388186,9,hatchery,Winter,SacR
+705,WR2017-448,Winter_H_2017,34.17224428,Chips,551.288,Upper Sacramento River,2017,108,13.8,8.388186,9,hatchery,Winter,SacR
+706,WR2017-450,Winter_H_2017,49.52565147,Chips,551.288,Upper Sacramento River,2017,96,10.3,8.388186,9,hatchery,Winter,SacR
+707,WR2017-451,Winter_H_2017,44.90017466,Chips,551.288,Upper Sacramento River,2017,99,10.8,8.388186,9,hatchery,Winter,SacR
+708,WR2017-452,Winter_H_2017,47.04324825,Chips,551.288,Upper Sacramento River,2017,105,13.1,8.388186,9,hatchery,Winter,Yolo
+709,WR2017-456,Winter_H_2017,43.2558219,Chips,551.288,Upper Sacramento River,2017,103,12.3,8.388186,9,hatchery,Winter,SacR
+710,WR2017-457,Winter_H_2017,47.72358774,Chips,551.288,Upper Sacramento River,2017,99,10.8,8.388186,9,hatchery,Winter,CenDel
+711,WR2017-458,Winter_H_2017,43.77112338,Chips,551.288,Upper Sacramento River,2017,100,11.2,8.388186,9,hatchery,Winter,SacR
+712,WR2017-459,Winter_H_2017,57.6409997,Chips,551.288,Upper Sacramento River,2017,95,9.9,8.388186,9,hatchery,Winter,SacR
+713,WR2017-463,Winter_H_2017,44.78864866,Chips,551.288,Upper Sacramento River,2017,99,10.8,8.388186,9,hatchery,Winter,SacR
+714,WR2017-464,Winter_H_2017,47.01066014,Chips,551.288,Upper Sacramento River,2017,100,10.8,8.388186,9,hatchery,Winter,SacR
+715,WR2017-466,Winter_H_2017,40.76057466,Chips,551.288,Upper Sacramento River,2017,99,11.3,8.388186,9,hatchery,Winter,SacRSlough
+716,WR2017-467,Winter_H_2017,46.50161807,Chips,551.288,Upper Sacramento River,2017,100,11.5,8.388186,9,hatchery,Winter,SacRSlough
+717,WR2017-468,Winter_H_2017,45.34336346,Chips,551.288,Upper Sacramento River,2017,96,10,8.388186,9,hatchery,Winter,CenDel
+718,WR2017-469,Winter_H_2017,38.18721944,Chips,551.288,Upper Sacramento River,2017,107,14,8.388186,9,hatchery,Winter,SacR
+719,WR2017-471,Winter_H_2017,37.69183355,Chips,551.288,Upper Sacramento River,2017,96,10.1,8.388186,9,hatchery,Winter,SacR
+720,WR2017-472,Winter_H_2017,53.05903088,Chips,551.288,Upper Sacramento River,2017,106,14.1,8.388186,9,hatchery,Winter,SacR
+721,WR2017-474,Winter_H_2017,41.74987747,Chips,551.288,Upper Sacramento River,2017,101,11.3,8.388186,9,hatchery,Winter,Yolo
+722,WR2017-476,Winter_H_2017,45.85045083,Chips,551.288,Upper Sacramento River,2017,98,10.5,8.388186,9,hatchery,Winter,SacR
+723,WR2017-477,Winter_H_2017,46.96216552,Chips,551.288,Upper Sacramento River,2017,98,10.6,8.388186,9,hatchery,Winter,SacR
+724,WR2017-478,Winter_H_2017,53.72961789,Chips,551.288,Upper Sacramento River,2017,103,12.5,8.388186,9,hatchery,Winter,SacR
+725,WR2017-479,Winter_H_2017,43.8683397,Chips,551.288,Upper Sacramento River,2017,93,8.8,8.388186,9,hatchery,Winter,SacR
+726,WR2017-480,Winter_H_2017,51.13031727,Chips,551.288,Upper Sacramento River,2017,99,11,8.388186,9,hatchery,Winter,SacR
+727,WR2017-484,Winter_H_2017,29.95648069,Chips,551.288,Upper Sacramento River,2017,91,7.7,8.388186,9,hatchery,Winter,SacR
+728,WR2017-487,Winter_H_2017,44.35548765,Chips,551.288,Upper Sacramento River,2017,101,11,8.388186,9,hatchery,Winter,SacRSlough
+729,WR2017-488,Winter_H_2017,43.85960197,Chips,551.288,Upper Sacramento River,2017,98,10.4,8.388186,9,hatchery,Winter,CenDel
+730,WR2017-493,Winter_H_2017,44.90085397,Chips,551.288,Upper Sacramento River,2017,98,11,8.388186,9,hatchery,Winter,CenDel
+731,WR2017-494,Winter_H_2017,41.2538223,Chips,551.288,Upper Sacramento River,2017,108,14.7,8.388186,9,hatchery,Winter,SacR
+732,WR2017-498,Winter_H_2017,45.94527348,Chips,551.288,Upper Sacramento River,2017,106,13.8,8.388186,9,hatchery,Winter,SacR
+733,WR2017-499,Winter_H_2017,43.86006916,Chips,551.288,Upper Sacramento River,2017,93,8.9,8.388186,9,hatchery,Winter,Yolo
+734,WR2017-501,Winter_H_2017,46.93303484,Chips,551.288,Upper Sacramento River,2017,100,11,8.388186,9,hatchery,Winter,Yolo
+735,WR2017-503,Winter_H_2017,44.39322815,Chips,551.288,Upper Sacramento River,2017,95,9.6,8.388186,9,hatchery,Winter,CenDel
+736,WR2017-504,Winter_H_2017,46.83074287,Chips,551.288,Upper Sacramento River,2017,99,10.4,8.388186,9,hatchery,Winter,SacR
+737,WR2017-505,Winter_H_2017,42.72179667,Chips,551.288,Upper Sacramento River,2017,97,10.4,8.388186,9,hatchery,Winter,SacR
+738,WR2017-506,Winter_H_2017,41.68400616,Chips,551.288,Upper Sacramento River,2017,104,12.4,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+739,WR2017-507,Winter_H_2017,59.69362851,Chips,551.288,Upper Sacramento River,2017,110,14.9,8.388186,9,hatchery,Winter,Yolo
+740,WR2017-508,Winter_H_2017,44.95062111,Chips,551.288,Upper Sacramento River,2017,101,11.1,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+741,WR2017-509,Winter_H_2017,41.73147218,Ben.Dec,551.288,Upper Sacramento River,2017,100,11,8.388186,9,hatchery,Winter,SacR
+742,WR2017-511,Winter_H_2017,41.25734537,Chips,551.288,Upper Sacramento River,2017,98,10,8.388186,9,hatchery,Winter,SacR
+743,WR2017-512,Winter_H_2017,44.78480118,Chips,551.288,Upper Sacramento River,2017,93,8.7,8.388186,9,hatchery,Winter,SacR
+744,WR2017-515,Winter_H_2017,45.32340391,Chips,551.288,Upper Sacramento River,2017,105,12.2,8.388186,9,hatchery,Winter,SacR
+745,WR2017-517,Winter_H_2017,58.65034627,Chips,551.288,Upper Sacramento River,2017,101,11.8,8.388186,9,hatchery,Winter,Yolo
+746,WR2017-519,Winter_H_2017,44.9288244,Chips,551.288,Upper Sacramento River,2017,100,11.5,8.388186,9,hatchery,Winter,CenDel
+747,WR2017-520,Winter_H_2017,51.67978838,Chips,551.288,Upper Sacramento River,2017,104,12.9,8.388186,9,hatchery,Winter,Yolo
+748,WR2017-524,Winter_H_2017,51.62469314,Chips,551.288,Upper Sacramento River,2017,107,13.7,8.388186,9,hatchery,Winter,Yolo
+749,WR2017-525,Winter_H_2017,44.30491125,Chips,551.288,Upper Sacramento River,2017,98,9.7,8.388186,9,hatchery,Winter,SacR
+750,WR2017-532,Winter_H_2017,45.95284723,Chips,551.288,Upper Sacramento River,2017,99,10.8,8.388186,9,hatchery,Winter,Yolo
+751,WR2017-535,Winter_H_2017,38.11874986,Chips,551.288,Upper Sacramento River,2017,105,12.1,8.388186,9,hatchery,Winter,SacRSlough
+752,WR2017-536,Winter_H_2017,55.28873788,Chips,551.288,Upper Sacramento River,2017,99,11.1,8.388186,9,hatchery,Winter,Yolo
+753,WR2017-537,Winter_H_2017,55.72281244,Chips,551.288,Upper Sacramento River,2017,98,9.8,8.388186,9,hatchery,Winter,SacR
+754,WR2017-538,Winter_H_2017,47.96402259,Chips,551.288,Upper Sacramento River,2017,96,9.7,8.388186,9,hatchery,Winter,SacR
+755,WR2017-539,Winter_H_2017,46.62822407,Chips,551.288,Upper Sacramento River,2017,96,10.2,8.388186,9,hatchery,Winter,SacR
+756,WR2017-540,Winter_H_2017,44.91299708,Chips,551.288,Upper Sacramento River,2017,103,11.1,8.388186,9,hatchery,Winter,SacR
+757,WR2017-542,Winter_H_2017,43.79463834,Chips,551.288,Upper Sacramento River,2017,118,18.4,8.388186,9,hatchery,Winter,Yolo
+758,WR2017-545,Winter_H_2017,22.20193597,Ben.Dec,551.288,Upper Sacramento River,2017,106,12.5,8.388186,9,hatchery,Winter,SacR
+759,WR2017-546,Winter_H_2017,32.39709609,Chips,551.288,Upper Sacramento River,2017,105,12.4,8.388186,9,hatchery,Winter,SacR
+760,WR2017-547,Winter_H_2017,38.18314318,Chips,551.288,Upper Sacramento River,2017,100,10.7,8.388186,9,hatchery,Winter,SacR
+761,WR2017-548,Winter_H_2017,47.93611179,Chips,551.288,Upper Sacramento River,2017,93,8.6,8.388186,9,hatchery,Winter,CenDel
+762,WR2017-552,Winter_H_2017,46.2316598,Chips,551.288,Upper Sacramento River,2017,92,8.5,8.388186,9,hatchery,Winter,SacR
+763,WR2017-553,Winter_H_2017,46.4672133,Ben.Dec,551.288,Upper Sacramento River,2017,94,8.5,8.388186,9,hatchery,Winter,SacR
+764,WR2017-555,Winter_H_2017,46.79709214,Chips,551.288,Upper Sacramento River,2017,93,8.5,8.388186,9,hatchery,Winter,CenDel
+765,WR2017-562,Winter_H_2017,46.22934435,Ben.Dec,551.288,Upper Sacramento River,2017,90,7.8,8.388186,9,hatchery,Winter,"Yolo, SacRSlough"
+766,WR2017-565,Winter_H_2017,56.78125693,Chips,551.288,Upper Sacramento River,2017,87,7.7,8.388186,9,hatchery,Winter,SacR
+767,WR2017-569,Winter_H_2017,55.10531427,Chips,551.288,Upper Sacramento River,2017,83,6.5,8.388186,9,hatchery,Winter,Yolo
+768,FR-Delta2013-013,FR_Spring_Delta_2013,6.096976557,Ben.Dec,172.57,Tidal Delta,2013,94,8.5,19.880579,141,hatchery,Spring,SacR
+769,FR-Delta2013-024,FR_Spring_Delta_2013,6.821662546,Ben.Dec,172.57,Tidal Delta,2013,95,9.5,19.880579,141,hatchery,Spring,SacRSlough
+770,FR-Delta2013-028,FR_Spring_Delta_2013,10.37022641,Ben.Dec,172.57,Tidal Delta,2013,84,6.7,19.880579,141,hatchery,Spring,SacR
+771,FR-Delta2013-038,FR_Spring_Delta_2013,4.98978636,Ben.Dec,172.57,Tidal Delta,2013,93,8.5,19.880579,141,hatchery,Spring,SacRSlough
+772,FR-Delta2013-047,FR_Spring_Delta_2013,9.629292471,Ben.Dec,172.57,Tidal Delta,2013,94,8.8,19.880579,141,hatchery,Spring,SacR
+773,FR-Delta2013-055,FR_Spring_Delta_2013,6.071154115,Ben.Ant,172.57,Tidal Delta,2013,98,10.1,19.880579,141,hatchery,Spring,"SacRSlough, CenDel"
+774,FR-Delta2013-058,FR_Spring_Delta_2013,14.63038133,Ben.Ant,172.57,Tidal Delta,2013,96,9.3,19.5089,141,hatchery,Spring,CenDel
+775,FR-Delta2013-069,FR_Spring_Delta_2013,6.485178802,Ben.Dec,172.57,Tidal Delta,2013,90,7.6,19.880579,141,hatchery,Spring,SacRSlough
+776,FR-Delta2013-076,FR_Spring_Delta_2013,5.048406019,Ben.Dec,172.57,Tidal Delta,2013,96,9,19.880579,141,hatchery,Spring,SacRSlough
+777,FR-Delta2013-083,FR_Spring_Delta_2013,7.867219751,Ben.Dec,172.57,Tidal Delta,2013,97,9.7,19.5089,141,hatchery,Spring,CenDel
+778,FR-Delta2013-101,FR_Spring_Delta_2013,4.547980255,Ben.Dec,172.57,Tidal Delta,2013,98,9.8,19.880579,141,hatchery,Spring,SacRSlough
+779,FR-Delta2013-112,FR_Spring_Delta_2013,5.319604844,Ben.Dec,172.57,Tidal Delta,2013,92,8.3,19.880579,141,hatchery,Spring,SacRSlough
+780,FR-Delta2013-116,FR_Spring_Delta_2013,4.528389919,Ben.Dec,172.57,Tidal Delta,2013,95,8.3,19.880579,141,hatchery,Spring,SacRSlough
+781,FR-Delta2013-117,FR_Spring_Delta_2013,6.112172882,Ben.Dec,172.57,Tidal Delta,2013,94,9,19.5089,141,hatchery,Spring,SacRSlough
+782,FR-Delta2013-119,FR_Spring_Delta_2013,7.349693698,Ben.Ant,172.57,Tidal Delta,2013,92,7.9,19.880579,141,hatchery,Spring,"SacRSlough, CenDel"
+783,FR-Delta2013-132,FR_Spring_Delta_2013,4.6934886,Ben.Dec,172.57,Tidal Delta,2013,100,11.2,19.880579,141,hatchery,Spring,SacRSlough
+784,FR-Delta2013-133,FR_Spring_Delta_2013,4.630492824,Ben.Dec,172.57,Tidal Delta,2013,93,7.8,19.5089,141,hatchery,Spring,SacRSlough
+785,FR-Delta2015-194,FR_Spring_Delta_2015,5.696996366,Ben.Dec,139.14,Tidal Delta,2015,89,7.8,15.984982,174,hatchery,Spring,SacRSlough
+786,FR-Delta2015-268,FR_Spring_Delta_2015,5.667761644,Ben.Dec,139.14,Tidal Delta,2015,85,7.1,15.984982,174,hatchery,Spring,SacRSlough
+787,Tisdale2013-022,Tisdale_RST_2013,7.254569907,Ben.Dec,267.456,Middle Sacramento River,2013,81,6,18.83333333,0,unknown,unknown,SacR
+788,Tisdale2013-063,Tisdale_RST_2013,4.579690966,Ben.Dec,267.456,Middle Sacramento River,2013,84,5.8,18.94444444,0,unknown,unknown,SacRSlough
+789,Tisdale2013-067,Tisdale_RST_2013,6.9275993,Ben.Ant,267.456,Middle Sacramento River,2013,85,6.7,18.94444444,0,unknown,unknown,CenDel
+790,Tisdale2013-175,Tisdale_RST_2013,7.131168084,Ben.Dec,267.456,Middle Sacramento River,2013,88,7.4,16.38888889,0,unknown,unknown,SacR
+791,Tisdale2013-179,Tisdale_RST_2013,9.862814769,Ben.Dec,267.456,Middle Sacramento River,2013,82,6.2,16.38888889,0,hatchery,unknown,SacRSlough
+792,Tisdale2013-180,Tisdale_RST_2013,9.253190301,Ben.Dec,267.456,Middle Sacramento River,2013,83,6,16.38888889,0,hatchery,unknown,SacR
+793,Tisdale2013-182,Tisdale_RST_2013,5.86446316,Ben.Dec,267.456,Middle Sacramento River,2013,90,8.6,16.38888889,0,unknown,unknown,SacR
